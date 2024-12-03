@@ -1,0 +1,1266 @@
+{
+  "ingest_type": "GMetaList",
+  "ingest_data": {
+    "gmeta": [
+      {
+        "id": "pub_record",
+        "subject": "Using public competitions to help design military ground vehicles: lessons learned from the darpa fang program_2015-08-04T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "CONF",
+            "title": "Using public competitions to help design military ground vehicles: lessons learned from the darpa fang program",
+            "authors": [
+              "Luskin, Paul"
+            ],
+            "secondary_title": "2015 NDIA Ground Vehicle Systems Engineering and Technology Symposium",
+            "abstract": "In January 2013, the Defense Advanced Research Projects Agency (DARPA) embarked on a public design competition for a heavy, amphibious infantry fighting vehicle, using new design and simulation tools intended to revolutionize the product development process for future complex defense systems. A $1-million prize was awarded for the winning design, which was ultimately built, tested, and evaluated. This paper will provide an overview of the planning and execution of the FANG Mobility/Drivetrain Challenge, insight into lessons learned for future ground vehicle development, as well as for other programs and organizations that are considering using prize competitions.",
+            "custom1": "Novi, MI",
+            "date": "2015-08-04T00:00:00+00:00",
+            "year": "2015",
+            "id": "Using public competitions to help design military ground vehicles: lessons learned from the darpa fang program_2015-08-04T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Salmonella spp."
+          ],
+          "files": [
+            "files/129/testbench.png"
+          ],
+          "sample_file": "files/129/testbench.png",
+          "sample_file_url": "https://g-a68a94.554f69.8540.data.globus.org/files/129/testbench.png",
+          "sample_plot_url": "",
+          "keywords": [
+            "crowdsourcing",
+            "software",
+            "vehicle engineering",
+            "cad"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "Imputation Server PGS: an automated approach to calculate polygenic risk scores on imputation servers_2024-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Imputation Server PGS: an automated approach to calculate polygenic risk scores on imputation servers",
+            "authors": [
+              "Forer, Lukas",
+              "Taliun, Daniel",
+              "LeFaive, Jonathon",
+              "Smith, Albert V.",
+              "Boughton, Andrew P.",
+              "Coassin, Stefan",
+              "Lamina, Claudia",
+              "Kronenberg, Florian",
+              "Fuchsberger, Christian",
+              "Sch\u00f6nherr, Sebastian"
+            ],
+            "secondary_title": "Nucleic Acids Research",
+            "date": "2024-01-01T00:00:00+00:00",
+            "year": "2024",
+            "start_page": "gkae331",
+            "short_title": "Imputation Server PGS",
+            "urls": [
+              "https://academic.oup.com/nar/advance-article-abstract/doi/10.1093/nar/gkae331/7665643"
+            ],
+            "id": "Imputation Server PGS: an automated approach to calculate polygenic risk scores on imputation servers_2024-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Chlamydophila abortus",
+            "Canine parvovirus"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "genetics",
+            "imputation",
+            "software"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "The Type 2 Diabetes Knowledge Portal: An open access genetic resource dedicated to type 2 diabetes and related traits_2023-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "The Type 2 Diabetes Knowledge Portal: An open access genetic resource dedicated to type 2 diabetes and related traits",
+            "authors": [
+              "Costanzo, Maria C.",
+              "von Grotthuss, Marcin",
+              "Massung, Jeffrey",
+              "Jang, Dongkeun",
+              "Caulkins, Lizz",
+              "Koesterer, Ryan",
+              "Gilbert, Clint",
+              "Welch, Ryan P.",
+              "Kudtarkar, Parul",
+              "Hoang, Quy"
+            ],
+            "secondary_title": "Cell metabolism",
+            "date": "2023-01-01T00:00:00+00:00",
+            "year": "2023",
+            "volume": "35",
+            "number": "4",
+            "start_page": "695",
+            "end_page": "710",
+            "short_title": "The Type 2 Diabetes Knowledge Portal",
+            "urls": [
+              "https://www.cell.com/cell-metabolism/fulltext/S1550-4131%2823%2900079-7?dgcid=raven_jbs_aip_email"
+            ],
+            "id": "The Type 2 Diabetes Knowledge Portal: An open access genetic resource dedicated to type 2 diabetes and related traits_2023-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Canine parvovirus"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "genetics",
+            "visualization",
+            "software"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "Whole-genome sequencing reveals host factors underlying critical COVID-19_2022-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Whole-genome sequencing reveals host factors underlying critical COVID-19",
+            "authors": [
+              "Kousathanas, Athanasios",
+              "Pairo-Castineira, Erola",
+              "Rawlik, Konrad",
+              "Stuckey, Alex",
+              "Odhams, Christopher A.",
+              "Walker, Susan",
+              "Russell, Clark D.",
+              "Malinauskas, Tomas",
+              "Wu, Yang",
+              "Millar, Jonathan"
+            ],
+            "secondary_title": "Nature",
+            "date": "2022-01-01T00:00:00+00:00",
+            "year": "2022",
+            "volume": "607",
+            "number": "7917",
+            "start_page": "97",
+            "end_page": "103",
+            "urls": [
+              "https://www.nature.com/articles/s41586-022-04576-6"
+            ],
+            "id": "Whole-genome sequencing reveals host factors underlying critical COVID-19_2022-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Brucella spp.",
+            "Eimeria maxima"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "genetics",
+            "covid"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "FIVEx: an interactive eQTL browser across public datasets_2022-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "FIVEx: an interactive eQTL browser across public datasets",
+            "authors": [
+              "Kwong, Alan",
+              "Boughton, Andrew P.",
+              "Wang, Mukai",
+              "VandeHaar, Peter",
+              "Boehnke, Michael",
+              "Abecasis, Gon\u00e7alo",
+              "Kang, Hyun Min"
+            ],
+            "secondary_title": "Bioinformatics",
+            "date": "2022-01-01T00:00:00+00:00",
+            "year": "2022",
+            "volume": "38",
+            "number": "2",
+            "start_page": "559",
+            "end_page": "561",
+            "short_title": "FIVEx",
+            "urls": [
+              "https://academic.oup.com/bioinformatics/article-abstract/38/2/559/6359813"
+            ],
+            "id": "FIVEx: an interactive eQTL browser across public datasets_2022-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Any pathogen"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "genetics",
+            "eqtl",
+            "visualization"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "Mapping the human genetic architecture of COVID-19_2021-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Mapping the human genetic architecture of COVID-19",
+            "authors": [
+              "Masahiro 2, Writing group Writing group leaders Pathak Gita A. 6 Andrews Shea J. 7 Kanai",
+              "leader, Manuscript analyses team",
+              "Juha 1, Manuscript analyses team member: meta-analysis Mehtonen",
+              "Manuscript analyses team member: heritability, methods",
+              "supplements",
+              "PHEWAS, Manuscript analyses team member",
+              "randomization, Manuscript analyses team member: Mendelian",
+              "projection, Manuscript analyses team member: PC",
+              "prioritization, gene",
+              "Hilary 3 29, Manuscript analyses team member: gene prioritization Finucane"
+            ],
+            "secondary_title": "Nature",
+            "date": "2021-01-01T00:00:00+00:00",
+            "year": "2021",
+            "volume": "600",
+            "number": "7889",
+            "start_page": "472",
+            "end_page": "477",
+            "urls": [
+              "https://www.nature.com/articles/s41586-021-03767-x"
+            ],
+            "id": "Mapping the human genetic architecture of COVID-19_2021-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Chlamydophila abortus",
+            "Leishmania infantum"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "genetics",
+            "covid"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "SARS-CoV-2 susceptibility and COVID-19 disease severity are associated with genetic variants affecting gene expression in a variety of tissues_2021-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "SARS-CoV-2 susceptibility and COVID-19 disease severity are associated with genetic variants affecting gene expression in a variety of tissues",
+            "authors": [
+              "D\u2019Antonio, Matteo",
+              "Nguyen, Jennifer P.",
+              "Arthur, Timothy D.",
+              "Matsui, Hiroko",
+              "Neale, Benjamin M.",
+              "Daly, Mark",
+              "Ganna, Andrea",
+              "Stevens, Christine",
+              "Pathak, Gita A.",
+              "Andrews, Shea J."
+            ],
+            "secondary_title": "Cell reports",
+            "date": "2021-01-01T00:00:00+00:00",
+            "year": "2021",
+            "volume": "37",
+            "number": "7",
+            "urls": [
+              "https://www.cell.com/cell-reports/fulltext/S2211-1247(21)01502-3"
+            ],
+            "id": "SARS-CoV-2 susceptibility and COVID-19 disease severity are associated with genetic variants affecting gene expression in a variety of tissues_2021-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Salmonella spp."
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "genetics",
+            "covid"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "LocusZoom. js: interactive and embeddable visualization of genetic association study results_2021-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "LocusZoom. js: interactive and embeddable visualization of genetic association study results",
+            "authors": [
+              "Boughton, Andrew P.",
+              "Welch, Ryan P.",
+              "Flickinger, Matthew",
+              "VandeHaar, Peter",
+              "Taliun, Daniel",
+              "Abecasis, Gon\u00e7alo R.",
+              "Boehnke, Michael"
+            ],
+            "secondary_title": "Bioinformatics",
+            "date": "2021-01-01T00:00:00+00:00",
+            "year": "2021",
+            "volume": "37",
+            "number": "18",
+            "start_page": "3017",
+            "end_page": "3018",
+            "short_title": "LocusZoom. js",
+            "urls": [
+              "https://academic.oup.com/bioinformatics/article-abstract/37/18/3017/6178278"
+            ],
+            "id": "LocusZoom. js: interactive and embeddable visualization of genetic association study results_2021-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Streptococcus pyogenes",
+            "Aeromonas hydrophila"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "genetics",
+            "visualization",
+            "software"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "FIVEx: an interactive multi-tissue eQTL browser_2021-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "FIVEx: an interactive multi-tissue eQTL browser",
+            "authors": [
+              "Kwong, Alan",
+              "Boughton, Andrew P.",
+              "Wang, Mukai",
+              "VandeHaar, Peter",
+              "Boehnke, Michael",
+              "Abecasis, Gon\u00e7alo",
+              "Kang, Hyun Min"
+            ],
+            "secondary_title": "bioRxiv",
+            "date": "2021-01-01T00:00:00+00:00",
+            "year": "2021",
+            "start_page": "2021",
+            "end_page": "01",
+            "short_title": "FIVEx",
+            "urls": [
+              "https://www.biorxiv.org/content/10.1101/2021.01.22.426874.abstract"
+            ],
+            "id": "FIVEx: an interactive multi-tissue eQTL browser_2021-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Arthritis"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "genetics",
+            "eqtl",
+            "visualization",
+            "software"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "Exploring and visualizing large-scale genetic associations by using PheWeb_2020-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Exploring and visualizing large-scale genetic associations by using PheWeb",
+            "authors": [
+              "Gagliano Taliun, Sarah A.",
+              "VandeHaar, Peter",
+              "Boughton, Andrew P.",
+              "Welch, Ryan P.",
+              "Taliun, Daniel",
+              "Schmidt, Ellen M.",
+              "Zhou, Wei",
+              "Nielsen, Jonas B.",
+              "Willer, Cristen J.",
+              "Lee, Seunggeun"
+            ],
+            "secondary_title": "Nature genetics",
+            "date": "2020-01-01T00:00:00+00:00",
+            "year": "2020",
+            "volume": "52",
+            "number": "6",
+            "start_page": "550",
+            "end_page": "552",
+            "urls": [
+              "https://www.nature.com/articles/s41588-020-0622-5"
+            ],
+            "id": "Exploring and visualizing large-scale genetic associations by using PheWeb_2020-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Porcine circovirus 2",
+            "Chlamydophila pneumoniae"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "genetics",
+            "visualization",
+            "software"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "Genes for good: engaging the public in genetics research via social media_2019-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Genes for good: engaging the public in genetics research via social media",
+            "authors": [
+              "Brieger, Katharine",
+              "Zajac, Gregory JM",
+              "Pandit, Anita",
+              "Foerster, Johanna R.",
+              "Li, Kevin W.",
+              "Annis, Aubrey C.",
+              "Schmidt, Ellen M.",
+              "Clark, Chris P.",
+              "McMorrow, Karly",
+              "Zhou, Wei"
+            ],
+            "secondary_title": "The American Journal of Human Genetics",
+            "date": "2019-01-01T00:00:00+00:00",
+            "year": "2019",
+            "volume": "105",
+            "number": "1",
+            "start_page": "65",
+            "end_page": "77",
+            "short_title": "Genes for good",
+            "urls": [
+              "https://www.cell.com/ajhg/fulltext/S0002-9297(19)30192-2"
+            ],
+            "id": "Genes for good: engaging the public in genetics research via social media_2019-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Eimeria maxima"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "genetics",
+            "crowdsourcing"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1366/13-07183",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Hyperspectral Imaging and Characterization of Live Cells by Broadband Coherent Anti-Stokes Raman Scattering (CARS) Microscopy with Singular Value Decomposition (SVD) Analysis",
+            "authors": [
+              "Khmaladze, Alexander",
+              "Jasensky, Joshua",
+              "Price, Erika",
+              "Zhang, Chi",
+              "Boughton, Andrew",
+              "Han, Xiaofeng",
+              "Seeley, Emily",
+              "Liu, Xinran",
+              "Holl, Mark M. Banaszak",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "Applied Spectroscopy",
+            "abstract": "Coherent anti-Stokes Raman scattering (CARS) microscopy can be used as a powerful imaging technique to identify chemical compositions of complex samples in biology, biophysics, medicine, and materials science. In this work we developed a CARS microscopic system capable of hyperspectral imaging. By employing an ultrafast laser source, a photonic crystal fiber, and a scanning laser microscope together with spectral detection by a highly sensitive back-illuminated cooled charge-coupled device (CCD) camera, we were able to rapidly acquire and process hyperspectral images of live cells with chemical selectivity. We discuss various aspects of hyperspectral CARS image analysis and demonstrate the use of singular value decomposition methods to characterize the cellular lipid content.",
+            "date": "2014-10-01T00:00:00+00:00",
+            "year": "2014",
+            "doi": "10.1366/13-07183",
+            "volume": "68",
+            "number": "10",
+            "start_page": "1116",
+            "end_page": "1122",
+            "alternate_title1": "Appl Spectrosc",
+            "issn": "0003-7028, 1943-3530",
+            "urls": [
+              "https://journals.sagepub.com/doi/10.1366/13-07183"
+            ],
+            "id": "10.1366/13-07183"
+          },
+          "bio_annotations": [
+            "Rotavirus"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "spectroscopy",
+            "chemistry",
+            "machine learning",
+            "cell imaging"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "Live-cell quantification and comparison of mammalian oocyte cytosolic lipid content between species, during development, and in relation to body composition using nonlinear vibrational microscopy_2016-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Live-cell quantification and comparison of mammalian oocyte cytosolic lipid content between species, during development, and in relation to body composition using nonlinear vibrational microscopy",
+            "authors": [
+              "Jasensky, Joshua",
+              "Boughton, Andrew P.",
+              "Khmaladze, Alexander",
+              "Ding, Jun",
+              "Zhang, Chi",
+              "Swain, Jason E.",
+              "Smith, George W.",
+              "Chen, Zhan",
+              "Smith, Gary D."
+            ],
+            "secondary_title": "Analyst",
+            "date": "2016-01-01T00:00:00+00:00",
+            "year": "2016",
+            "volume": "141",
+            "number": "15",
+            "start_page": "4694",
+            "end_page": "4706",
+            "urls": [
+              "https://pubs.rsc.org/en/content/articlehtml/2016/an/c6an00629a"
+            ],
+            "id": "Live-cell quantification and comparison of mammalian oocyte cytosolic lipid content between species, during development, and in relation to body composition using nonlinear vibrational microscopy_2016-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Bacillus anthracis"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "spectroscopy",
+            "chemistry",
+            "machine learning",
+            "cell imaging"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "Sum Frequency Generation Vibrational Spectroscopy: A Sensitive Technique for the Study of Biological Molecules at Interfaces_2014-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "CHAP",
+            "title": "Sum Frequency Generation Vibrational Spectroscopy: A Sensitive Technique for the Study of Biological Molecules at Interfaces",
+            "authors": [
+              "Boughton, Andrew P.",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "Surface Analysis and Techniques in Biology",
+            "secondary_authors": [
+              "Smentkowski, Vincent S."
+            ],
+            "place_published": "Cham",
+            "date": "2014-01-01T00:00:00+00:00",
+            "year": "2014",
+            "start_page": "195",
+            "end_page": "224",
+            "publisher": "Springer International Publishing",
+            "issn": "978-3-319-01359-6 978-3-319-01360-2",
+            "short_title": "Sum Frequency Generation Vibrational Spectroscopy",
+            "urls": [
+              "http://link.springer.com/10.1007/978-3-319-01360-2_8"
+            ],
+            "id": "Sum Frequency Generation Vibrational Spectroscopy: A Sensitive Technique for the Study of Biological Molecules at Interfaces_2014-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Japanese encephalitis virus"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "spectroscopy",
+            "chemistry"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1021/ja3116026",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Membrane Orientation of G\u03b1<sub>i</sub> \u03b2<sub>1</sub> \u03b3<sub>2</sub> and G\u03b2<sub>1</sub> \u03b3<sub>2</sub> Determined via Combined Vibrational Spectroscopic Studies",
+            "authors": [
+              "Yang, Pei",
+              "Boughton, Andrew",
+              "Homan, Kristoff T.",
+              "Tesmer, John J. G.",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "Journal of the American Chemical Society",
+            "date": "2013-04-03T00:00:00+00:00",
+            "year": "2013",
+            "doi": "10.1021/ja3116026",
+            "volume": "135",
+            "number": "13",
+            "start_page": "5044",
+            "end_page": "5051",
+            "alternate_title1": "J. Am. Chem. Soc.",
+            "issn": "0002-7863, 1520-5126",
+            "urls": [
+              "https://pubs.acs.org/doi/10.1021/ja3116026"
+            ],
+            "id": "10.1021/ja3116026"
+          },
+          "bio_annotations": [
+            "Streptococcus equi",
+            "Toxoplasma gondii"
+          ],
+          "files": [
+            "files/125/abought-sfg-plotly.json"
+          ],
+          "sample_file": "files/125/abought-sfg-plotly.json",
+          "sample_file_url": "https://g-a68a94.554f69.8540.data.globus.org/files/125/abought-sfg-plotly.json",
+          "sample_plot_url": "https://g-a68a94.554f69.8540.data.globus.org/files/125/abought-sfg-plotly.json",
+          "keywords": [
+            "protein",
+            "membranes",
+            "spectroscopy",
+            "chemistry"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1021/ja2110784",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Observing a Model Ion Channel Gating Action in Model Cell Membranes in Real Time in Situ: Membrane Potential Change Induced Alamethicin Orientation Change",
+            "authors": [
+              "Ye, Shuji",
+              "Li, Hongchun",
+              "Wei, Feng",
+              "Jasensky, Joshua",
+              "Boughton, Andrew P.",
+              "Yang, Pei",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "Journal of the American Chemical Society",
+            "date": "2012-04-11T00:00:00+00:00",
+            "year": "2012",
+            "doi": "10.1021/ja2110784",
+            "volume": "134",
+            "number": "14",
+            "start_page": "6237",
+            "end_page": "6243",
+            "alternate_title1": "J. Am. Chem. Soc.",
+            "issn": "0002-7863, 1520-5126",
+            "short_title": "Observing a Model Ion Channel Gating Action in Model Cell Membranes in Real Time in Situ",
+            "urls": [
+              "https://pubs.acs.org/doi/10.1021/ja2110784"
+            ],
+            "id": "10.1021/ja2110784"
+          },
+          "bio_annotations": [
+            "Coxiella burnetii"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "protein",
+            "membranes",
+            "spectroscopy",
+            "chemistry"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "Live-cell intra-oocyte lipid analysis and quantification with hyperspectral imaging by multiplex coherent anti-stockes Raman scattering microscopy (CARS-M)_2012-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Live-cell intra-oocyte lipid analysis and quantification with hyperspectral imaging by multiplex coherent anti-stockes Raman scattering microscopy (CARS-M)",
+            "authors": [
+              "Jasensky, J.",
+              "Boughton, A.",
+              "Khmaladze, A.",
+              "Swain, J. E.",
+              "Chen, Z.",
+              "Smith, G. D."
+            ],
+            "secondary_title": "Fertility and Sterility",
+            "date": "2012-01-01T00:00:00+00:00",
+            "year": "2012",
+            "volume": "98",
+            "number": "3",
+            "start_page": "S79",
+            "urls": [
+              "https://www.fertstert.org/article/S0015-0282(12)01020-5/fulltext"
+            ],
+            "id": "Live-cell intra-oocyte lipid analysis and quantification with hyperspectral imaging by multiplex coherent anti-stockes Raman scattering microscopy (CARS-M)_2012-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Mycobacterium avium"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "spectroscopy",
+            "chemistry",
+            "machine learning",
+            "cell imaging"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1021/la203192c",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Interfacial Orientation and Secondary Structure Change in Tachyplesin I: Molecular Dynamics and Sum Frequency Generation Spectroscopy Studies",
+            "authors": [
+              "Boughton, Andrew P.",
+              "Nguyen, Khoi",
+              "Andricioaei, Ioan",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "Langmuir",
+            "date": "2011-12-06T00:00:00+00:00",
+            "year": "2011",
+            "doi": "10.1021/la203192c",
+            "volume": "27",
+            "number": "23",
+            "start_page": "14343",
+            "end_page": "14351",
+            "alternate_title1": "Langmuir",
+            "issn": "0743-7463, 1520-5827",
+            "short_title": "Interfacial Orientation and Secondary Structure Change in Tachyplesin I",
+            "urls": [
+              "https://pubs.acs.org/doi/10.1021/la203192c"
+            ],
+            "id": "10.1021/la203192c"
+          },
+          "bio_annotations": [
+            "Chlamydophila abortus"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "protein",
+            "spectroscopy",
+            "molecular dynamics",
+            "chemistry"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1073/pnas.1108236108",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Heterotrimeric G protein <i>\u03b2</i><sub>1</sub> <i>\u03b3</i><sub>2</sub> subunits change orientation upon complex formation with G protein-coupled receptor kinase 2 (GRK2) on a model membrane",
+            "authors": [
+              "Boughton, Andrew P.",
+              "Yang, Pei",
+              "Tesmer, Valerie M.",
+              "Ding, Bei",
+              "Tesmer, John J. G.",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "Proceedings of the National Academy of Sciences",
+            "abstract": "Few experimental techniques can assess the orientation of peripheral membrane proteins in their native environment. Sum Frequency Generation (SFG) vibrational spectroscopy was applied to study the formation of the complex between G protein-coupled receptor (GPCR) kinase 2 (GRK2) and heterotrimeric G protein \u03b2 1 \u03b3 2 subunits (G\u03b2\u03b3) at a lipid bilayer, without any exogenous labels. The most likely membrane orientation of the GRK2-G\u03b2\u03b3 complex differs from that predicted from the known protein crystal structure, and positions the predicted receptor docking site of GRK2 such that it would more optimally interact with GPCRs. G\u03b2\u03b3 also appears to change its orientation after binding to GRK2. The developed methodology is widely applicable for the study of other membrane proteins in situ. , Author Summary With the addition of more measurements from other techniques, we believe that it will be possible to assess the exact orientation of proteins that interact with biological membranes, and how the binding of additional components affects the orientation, and hence the function, of these complexes. Such studies would improve our understanding of the molecular basis of a variety of cellular processes, particularly those involving the recruitment of signaling molecules to the cell surface. For example, formation of the GRK2-G\u03b2\u03b3 complex is thought to play an important role in the progression of heart failure and cardiac hypertrophy. The results obtained in this study represent another step towards a complete understanding of the molecular mechanisms underlying signal transduction at biological interfaces. The tools and methods developed in this research are widely applicable to the analysis of other membrane protein complexes. SFG signals were collected from the proteins associated with the lipid bilayer ( Fig.\u00a0P1 ) in the so-called Amide I spectral region, which can provide a guide to the overall orientation of a protein backbone. Spectra of the GRK2-G\u03b2\u03b3 complex were markedly different from those of the G\u03b2\u03b3 subunit alone, and it was shown that the complex could be formed in situ. To assess the orientation of the large GRK2-G\u03b2\u03b3 protein complex, the single experimentally observed quantity ( , the ratio of signals from two laser polarizations) was not sufficient. An additional measurement was obtained, based on the observation that the polarized SFG signal intensity from the G\u03b2\u03b3 subunit alone was greater than the signal from the entire GRK2-G\u03b2\u03b3 complex, which is only possible for certain orientations. It was subsequently determined that the G\u03b2\u03b3 subunit reorients to accommodate the binding of GRK2, leading to a membrane orientation consistent with that predicted for a recent and more complete atomic structure of GPCR kinase 6, a GRK2 homolog. Fig. P1. The orientation of the GRK2- G\u03b2 1 \u03b3 2 complex (inset) can be studied using SFG vibrational spectroscopy. Spectra were collected from samples of protein in contact with a 9\u22361 POPC/POPG lipid bilayer. Based on analysis of fitted spectral intensity ratios in spectra collected using different laser polarizations, it was found that the orientation of GRK2- G\u03b2 1 \u03b3 2 did not match that predicted from the crystal structure alone. A possible membrane orientation (shown) is consistent with the presence of a GPCR docking site homology modeled from the structure of GRK6. The protein, lipid bilayer, SFG beams, the prism, and the sample container are not drawn to scale. This program was applied to study the orientation of a multisubunit protein-protein complex, specifically the G protein-coupled receptor kinase 2 (GRK2)- G\u03b2 1 \u03b3 2 complex. GRK2 is a kinase enzyme responsible for regulation of cell surface G protein-coupled receptors (GPCRs) signaling. Because of its apparent ability to simultaneously interact with activated G proteins, GPCRs, and the membrane, GRK2 may be involved in the assembly and organization of signaling complexes at GPCRs. Although the atomic structure of GRK2 in complex with both G\u03b1 q and G\u03b2\u03b3 is known ( 4 ), its orientation while engaged at the cell membrane is less clear because many of the known membrane-binding determinants in this structure are disordered. Previously, we studied the orientation of the smaller G\u03b2\u03b3 subunit alone at the bilayer ( 5 ), but it is possible that this subunit changes orientation to accommodate the binding of GRK2. In this work, we sought to determine the orientation of GRK2 and G\u03b2\u03b3 relative to the bilayer and to each other, providing an in situ glimpse of molecular orientation and complex formation. To date, however, studies on the orientation of large biomolecules have been hampered by the difficulty of interpreting their complicated spectra. Although a protein may contain multiple segments of spiral-shaped motifs called alpha-helices, these regions collectively contribute to a single vibrational peak center in the SFG spectrum. Thus efforts to determine the overall molecular orientation depend on the combined molecular response for all helical segments. We have developed a computer program that greatly simplifies the analysis of SFG data for any arbitrary protein structure, and that determines the most likely orientations of the protein at a membrane surface. It has been estimated that as many as half of all proteins in a typical cell interact with the cell membrane, yet most tools used to study biomolecules require removing those molecules from their native environment. This requirement is partly due to a lack of surface sensitive techniques capable of studying biomolecules in situ in an aqueous lipid environment. A technique called Sum Frequency Generation (SFG) vibrational spectroscopy ( 1 ) was recently used to reveal the spectra of small peptides and proteins at solid/liquid interfaces or in lipid bilayers ( 2 , 3 ), thereby providing information about molecular orientation, secondary structure, and chemical functional groups.",
+            "date": "2011-09-13T00:00:00+00:00",
+            "year": "2011",
+            "doi": "10.1073/pnas.1108236108",
+            "volume": "108",
+            "number": "37",
+            "alternate_title1": "Proc. Natl. Acad. Sci. U.S.A.",
+            "issn": "0027-8424, 1091-6490",
+            "urls": [
+              "https://pnas.org/doi/full/10.1073/pnas.1108236108"
+            ],
+            "id": "10.1073/pnas.1108236108"
+          },
+          "bio_annotations": [
+            "Pasteurella multocida",
+            "Yersinia enterocolitica"
+          ],
+          "files": [
+            "files/130/1omw.pdb"
+          ],
+          "sample_file": "files/130/1omw.pdb",
+          "sample_file_url": "https://g-a68a94.554f69.8540.data.globus.org/files/130/1omw.pdb",
+          "sample_plot_url": "",
+          "keywords": [
+            "protein",
+            "spectroscopy",
+            "chemistry"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1021/la1024394",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Surface Orientation of Magainin 2: Molecular Dynamics Simulation and Sum Frequency Generation Vibrational Spectroscopic Studies",
+            "authors": [
+              "Boughton, Andrew P.",
+              "Andricioaei, Ioan",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "Langmuir",
+            "date": "2010-10-19T00:00:00+00:00",
+            "year": "2010",
+            "doi": "10.1021/la1024394",
+            "volume": "26",
+            "number": "20",
+            "start_page": "16031",
+            "end_page": "16036",
+            "alternate_title1": "Langmuir",
+            "issn": "0743-7463, 1520-5827",
+            "short_title": "Surface Orientation of Magainin 2",
+            "urls": [
+              "https://pubs.acs.org/doi/10.1021/la1024394"
+            ],
+            "id": "10.1021/la1024394"
+          },
+          "bio_annotations": [
+            "Vibrio cholerae"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "protein",
+            "spectroscopy",
+            "molecular dynamics",
+            "chemistry"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "Sum Frequency Generation and Molecular Dynamics Studies of Biomolecular Orientation at Model Interfaces_2011-01-01T00:00:00+00:00",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "THES",
+            "title": "Sum Frequency Generation and Molecular Dynamics Studies of Biomolecular Orientation at Model Interfaces",
+            "authors": [
+              "Boughton, Andrew P."
+            ],
+            "date": "2011-01-01T00:00:00+00:00",
+            "year": "2011",
+            "type_of_work": "PhD Thesis",
+            "publisher": "University of Michigan",
+            "urls": [
+              "https://search.proquest.com/openview/0d26c2b5fa7fdc68d5e3d5c5308f028b/1?pq-origsite=gscholar&cbl=18750"
+            ],
+            "id": "Sum Frequency Generation and Molecular Dynamics Studies of Biomolecular Orientation at Model Interfaces_2011-01-01T00:00:00+00:00"
+          },
+          "bio_annotations": [
+            "Streptococcus pyogenes",
+            "Brucella spp."
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "protein",
+            "membranes",
+            "spectroscopy",
+            "molecular dynamics",
+            "chemistry"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.7554/eLife.67995",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Challenges for assessing replicability in preclinical cancer biology",
+            "authors": [
+              "Errington, Timothy M",
+              "Denis, Alexandria",
+              "Perfito, Nicole",
+              "Iorns, Elizabeth",
+              "Nosek, Brian A"
+            ],
+            "secondary_title": "eLife",
+            "abstract": "We conducted the Reproducibility Project: Cancer Biology to investigate the replicability of preclinical research in cancer biology. The initial aim of the project was to repeat 193 experiments from 53 high-impact papers, using an approach in which the experimental protocols and plans for data analysis had to be peer reviewed and accepted for publication before experimental work could begin. However, the various barriers and challenges we encountered while designing and conducting the experiments meant that we were only able to repeat 50 experiments from 23 papers. Here we report these barriers and challenges. First, many original papers failed to report key descriptive and inferential statistics: the data needed to compute effect sizes and conduct power analyses was publicly accessible for just 4 of 193 experiments. Moreover, despite contacting the authors of the original papers, we were unable to obtain these data for 68% of the experiments. Second, none of the 193 experiments were described in sufficient detail in the original paper to enable us to design protocols to repeat the experiments, so we had to seek clarifications from the original authors. While authors were extremely or very helpful for 41% of experiments, they were minimally helpful for 9% of experiments, and not at all helpful (or did not respond to us) for 32% of experiments. Third, once experimental work started, 67% of the peer-reviewed protocols required modifications to complete the research and just 41% of those modifications could be implemented. Cumulatively, these three factors limited the number of experiments that could be repeated. This experience draws attention to a basic and fundamental concern about replication \u2013 it is hard to assess whether reported findings are credible.",
+            "date": "2021-12-07T00:00:00+00:00",
+            "year": "2021",
+            "doi": "10.7554/eLife.67995",
+            "volume": "10",
+            "start_page": "e67995",
+            "issn": "2050-084X",
+            "urls": [
+              "https://elifesciences.org/articles/67995"
+            ],
+            "id": "10.7554/eLife.67995"
+          },
+          "bio_annotations": [
+            "Human Immunodeficiency Virus"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "replication",
+            "metascience",
+            "cancer biology",
+            "crowdsourcing"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1162/OPMI_a_00002",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Lookit (Part 1): A New Online Platform for Developmental Research",
+            "authors": [
+              "Scott, Kimberly",
+              "Schulz, Laura"
+            ],
+            "secondary_title": "Open Mind",
+            "abstract": "Many important questions about children\u2019s early abilities and learning mechanisms remain unanswered not because of their inherent scientific difficulty but because of practical challenges: recruiting an adequate number of children, reaching special populations, or scheduling repeated sessions. Additionally, small participant pools create barriers to replication while differing laboratory environments make it difficult to share protocols with precision, limiting the reproducibility of developmental research. Here we introduce a new platform, \u201cLookit,\u201d that addresses these constraints by allowing families to participate in behavioral studies online via webcam. We show that this platform can be used to test infants (11\u201318 months), toddlers (24\u201336 months), and preschoolers (36\u201360 months) and reliably code looking time, preferential looking, and verbal responses, respectively; empirical results of these studies are presented in Scott, Chu, and Schulz ( 2017 ). In contrast to most laboratory-based studies, participants were roughly representative of the American population with regards to income, race, and parental education. We discuss broad technical and methodological aspects of the platform, its strengths and limitations, recommendations for researchers interested in conducting developmental studies online, and issues that remain before online testing can fulfill its promise.",
+            "date": "2017-02-01T00:00:00+00:00",
+            "year": "2017",
+            "doi": "10.1162/OPMI_a_00002",
+            "volume": "1",
+            "number": "1",
+            "start_page": "4",
+            "end_page": "14",
+            "alternate_title1": "Open Mind",
+            "issn": "2470-2986",
+            "short_title": "Lookit (Part 1)",
+            "urls": [
+              "https://direct.mit.edu/opmi/article/1/1/4-14/2933"
+            ],
+            "id": "10.1162/OPMI_a_00002"
+          },
+          "bio_annotations": [
+            "Canine parvovirus"
+          ],
+          "files": [
+            "files/128/High framerate example.mp4"
+          ],
+          "sample_file": "files/128/High framerate example.mp4",
+          "sample_file_url": "https://g-a68a94.554f69.8540.data.globus.org/files/128/High framerate example.mp4",
+          "sample_plot_url": "",
+          "keywords": [
+            "psychology",
+            "video",
+            "crowdsourcing",
+            "software"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1021/la903932w",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Orientation Difference of Chemically Immobilized and Physically Adsorbed Biological Molecules on Polymers Detected at the Solid/Liquid Interfaces in Situ",
+            "authors": [
+              "Ye, Shuji",
+              "Nguyen, Khoi Tan",
+              "Boughton, Andrew P.",
+              "Mello, Charlene M.",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "Langmuir",
+            "date": "2010-05-04T00:00:00+00:00",
+            "year": "2010",
+            "doi": "10.1021/la903932w",
+            "volume": "26",
+            "number": "9",
+            "start_page": "6471",
+            "end_page": "6477",
+            "alternate_title1": "Langmuir",
+            "issn": "0743-7463, 1520-5827",
+            "urls": [
+              "https://pubs.acs.org/doi/10.1021/la903932w"
+            ],
+            "id": "10.1021/la903932w"
+          },
+          "bio_annotations": [
+            "Edwardsiella ictaluri",
+            "Streptococcus pyogenes"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "spectroscopy",
+            "chemistry",
+            "polymers"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1021/am900612r",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Molecular Structures of the Buried Interfaces between Silicone Elastomer and Silane Adhesion Promoters Probed by Sum Frequency Generation Vibrational Spectroscopy and Molecular Dynamics Simulations",
+            "authors": [
+              "V\u00e1zquez, Anne V.",
+              "Boughton, Andrew P.",
+              "Shephard, Nick E.",
+              "Rhodes, Susan M.",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "ACS Applied Materials & Interfaces",
+            "date": "2010-01-27T00:00:00+00:00",
+            "year": "2010",
+            "doi": "10.1021/am900612r",
+            "volume": "2",
+            "number": "1",
+            "start_page": "96",
+            "end_page": "103",
+            "alternate_title1": "ACS Appl. Mater. Interfaces",
+            "issn": "1944-8244, 1944-8252",
+            "urls": [
+              "https://pubs.acs.org/doi/10.1021/am900612r"
+            ],
+            "id": "10.1021/am900612r"
+          },
+          "bio_annotations": [
+            "Yersinia pestis",
+            "Toxoplasma gondii"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "spectroscopy",
+            "chemistry",
+            "polymers"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1021/ja075542w",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "In Situ Investigation of Heterotrimeric G Protein \u03b2\u03b3 Subunit Binding and Orientation on Membrane Bilayers",
+            "authors": [
+              "Chen, Xiaoyun",
+              "Boughton, Andrew P.",
+              "Tesmer, John J. G.",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "Journal of the American Chemical Society",
+            "date": "2007-10-01T00:00:00+00:00",
+            "year": "2007",
+            "doi": "10.1021/ja075542w",
+            "volume": "129",
+            "number": "42",
+            "start_page": "12658",
+            "end_page": "12659",
+            "alternate_title1": "J. Am. Chem. Soc.",
+            "issn": "0002-7863, 1520-5126",
+            "urls": [
+              "https://pubs.acs.org/doi/10.1021/ja075542w"
+            ],
+            "id": "10.1021/ja075542w"
+          },
+          "bio_annotations": [
+            "Vibrio cholerae",
+            "Mycobacterium avium"
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "protein",
+            "spectroscopy",
+            "chemistry"
+          ]
+        }
+      },
+      {
+        "id": "pub_record",
+        "subject": "10.1021/ja067446l",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "citation": {
+            "type_of_reference": "JOUR",
+            "title": "Multiple Orientation of Melittin inside a Single Lipid Bilayer Determined by Combined Vibrational Spectroscopic Studies",
+            "authors": [
+              "Chen, Xiaoyun",
+              "Wang, Jie",
+              "Boughton, Andrew P.",
+              "Kristalyn, Cornelius B.",
+              "Chen, Zhan"
+            ],
+            "secondary_title": "Journal of the American Chemical Society",
+            "date": "2007-02-01T00:00:00+00:00",
+            "year": "2007",
+            "doi": "10.1021/ja067446l",
+            "volume": "129",
+            "number": "5",
+            "start_page": "1420",
+            "end_page": "1427",
+            "alternate_title1": "J. Am. Chem. Soc.",
+            "issn": "0002-7863, 1520-5126",
+            "urls": [
+              "https://pubs.acs.org/doi/10.1021/ja067446l"
+            ],
+            "id": "10.1021/ja067446l"
+          },
+          "bio_annotations": [
+            "Streptococcus equi",
+            "Brucella spp."
+          ],
+          "files": [],
+          "sample_file": "",
+          "sample_file_url": "",
+          "sample_plot_url": "",
+          "keywords": [
+            "protein",
+            "spectroscopy",
+            "chemistry"
+          ]
+        }
+      }
+    ]
+  }
+}

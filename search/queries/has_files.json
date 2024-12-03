@@ -1,0 +1,10 @@
+{
+  "q": "",
+  "filters": [
+    {
+      "type": "exists",
+      "field_name": "files",
+      "post_filter": false
+    }
+  ]
+}

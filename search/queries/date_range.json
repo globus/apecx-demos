@@ -1,0 +1,24 @@
+{
+  "q": "",
+  "facets": [
+    {
+      "type": "terms",
+      "size": 25,
+      "name": "Top Tags",
+      "field_name": "keywords"
+    }
+  ],
+  "filters": [
+    {
+      "type": "range",
+      "field_name": "citation.date",
+      "post_filter": false,
+      "values": [
+        {
+          "from": "2010-01-01",
+          "to": "2020-01-01"
+        }
+      ]
+    }
+  ]
+}

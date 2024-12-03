@@ -1,0 +1,35 @@
+{
+  "q": "",
+  "facets": [
+    {
+      "type": "terms",
+      "size": 10,
+      "name": "Publication Type",
+      "field_name": "citation.type_of_reference"
+    },
+    {
+      "type": "date_histogram",
+      "field_name": "citation.date",
+      "date_interval": "year"
+    },
+    {
+      "type": "terms",
+      "size": 25,
+      "name": "Top Tags",
+      "field_name": "keywords"
+    },
+    {
+      "type": "terms",
+      "name": "Pathogen or disease",
+      "field_name": "bio_annotations.pathogens",
+      "size": 50
+    }
+  ],
+  "filters": [
+    {
+      "type": "exists",
+      "field_name": "citation.urls",
+      "post_filter": false
+    }
+  ]
+}
