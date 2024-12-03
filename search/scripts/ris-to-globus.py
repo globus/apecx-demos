@@ -86,7 +86,7 @@ def build_record(citation: dict):
     if 'id' not in citation:
         citation['id'] = citation.get(
             'doi',  # Most things have a DOI.
-            # TODO: Find a better default ID- titles may not always be distinct enough, and uuids aren't stabke enough, but this is a demo script
+            # TODO: Find a better default ID- titles may not always be distinct enough, and uuids aren't stable enough... but this is a demo script
             '{}_{}'.format(citation.get('title'), citation.get('date'))
         )
 
