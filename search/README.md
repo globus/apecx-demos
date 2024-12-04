@@ -11,8 +11,10 @@ The internal technology is an extension of industry-standard ElasticSearch, and 
 ## Demonstration
 This project includes a demonstration of various Globus Search features, as well as integration with other Globus Services like file access and permissions controls. A companion website allows users to see how these features work together to build powerful web applications.
 
+[View the demo](https://abought.github.io/apecx-demo-static-search-portal/search)
+
 ### Instructions
-Runnable tutorial instructions are [provided](INSTRUCTIONS.md) alongside this tutorial; you can copy and extend all aspects for your own needs!
+Runnable tutorial instructions are [provided](INSTRUCTIONS.md) alongside this tutorial, which will allow you to create your own search index. You can copy and extend all aspects for your own needs!
 
 ### Goals
 * Keyword search in UI 

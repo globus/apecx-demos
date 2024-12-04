@@ -2,6 +2,11 @@
 
 This document covers the full commands used to create this demo.
 
+## Requirements
+* This tutorial uses the [Globus command line (CLI)](https://docs.globus.org/cli/).
+* Advanced file transfer features (like HTTPS over the web) may require access to a server with a Globus endpoint, and possibly a Globus subscription. If your university does not have something ready, basic file transfers can be done from your laptop via [Globus Connect Personal](https://www.globus.org/globus-connect-personal). 
+* Some of the features in this demo are subject to [service limits](https://docs.globus.org/api/search/limits/). In particular, if you have already done other Globus search tutorials, there is a limit of three trial indices. (you may need to clean up any previous tutorial assets)
+
 ## 0. Create an auth Group to serve as owner
 In a large complex project, it is often difficult to keep track of who has access to what resource. Globus provides a "groups" feature that can be used to centralize granting permissions in one place. Although you do not *need* to create a group, doing so will make it easier to manage your team as the project grows.
 
@@ -105,23 +110,27 @@ We provide several example queries in this repository, based on the data format 
 2. A query that imposes specific conditions, like "show me records that have supporting data attached"
 3. A keyword search query that limits results to specific words from a particular date range
 
+For today, we will run the example queries via the [Globus Command Line](https://docs.globus.org/cli/) (CLI). If you follow these instructions, your computer will have this handy tool installed and ready for all future projects. 
+
 To run the example queries:
 ```bash
 # First query discovers broad facets (like "top keywords"), but does not run a specific search. This is great for building a UI that suggests common categories for data exploration
-globus search query "${GSI_UUID}" --query-document queries/query_facets.json --format json --jq facet_results
+globus search query "${GSI_UUID}" --query-document queries/query_facets.json --format json --jq "facet_results"
 
 # Second query imposes conditions like "has sample data available"; filter conditions can be more abstract than just keywords! Note how the powerful JMESPath output filter syntax flattens a complex result into a more manageable list 
 globus search query "${GSI_UUID}" --query-document queries/has_files.json --format json --jq "gmeta[].entries[]"
 
-# Third query is generic key word search, much like you'd see in the web app search box. Simple queries don't require a complex query document at all.
-globus search query "${GSI_UUID}" -q "oocyte" --format json --jq facet_results
+# Third query is generic key word search, much like you'd see in the web app search box. This search demonstrates an abbreviated output format
+globus search query "${GSI_UUID}" -q "oocyte" --format text
 
 # Fourth query demonstrates "advanced" search mode, where a single query string can search fields without creating an entire query document. This is useful for quick scripting experiments. Eg Filter by citation type and print just the number of results:
-globus search query $GSI_UUID -q 'citation.type_of_reference:JOUR' --advanced --format json --jq ".total"
+globus search query "${GSI_UUID}" -q 'citation.type_of_reference:JOUR' --advanced --format json --jq "total"
 
 # Fifth query demonstrates combination of facets (tag counts) + filters (date range query) Note that results are paginated. To fetch beyond first page (offset parameter), you will need to use the SDK. The Globus CLI exposes many, but not all, of the available features.
 globus search query "${GSI_UUID}" --limit 50 --query-document queries/date_range.json --format unix --jq "facet_results[].buckets[].[count, value]"
 ```
+
+> NOTE: Future demos will emphasize the Globus SDK, which lets you control Globus features directly from other programming languages ([python](https://globus-sdk-python.readthedocs.io/en/stable/) or [JavaScript](https://globus.github.io/globus-sdk-javascript/)). Today's focus is on showing high level concepts, and we have used the CLI to make demos accessible to a broader audience. 
 
 ## 5. Upload supporting files
 This step is not required to use Globus Search, but it is required to demonstrate the web application, which renders supporting files alongside user data.
@@ -140,9 +149,28 @@ We will be serving files directly from a file server [over HTTPS](https://docs.g
 ### Create a guest collection, exposing ONLY those files to the public
 A "guest collection" allows sharing data with people who do not have account on your local system. You can share all or part of your data, and you can even set permissions to make the data public (viewable by anyone on the internet). Globus Search and Globus Auth can work together to control what data is shown.
 
-Use the [Globus Web app](https://app.globus.org/collections) to [create a guest collection and manage permissions](https://docs.globus.org/guides/tutorials/manage-files/share-files/). For this demo, I made my guest collection *public*.
+Use the [Globus Web app](https://app.globus.org/collections) to [create a guest collection and manage permissions](https://docs.globus.org/guides/tutorials/manage-files/share-files/). For this demo, I made a guest collection in a subfolder of the Globus endpoint, and files in the guest collection are set to *public* visibility.
+
+> NOTE: A Globus search index is not limited to just files, which means that there is no direct automatic link between the filesystem permissions (guest collection) and search `visible_to` access controls. Your application / data ingest pipeline is responsible for keeping permissions in sync.
+
+## 6. Create a sample data portal
+Follow the instructions in the Globus [template data portal](https://github.com/globus/template-data-portal) to clone your own project, and customize static.json with your search and file access preferences. This is a quick dataset browser with limited customization options, but it is useful for demonstrating what the Globus Platform can do.
+
+> NOTE: This project is experimental. Features may be added/removed at any time, and there may be bugs.
+
+## 7. View the demo webapp
+An interactive webapp is available that uses the sample data prepared via the instructions in this document.
+[View the demo](https://abought.github.io/apecx-demo-static-search-portal/search)
+
+The webapp showcases how Globus features can integrate to create a rich interactive experience. It is based on the experimental [Globus template search portal](https://github.com/globus/template-search-portal?tab=readme-ov-file#staticjson), which provides a stock website for the most common basic search use cases.
+
+Features of the portal include:
+
+* Generate facets for data (like biological organisms), so that the UI doesn't have to be hardcoded. The website automatically updates available categories as new data arrives.
+* Facet counts update as a search is performed, allowing users to drill down into the data one step at a time 
+* Embeddable files (like pictures or interactive plots)
+  * Search is not a dry technical subject. These discussions will allow us to start thinking about features that showcase your results for maximum impact 
+* Show integration with other Globus Services, like transfer. In my case, I'll use a [Globus Connect Personal](https://www.globus.org/globus-connect-personal) endpoint to demonstrate transfer to my laptop (`~/Documents/globus-connect-personal/downloads`)
 
 
-
-## 6. View the demo webapp
-(TODO add link, notes, explanation)
+**This website is only a demo**- it's a quick hack based on a narrow special-purpose tool created for another project. We can, and will, create our own site with specialized features for APECx!
