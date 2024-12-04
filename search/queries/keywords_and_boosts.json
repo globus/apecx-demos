@@ -1,0 +1,17 @@
+{
+  "q": "protein",
+  "boosts": [
+    {
+      "field_name": "keywords",
+      "factor": 0
+    },
+    {
+      "field_name": "citation.abstract",
+      "factor": 0
+    },
+        {
+      "field_name": "citation.title",
+      "factor": 10
+    }
+  ]
+}

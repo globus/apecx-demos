@@ -3,7 +3,7 @@
   "facets": [
     {
       "type": "terms",
-      "size": 25,
+      "size": 100,
       "name": "Top Tags",
       "field_name": "keywords"
     }
@@ -12,7 +12,6 @@
     {
       "type": "range",
       "field_name": "citation.date",
-      "post_filter": false,
       "values": [
         {
           "from": "2010-01-01",

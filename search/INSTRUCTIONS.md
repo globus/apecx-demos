@@ -106,28 +106,23 @@ If you are updating an existing index, you might see ingest errors if the new do
 ## 4. Run some example queries
 We provide several example queries in this repository, based on the data format in the ingest records. Full documentation of query features is available if you would like to [build your own queries](https://docs.globus.org/api/search/reference/post_query/).
 
-1. A query that discovers interesting facets (like "top keywords"), but does not search for any words. This is great for building a UI that suggests common categories for data exploration.
-2. A query that imposes specific conditions, like "show me records that have supporting data attached"
-3. A keyword search query that limits results to specific words from a particular date range
-
-For today, we will run the example queries via the [Globus Command Line](https://docs.globus.org/cli/) (CLI). If you follow these instructions, your computer will have this handy tool installed and ready for all future projects. 
+For today, we will run the example queries via the [Globus Command Line](https://docs.globus.org/cli/) (CLI). If you follow these instructions, your computer will have this handy tool installed and ready for all future projects. All queries run by the CLI use the same syntax and permissions controls as the web app, which means that you can start exploring the data and finding useful views even before the web app is fully built out. 
 
 To run the example queries:
 ```bash
-# First query discovers broad facets (like "top keywords"), but does not run a specific search. This is great for building a UI that suggests common categories for data exploration
-globus search query "${GSI_UUID}" --query-document queries/query_facets.json --format json --jq "facet_results"
+# Demonstrates how facets ("top keywords") + filters (date range query) can combine to drill down into search result categories. This is great for building a UI that suggests common categories for data exploration
+# In this query, notice that output can be filtered to a few fields, then reformatted for screen display using the powerful JMESPath query syntax and format options.
+globus search query "${GSI_UUID}" --limit 50 --query-document "queries/date_range.json" --format unix --jq "facet_results[].buckets[].[count, value]"
 
-# Second query imposes conditions like "has sample data available"; filter conditions can be more abstract than just keywords! Note how the powerful JMESPath output filter syntax flattens a complex result into a more manageable list 
-globus search query "${GSI_UUID}" --query-document queries/has_files.json --format json --jq "gmeta[].entries[]"
+# We can alter the order of search results to emphasize some fields more than others.
+# Compare the result ordering for a regular keyword search, vs one where we heavily emphasize the title. Boosts are applied during the relevance calculation, after results are retrieved.
+#   (Alternately, one could write a query that *only* searched certain fields, but boosts are a more subtle fine tuning)
+# Example scenario: search should return any paper that *mentions* a virus, but results tagged with high confidence by manual curators should always be ranked first
+globus search query "${GSI_UUID}" -q "protein" --format json --jq "gmeta[].entries[].content.citation.title"
+globus search query "${GSI_UUID}" --query-document "queries/keywords_and_boosts.json" --format json --jq "gmeta[].entries[].content.citation.title"
 
-# Third query is generic key word search, much like you'd see in the web app search box. This search demonstrates an abbreviated output format
-globus search query "${GSI_UUID}" -q "oocyte" --format text
-
-# Fourth query demonstrates "advanced" search mode, where a single query string can search fields without creating an entire query document. This is useful for quick scripting experiments. Eg Filter by citation type and print just the number of results:
-globus search query "${GSI_UUID}" -q 'citation.type_of_reference:JOUR' --advanced --format json --jq "total"
-
-# Fifth query demonstrates combination of facets (tag counts) + filters (date range query) Note that results are paginated. To fetch beyond first page (offset parameter), you will need to use the SDK. The Globus CLI exposes many, but not all, of the available features.
-globus search query "${GSI_UUID}" --limit 50 --query-document queries/date_range.json --format unix --jq "facet_results[].buckets[].[count, value]"
+# "Advanced" query string syntax allows one liners for quick exploration via CLI. This query omits any jq filters so you can see that the underlying payload is the raw response from the Globus search API: https://docs.globus.org/api/search/reference/post_query/#gsearchresult
+globus search query "${GSI_UUID}" -q "sfg AND citation.type_of_reference:JOUR" --advanced --format json
 ```
 
 > NOTE: Future demos will emphasize the Globus SDK, which lets you control Globus features directly from other programming languages ([python](https://globus-sdk-python.readthedocs.io/en/stable/) or [JavaScript](https://globus.github.io/globus-sdk-javascript/)). Today's focus is on showing high level concepts, and we have used the CLI to make demos accessible to a broader audience. 
