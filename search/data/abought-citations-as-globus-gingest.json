@@ -23,8 +23,7 @@
             "id": "Using public competitions to help design military ground vehicles: lessons learned from the darpa fang program_2015-08-04T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Edwardsiella ictaluri",
-            "Hantavirus"
+            "Shigella"
           ],
           "files": [
             "files/129/testbench.png"
@@ -73,8 +72,7 @@
             "id": "Imputation Server PGS: an automated approach to calculate polygenic risk scores on imputation servers_2024-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Coxiella burnetii",
-            "Aeromonas hydrophila"
+            "Vibrio cholerae"
           ],
           "files": [],
           "sample_file": "",
@@ -123,7 +121,8 @@
             "id": "The Type 2 Diabetes Knowledge Portal: An open access genetic resource dedicated to type 2 diabetes and related traits_2023-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Toxoplasma gondii"
+            "Porcine circovirus 2",
+            "Canine parvovirus"
           ],
           "files": [],
           "sample_file": "",
@@ -171,7 +170,7 @@
             "id": "Whole-genome sequencing reveals host factors underlying critical COVID-19_2022-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Pasteurella multocida"
+            "Actinobacillus pleuropneumoniae"
           ],
           "files": [],
           "sample_file": "",
@@ -216,8 +215,8 @@
             "id": "FIVEx: an interactive eQTL browser across public datasets_2022-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Campylobacter jejuni",
-            "Human Immunodeficiency Virus"
+            "Human Immunodeficiency Virus",
+            "Bacillus anthracis"
           ],
           "files": [],
           "sample_file": "",
@@ -265,7 +264,8 @@
             "id": "Mapping the human genetic architecture of COVID-19_2021-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Listeria monocytogenes"
+            "Influenza virus",
+            "Porcine circovirus 2"
           ],
           "files": [],
           "sample_file": "",
@@ -310,8 +310,8 @@
             "id": "SARS-CoV-2 susceptibility and COVID-19 disease severity are associated with genetic variants affecting gene expression in a variety of tissues_2021-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Mycobacterium avium",
-            "Eimeria maxima"
+            "Haemophilus influenzae",
+            "Mycobacterium avium"
           ],
           "files": [],
           "sample_file": "",
@@ -356,7 +356,8 @@
             "id": "LocusZoom. js: interactive and embeddable visualization of genetic association study results_2021-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Francisella tularensis"
+            "Francisella tularensis",
+            "Shigella"
           ],
           "files": [],
           "sample_file": "",
@@ -400,8 +401,8 @@
             "id": "FIVEx: an interactive multi-tissue eQTL browser_2021-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Mycobacterium tuberculosis",
-            "Edwardsiella ictaluri"
+            "Actinobacillus pleuropneumoniae",
+            "Leishmania donovani"
           ],
           "files": [],
           "sample_file": "",
@@ -450,7 +451,7 @@
             "id": "Exploring and visualizing large-scale genetic associations by using PheWeb_2020-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Herpes simplex virus type 1 and 2"
+            "Staphylococcus aureus"
           ],
           "files": [],
           "sample_file": "",
@@ -499,7 +500,8 @@
             "id": "Genes for good: engaging the public in genetics research via social media_2019-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Cryptosporidium parvum"
+            "Brucella spp.",
+            "Pasteurella multocida"
           ],
           "files": [],
           "sample_file": "",
@@ -550,7 +552,8 @@
             "id": "10.1366/13-07183"
           },
           "bio_annotations": [
-            "West Nile virus"
+            "Leishmania donovani",
+            "Pasteurella multocida"
           ],
           "files": [],
           "sample_file": "",
@@ -598,8 +601,8 @@
             "id": "Live-cell quantification and comparison of mammalian oocyte cytosolic lipid content between species, during development, and in relation to body composition using nonlinear vibrational microscopy_2016-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Cryptosporidium parvum",
-            "Toxoplasma gondii"
+            "Influenza virus",
+            "Pasteurella multocida"
           ],
           "files": [],
           "sample_file": "",
@@ -645,8 +648,8 @@
             "id": "Sum Frequency Generation Vibrational Spectroscopy: A Sensitive Technique for the Study of Biological Molecules at Interfaces_2014-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Aeromonas hydrophila",
-            "Eimeria maxima"
+            "Arthritis",
+            "Streptococcus equi"
           ],
           "files": [],
           "sample_file": "",
@@ -691,7 +694,7 @@
             "id": "10.1021/ja3116026"
           },
           "bio_annotations": [
-            "Shigella"
+            "Mycobacterium tuberculosis"
           ],
           "files": [
             "files/125/abought-sfg-plotly.json"
@@ -743,7 +746,8 @@
             "id": "10.1021/ja2110784"
           },
           "bio_annotations": [
-            "Brucella spp."
+            "Streptococcus pyogenes",
+            "Pasteurella multocida"
           ],
           "files": [],
           "sample_file": "",
@@ -787,7 +791,7 @@
             "id": "Live-cell intra-oocyte lipid analysis and quantification with hyperspectral imaging by multiplex coherent anti-stockes Raman scattering microscopy (CARS-M)_2012-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Streptococcus equi"
+            "Hantavirus"
           ],
           "files": [],
           "sample_file": "",
@@ -834,8 +838,7 @@
             "id": "10.1021/la203192c"
           },
           "bio_annotations": [
-            "Pseudorabies virus",
-            "Japanese encephalitis virus"
+            "Salmonella spp."
           ],
           "files": [],
           "sample_file": "",
@@ -882,7 +885,8 @@
             "id": "10.1073/pnas.1108236108"
           },
           "bio_annotations": [
-            "Rickettsia spp"
+            "Chlamydophila abortus",
+            "Arthritis"
           ],
           "files": [
             "files/130/1omw.pdb"
@@ -929,8 +933,8 @@
             "id": "10.1021/la1024394"
           },
           "bio_annotations": [
-            "Escherichia coli",
-            "Burkholderia pseudomallei"
+            "Chlamydophila abortus",
+            "Streptococcus pyogenes"
           ],
           "files": [],
           "sample_file": "",
@@ -967,8 +971,8 @@
             "id": "Sum Frequency Generation and Molecular Dynamics Studies of Biomolecular Orientation at Model Interfaces_2011-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Japanese encephalitis virus",
-            "Bacillus anthracis"
+            "Mycobacterium tuberculosis",
+            "Chlamydophila pneumoniae"
           ],
           "files": [],
           "sample_file": "",
@@ -1014,7 +1018,7 @@
             "id": "10.7554/eLife.67995"
           },
           "bio_annotations": [
-            "Staphylococcus aureus"
+            "Pseudorabies virus"
           ],
           "files": [],
           "sample_file": "",
@@ -1060,7 +1064,7 @@
             "id": "10.1162/OPMI_a_00002"
           },
           "bio_annotations": [
-            "Listeria monocytogenes"
+            "Coxiella burnetii"
           ],
           "files": [
             "files/128/High framerate example.mp4"
@@ -1109,8 +1113,7 @@
             "id": "10.1021/la903932w"
           },
           "bio_annotations": [
-            "Francisella tularensis",
-            "Coxiella burnetii"
+            "Chlamydia muridarum"
           ],
           "files": [],
           "sample_file": "",
@@ -1156,7 +1159,8 @@
             "id": "10.1021/am900612r"
           },
           "bio_annotations": [
-            "Cryptosporidium parvum"
+            "Burkholderia pseudomallei",
+            "Leishmania infantum"
           ],
           "files": [],
           "sample_file": "",
@@ -1201,8 +1205,7 @@
             "id": "10.1021/ja075542w"
           },
           "bio_annotations": [
-            "Staphylococcus aureus",
-            "Shigella"
+            "Yersinia pestis"
           ],
           "files": [],
           "sample_file": "",
@@ -1248,8 +1251,8 @@
             "id": "10.1021/ja067446l"
           },
           "bio_annotations": [
-            "Rotavirus",
-            "Measles virus"
+            "Coxiella burnetii",
+            "Any pathogen"
           ],
           "files": [],
           "sample_file": "",
@@ -1283,7 +1286,8 @@
             "id": "Vehicle CAD test benches from the DARPA AVM project_2013-01-01T00:00:00+00:00"
           },
           "bio_annotations": [
-            "Salmonella spp."
+            "Aeromonas hydrophila",
+            "West Nile virus"
           ],
           "files": [],
           "sample_file": "",

@@ -10,7 +10,7 @@ This document covers the full commands used to create this demo.
 ## 0. Create an auth Group to serve as owner
 In a large complex project, it is often difficult to keep track of who has access to what resource. Globus provides a "groups" feature that can be used to centralize granting permissions in one place. Although you do not *need* to create a group, doing so will make it easier to manage your team as the project grows.
 
-> Advanced tip: Globus Groups can have nested subgroups. For a big project, it may be useful to define subgroups like `project -> search_team -> (owners, editors, preview_audience)`. 
+> Advanced tip: Globus Groups can have nested subgroups. For a big project, it may be useful to define subgroups like `project -> search_team -> (editors, preview_audience)`. 
 
 Before we begin work on the search index, we will create a new group for the project:
 
@@ -66,6 +66,16 @@ The Globus Search API requires document information to be in a [specific format]
 
 Like ElasticSearch, Globus Search uses [dynamic typings](https://docs.globus.org/api/search/mapped_data_types/): it assumes that all records will always have the same type of data in a given field. If you change the field type (like converting from a string to a date), you may experience errors that require rebuilding the entire collection from scratch. The sample scripts in this repository demonstrate how a text-based RIS file might be cleaned up to avoid common errors.
 
+```bash
+# Once you have a file storage collection (as described in step 5), the search index script needs to know the web URL for that collection, in order to use the "preview files in web page" feature of this demo app. In the future we could make the demo app smarter, and the search index might not need as much help to find the file
+GCE_HTTPS_URL="https://g-REPLACEME.data.globus.org"
+
+# If you name the demo collection something distinctive, the following CLI command might be enough to get the value. Otherwise, you can get it manually from https://app.globus.org/collections -> "Domain"
+#GCE_HTTPS_URL=$(globus endpoint search apecx --format unix --jq "DATA[0].https_server")
+
+python3 ./scripts/ris-to-globus.py "/path/to/your/zotero-export.ris" "data/abought-citations-as-globus-gingest.json" --base-url ${GCE_HTTPS_URL}  --group-id ${GG_ID}
+```
+
 > Advanced tip:
 > It's a good idea to keep a copy of your input data, in case you need to rebuild the index later!
 
@@ -99,11 +109,11 @@ globus search delete-by-query "${GSI_UUID}" -q "*"
 ### Fixing a mistake
 Globus Search uses [dynamic schemas](https://docs.globus.org/api/search/mapped_data_types/), inferred the first time it sees a new type of field in a document. If user data is messy, sometimes two fields with the same name will have a different data type, which can cause problems.
 
-Changing the schema in Elasticsearch can be rather tricky, and _there is no substitute for cleaning up the data before it goes in_. There are times when it is helpful to re-index all documents to fix a problem; always keep a copy of the source data!
+Altering the schema in Globus Search can be rather tricky, and _there is no substitute for cleaning up the data before it goes in_. There are times when it is helpful to re-index all documents to fix a problem; always keep a copy of the source data!
 
 If you are updating an existing index, you might see ingest errors if the new documents use a different datatype in a field of the same name. If you see problems, you can either delete and recreate the index (if you are just starting out), or [contact Globus Support for help](https://docs.globus.org/api/search/mapped_data_types/#changing_the_type_of_indexed_data) (if this is an established search index). Don't delete an index that is part of an established website.
 
-> Advanced tip: Some ElasticSearch users will index a hidden "dummy" document when the index is created. This ensures that the index will assume the correct datatypes for every field, even if there is bad data in one user-provided item. 
+> Advanced tip: Some Globus Search users will index a hidden "dummy" document when the index is created. This ensures that the index will assume the correct datatypes for every field, even if there is bad data in one user-provided item. 
 
 ## 4. Run some example queries
 We provide several example queries in this repository, based on the data format in the ingest records. Full documentation of query features is available if you would like to [build your own queries](https://docs.globus.org/api/search/reference/post_query/).
@@ -123,7 +133,7 @@ globus search query "${GSI_UUID}" --limit 50 --query-document "queries/date_rang
 globus search query "${GSI_UUID}" -q "protein" --format json --jq "gmeta[].entries[].content.citation.title"
 globus search query "${GSI_UUID}" --query-document "queries/keywords_and_boosts.json" --format json --jq "gmeta[].entries[].content.citation.title"
 
-# "Advanced" query string syntax allows one liners for quick exploration via CLI. This query omits any jq filters so you can see that the underlying payload is the raw response from the Globus search API: https://docs.globus.org/api/search/reference/post_query/#gsearchresult
+# "Advanced" query string syntax allows one liners for quick exploration via CLI. This query omits any jq filters, demonstrating that the response is the raw response from the Globus search API and contains all fields: https://docs.globus.org/api/search/reference/post_query/#gsearchresult
 globus search query "${GSI_UUID}" -q "sfg AND citation.type_of_reference:JOUR" --advanced --format json
 ```
 
