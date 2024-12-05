@@ -10,6 +10,8 @@ This document covers the full commands used to create this demo.
 ## 0. Create an auth Group to serve as owner
 In a large complex project, it is often difficult to keep track of who has access to what resource. Globus provides a "groups" feature that can be used to centralize granting permissions in one place. Although you do not *need* to create a group, doing so will make it easier to manage your team as the project grows.
 
+> Advanced tip: Globus Groups can have nested subgroups. For a big project, it may be useful to define subgroups like `project -> search_team -> (owners, editors, preview_audience)`. 
+
 Before we begin work on the search index, we will create a new group for the project:
 
 ```bash
@@ -169,3 +171,11 @@ Features of the portal include:
 
 
 **This website is only a demo**- it's a quick hack based on a narrow special-purpose tool created for another project. We can, and will, create our own site with specialized features for APECx!
+
+
+## 8. Bonus Material
+We did not cover access controls / private data in this demo, but Globus Search provides many ways to [restrict](https://docs.globus.org/api/search/ingest/#gmetaentry_subjects_and_entries) and [subset](https://docs.globus.org/api/search/guides/role_filtering/) which results are returned. Restrictions can be applied to [special categories](https://docs.globus.org/api/search/overview/#visibility_values), or specific principals such as [user/group URNs](https://docs.globus.org/api/search/overview/#principal_urns).
+
+An example script is provided that uses the Globus Python SDK to perform authenticated (and unauthenticated) requests. This uses the OAuth native client app functionality to make requests on behalf of a specific user, and compares the number of results returned.
+
+We also demonstrate role based filtering, a feature that allows retrieving only a specific subset of records (and only if the user would be allowed to see them). For example, a site administrator might want to look at newly ingested records for final approval before they are made publicly available. We show that the number and type of results can be restricted this way.

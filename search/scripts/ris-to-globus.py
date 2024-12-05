@@ -82,7 +82,7 @@ def make_pathogens():
 
 
 def build_record(citation: dict):
-    """Citation data """
+    """Fill in the data fields for a record: citation + other supporting information"""
     if 'id' not in citation:
         citation['id'] = citation.get(
             'doi',  # Most things have a DOI.
@@ -108,50 +108,71 @@ def build_record(citation: dict):
     }
 
 
+def citation_to_gingest(record: dict, admin_group_urn=''):
+    """
+    Add options and format specific to Globus, including permissions
 
-def citations_to_gingest(records: list[dict]) -> dict:
+    This is a dummy script, so it can make some special assumptions. Permissions are controlled by the magic
+     tag/keyword "hidden"` in my personal sample dataset (if present, extra restrictions are applied):
+    """
+    is_hidden = ('hidden' in record.get('keywords', []))
+
+    # In practice, principal sets are defined on every single record, but the content is always the same. Updating members of a principal set would require re-indexing every single record!
+    #  To avoid maintenance burden when set members change, we strongly encourage the use of Globus Groups as principals, and making all member changes to the group (not the search record)
+    secret_principal = {'curators': [admin_group_urn]}  # these principal groups can be called any name you want; I chose a word not used by other globus features for clarity
+
+    record = {
+        "id": "pub_record",
+        "subject": record['citation']['id'],
+        "visible_to": ['all_authenticated_users' if is_hidden else 'public'],
+        "content": record
+    }
+
+    if is_hidden and admin_group_urn:
+        record['principal_sets'] = secret_principal
+
+    return record
+
+
+def to_gingest_payload(records: list[dict]) -> dict:
     """Make the final combined document that will be submitted directly to the globus search API"""
     return {
         "ingest_type": "GMetaList",
         "ingest_data": {
-            "gmeta": [
-                {
-                    "id": "pub_record",
-                    "subject": r['citation']['id'],
-                    "visible_to": ['public'],
-                    "content": r
-                }
-                for i, r in enumerate(records)
-            ]
+            "gmeta": records
         }
     }
     
     
 
 if __name__ == '__main__':
-    path = '/Users/abought/Desktop/search-demo-data/abought-papers/abought-papers.ris'
+    INPUT_RS_FN = '/Users/abought/Desktop/search-demo-data/abought-papers/abought-papers.ris'
 
     # The "file transfer" feature uses relative paths, but embeds use absolute paths. This hardcodes the globus URL of a specific guest collection, as determined via app.globus.org. Our script will construct full URL to the asset for now.
     #
     # In initial demo, sample file field needs a little help to be used as a webapp embed. Can webapp be smarter?
     GLOBUS_BASE_URL = "https://g-a68a94.554f69.8540.data.globus.org"
+    GLOBUS_ADMIN_GROUP_ID = 'bc11522c-ac0c-11ef-ac5f-93dd5ebd0925'
 
-    with open(path, 'r') as f:
+    globus_admin_group_urn = f'urn:globus:groups:id:{GLOBUS_ADMIN_GROUP_ID}'
+
+
+    with open(INPUT_RS_FN, 'r') as f:
         ris_entries = rispy.load(f)  # type: list[dict]
 
     records = []
     for r in ris_entries:
+        # Build record data, then add globus search permissions rules
         t = cleanup_citation(GLOBUS_BASE_URL, r)
         t = build_record(t)
-
+        t = citation_to_gingest(t, admin_group_urn=globus_admin_group_urn)
         records.append(t)
 
-    res = citations_to_gingest(records)
+    # Add wrapper for globus ingest payload
+    res = to_gingest_payload(records)
 
-
-
-    outpath = '../data/abought-citations-as-globus-gingest.json'
-    with open(outpath, 'w') as f:
+    OUT_JSON_FN = '../data/abought-citations-as-globus-gingest.json'
+    with open(OUT_JSON_FN, 'w') as f:
         json.dump(res, f, indent=2)
 
-    print(outpath)
+    print(OUT_JSON_FN)
