@@ -189,3 +189,10 @@ We did not cover access controls / private data in this demo, but Globus Search 
 An example script is provided that uses the Globus Python SDK to perform authenticated (and unauthenticated) requests. This uses the OAuth native client app functionality to make requests on behalf of a specific user, and compares the number of results returned.
 
 We also demonstrate role based filtering, a feature that allows retrieving only a specific subset of records (and only if the user would be allowed to see them). For example, a site administrator might want to look at newly ingested records for final approval before they are made publicly available. We show that the number and type of results can be restricted this way.
+
+```bash
+# This script queries the sample index generated above. In order to demonstrate authenticated requests, you will need to provide a registered Globus OAuth client ID. See: https://docs.globus.org/api/auth/developer-guide/#register-app
+G_CLIENT_ID="REPLACEME"
+
+python3 scripts/sdk-search-example.py "${GSI_UUID}" "${G_CLIENT_ID}" 
+```
