@@ -30,8 +30,7 @@ Runnable tutorial instructions are [provided](INSTRUCTIONS.md) alongside this tu
 * Switch to CLI and demonstrate advanced custom queries(see instructions)
   * Emphasize that the CLI will act as a way for people to use search, even before UI is written: we can prototype and explore the data for early feedback
   * Users can write their own queries, even beyond what the webapp implements... and it will follow exactly the same auth and permissions rules no matter what route they take to access the data
-  * Other actions (such as running workflows)
-* If time permits, add an example notebook showing SDK used to fetch pages of results (CLI doesn't expose offset parameter for pagination)
+* Mention  bonus materials, such as script with example queries that use visibility/access controls. Direct users again to the demo showing how to create assets, best practices, and full documentation. 
 
 ## Audience Questions
 Feedback will help us decide which use cases to explore and build prototypes for.
@@ -44,7 +43,6 @@ Feedback will help us decide which use cases to explore and build prototypes for
   * Display of results
   * Rendering preview of select asset types (graph, table, PDB viewer, etc)
   * Focus on common data types first: MU deliverables etc
-
 
 
 ## References
