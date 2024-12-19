@@ -17,7 +17,7 @@ from globus_sdk import (
 )
 
 def str_ne(value):
-    """Convert empty strings to None"""
+    """Validator rejects empty strings"""
     if not value:
         raise ValueError("Must not be an empty string")
     return value
@@ -25,9 +25,11 @@ def str_ne(value):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('search_index', help='UUID of the search index to use')
-    parser.add_argument('client_id',
-                        type=str_ne,
-                        help='The Globus oauth native/thick client ID to use for user credential requests')
+    parser.add_argument(
+        'client_id',
+        type=str_ne,
+        help='The Globus oauth native/thick client ID to use for user credential requests'
+    )
     return parser.parse_args()
 
 
