@@ -1,101 +1,75 @@
  # Introduction to Globus Data Services: Move, share, and automate
 This presentation provides an overview of how Globus can help you move and share data. The Globus documentation can be quite extensive, so this supplemental document provides a quick reference to key information. Many tutorials exist, so we will not attempt to duplicate separate instructions here.
 
-## Quick links: Useful Tutorials
--
+## Quick links: Useful References
+* [Getting started](https://www.globus.org/get-started)
+* [How to share data using Globus](https://docs.globus.org/guides/tutorials/manage-files/share-files/): Introduction to guest collections
+* [Subscriptions](https://www.globus.org/why-subscribe) provide access to advanced features. [Search](https://app.globus.org/settings/subscriptions/search) to see if your institution (or a partner) already has a subscription!
 
+
+### Useful tools
+* [Globus web app](https://app.globus.org/file-manager): Go to app.globus.org to use the file manager and manage collections on any kind of storage system. Many researchers use this to manage their data, without having to learn SSH.
+* [Globus Connect Personal](https://docs.globus.org/api/transfer/): Create your own endpoint on a laptop
+* All Globus transfer features can be controlled via the [Transfer API](https://docs.globus.org/api/transfer/). Several tools exist to help control this functionality:
+  * The Globus [command line](https://docs.globus.org/cli/) tool (CLI) lets you interact with Globus services. It does not support every possible API feature, but it is very useful for scripting common file operations. (including list, copy, or delete)
+  * The [Python SDK](https://globus-sdk-python.readthedocs.io/en/stable/) provides control over the most advanced Globus transfer features, like filters. It can do (almost) anything that the API can do, which makes it very useful for building applications on top of Globus Transfer.
+* The [globus-jupyter-notebooks](https://github.com/globus/globus-jupyter-notebooks) repository demonstrates how to control many advanced features via the Python SDK
 
 ## Create your own endpoint
 ### Globus Connect Personal (GCP)
-This can be used to enable transfer for a single-user machine, such as a laptop or personal cloud workstation. Data can be exchanged with other Globus destinations, and (if your institution is a subscriber) even other personal endpoints.
+This can be used to enable transfer for a single-user machine, such as a laptop or personal cloud workstation. Data can be exchanged with other Globus destinations, and (if your institution is a subscriber) even other personal endpoints. [Get started with Globus Connect Personal](https://docs.globus.org/api/transfer/)
 
-Personal endpoints do not support more advanced features, such as serving files over HTTPS: you would not use them to build a web server for global usage!
+_This is a good place for someone to get started with Globus_, because GCP will let you try many Globus features even if you don't have access to a big HPC computer system. Personal endpoints do not support more advanced features, such as serving files over HTTPS. You would not use them to build a web server for global usage!
 
 ### Globus Connect Server (GCS)
-This is the flagship product of Globus: an agent that runs on a remote server and enables the full range of Globus Transfer features. It supports many storage types and authentication modes, for any number of users on the host system. There are tens of thousands of active endpoints at institutions all over the world.
+This is the flagship product of Globus: an agent that runs on a remote server and enables the full range of Globus Transfer features. It supports many storage types and authentication modes, for any number of users on the host system. There are tens of thousands of active endpoints at institutions all over the world, serving hundreds of thousands of users.
 
-Because Globus enables peer-to-peer data transfer, you will need to run your own copy of GCS even if using a cloud based storage system (like S3).
+Because Globus enables peer-to-peer data transfer, you will need to run your own copy of GCS even if using a cloud based storage system (like S3). There are many options for controlling identity and access: running your own endpoint gives you full control. 
+
+* [Search](https://app.globus.org/collections) to see if your systems already have an endpoint set up. Not every endpoint is publicly listed; when in doubt, ask your systems administrator.
+* [Create an endpoint](https://docs.globus.org/globus-connect-server/v5.4/)
+  * [Data access and sharing options](https://docs.globus.org/globus-connect-server/v5.4/data-access-guide/) allow you to set system policies that define what users can do
+* Advanced deployment tips
+  * Tips for [automating a deployment](https://docs.globus.org/globus-connect-server/v5.4/automated-deployment/)
+  * Use [multiple data transfer nodes](https://docs.globus.org/globus-connect-server/v5/reference/node/) for robust service and low downtime
+  * Administrators can [schedule pause rules](https://www.globus.org/blog/cancel-and-pauseresume-tasks-using-management-console) when they need to plan for downtime, and trust that transfers will complete when the system returns to service
 
 ## Permissions management
 ### Authentication
+GCS Mapped Collections allows you to control how users log in. By default, it user the username portion of their Globus linked identity, eg `<username>@domain.example`, and looks for a matching username on the host system.
 
-### Users and Groups
+You can configure this to work with other on-campus login systems, add domain restrictions, and apply other policy controls via your globus endpoint.
+
+* https://docs.globus.org/globus-connect-server/v5.4/identity-mapping-guide/
+* https://docs.globus.org/globus-connect-server/v5.4/globus-oidc-guide/
 
 ### Mapped collections
+Mapped collections are the default way of accessing files. They best resemble the experience of logging into an HPC system: a user will see the same files as their existing account on the HPC system. Special [connectors](https://www.globus.org/connectors) are available that seamlessly enable access to many different kinds of storage through a single unified interface. Many [options](https://docs.globus.org/globus-connect-server/v5/reference/collection/create/) are available to give the systems administrator control of what users can see.
 
 ### Guest collections
+Guest collections allow you to share part of your storage with users who do not have an account on your HPC cluster. Different users can be granted access to different sub-paths within the same guest collection. We provide a tutorial for [how to share data using Globus](https://docs.globus.org/guides/tutorials/manage-files/share-files/).
 
+For large collaborations, this is often a far easier way to extend sharing than other methods (such as sponsored university affiliate accounts). If your subscription support High Assurance (HA) features, sharing grants can be also be [set to expire](https://docs.globus.org/faq/transfer-sharing/#can_i_set_permissions_on_guest_collections_to_automatically_expire_can_i_limit_how_long_everyone_can_share_data_from_my_collection) after a defined period of time.
 
+#### Users and Groups
+Guest collection access and/or administration privileges can be granted to all members of a group. This is useful for managing large distributed collaborations, because it lets you centralize privileges in one place.
+
+* [How to manage Globus Groups](https://docs.globus.org/guides/tutorials/manage-identities/manage-groups/)
 
 ## Automation capabilities
-* Timers: 
-* Flows: https://www.globus.org/automation
+### Workflow automation with Globus Flows
+Increasingly, big data applications do not use files in isolation. For example, data portal submission usually involves running a QC script after upload, then adding the file to a search index. For sensitive data, it may also make sense to perform [two-stage transfers](https://docs.globus.org/api/flows/examples/), where a user only has access to the staging area. This is useful for high-security use cases where data should pass QC, then move into the final deployment area... all without giving a partner direct access to the final repository data. 
 
+Globus provides an automation product called [flows](https://www.globus.org/automation) that can do these things and more. Flows has access to the full range of [operations](https://docs.globus.org/api/transfer/action-providers/) exposed by transfer for use in scripting.
+
+### Scheduled tasks with Timers
+Sometimes, it is useful to perform file operations on a schedule. The most obvious example would be nightly backups/sync, but [other examples](https://www.globus.org/instruments) include regularly distributing new files across nodes in a global data partnership. [Globus Timers](https://dl.acm.org/doi/10.1145/3569951.3597571) provides the ability to control file transfers on a schedule.
 
 
 ## Glossary
-Globus provides a common interface to many kinds of storage systems. To achieve this customizability, there are several layers of resource that need to be created
+Globus provides a common interface to many kinds of storage systems. To achieve this customizability, there are several [layers of resource](https://docs.globus.org/guides/overviews/collections-and-endpoints/) that need to be created. 
 
 * Endpoint: the host server (or cluster of servers). A single endpoint can govern access to multiple kinds of storage.
   * Storage Gateway (each endpoint can control access to multiple storage systems at once): defines how to access a particular storage type (S3, POSIX, etc). Even if you are using cloud storage, you must register your own endpoint and gateway.
     * Mapped collection (each gateway can have multiple views of storage): this is the storage type that most closely resembles accessing the host system. You will see paths and authentication rules similar to if your authenticated user had directly accessed the system. 
       * Guest collection (each mapped collection can expose multiple guest collections): The unit of storage most useful for sharing resources with external users. With guest collections, user authorization is handled by globus.org, rather than the rules on the host system. Guest collections can only be created by users with appropriate permissions on the parent mapped collection.
-
-
-## Demo
-### Setup required
-- Create two Globus storage gateways, with doc links (source and dest)
-- Set up GCP on local machine
-- Create an ALCF globus guest collection, assigning permissions to a user group
-
-### Things to demonstrate
-- Globus app can be used to find a storage collection and view contents of a storage location: https://app.globus.org/file-manager
-- Transfer files from POSIX to S3: just selected files, or an entire folder recursively
-- Apply filters: `match files named *.cff` (see slack discussion, use a CLI example to demo filters. Need exclude AND include!)
-- Control over other options (like encryption of transfer)
-- Optional: get access to an ALCF guest collection and show how that can be used as a transfer destination too (highlight that system is locked down to owners, but with a guest collection, we gain flexibility. Maybe show auth rules assigned to a group.)
-
-### Multiple interfaces to the same operation!
-(note: certain operations, like filters, are best done via the SDK; the expecyted behavior is a bit complex and hard to present concisely. The CLI can only filter filenames, and )
-- Copy file via the web app
-- Copy same file via the CLI:
-```bash
-GCS_SOURCE_UUID="REPLACE-SOURCE"
-GCS_SOURCE_PATH="/"
-
-# Written as example of copying from POSIX to s3, where bucket name must be part of the path
-GCS_DEST_UUID="20eb90f3-e3f9-4c7a-823f-bcc6fedf1f29"
-GCS_DEST_PATH="/some-aws-bucket-name/target-dest-folder"
-
-# Note that we specify both include and exclude. 
-#   A file that does not match either option is included by default, and earlier options have priority. Filters are powerful, but not always intuitive! 
-globus transfer \
-    "${GCS_SOURCE_UUID}:${GCS_SOURCE_PATH}" \
-    "${GCS_DEST_UUID}:${GCS_DEST_PATH}" \
-    --label "abought APECx demo" \
-    --recursive \
-    --include "*.cff" --exclude "*" \
-    --preserve-timestamp \
-    --encrypt-data \
-    --notify on
-    
-# Monitor task status using CLI. You will receive an email message when transfer succeeds/fails.
-globus task show ${GCS_TRANSFER_TASK_ID}
-    
-```
-
-
-UI lets me exclude files, folders, or both
-
-CLI above produces for the exclude rule:
-```
-    {
-      "DATA_TYPE": "filter_rule",
-      "method": "exclude",
-      "name": "*",
-      "type": "file"
-    }
-```
-
-Can CLI let me exclude all? Web site usage per slack produces an API request as below. Note no "type:file" on the exclude. (if we specify type:file for exclude, we copy everything!!)
-`{"DATA_TYPE":"transfer","DATA":[{"DATA_TYPE":"transfer_item","source_path":"/home/andrew.boughton/","destination_path":"/abought-globus-development-globus-storage/andrew.boughton/","recursive":true}],"submission_id":"8ee26f89-be2d-11ef-967f-61ba15b0390d","source_endpoint":"bfe8ac24-4e2e-4380-840b-d7da53a58532","destination_endpoint":"20eb90f3-e3f9-4c7a-823f-bcc6fedf1f29","deadline":null,"delete_destination_extra":false,"encrypt_data":true,"fail_on_quota_errors":false,"filter_rules":[{"DATA_TYPE":"filter_rule","method":"include","name":"*.cff","type":"file"},{"DATA_TYPE":"filter_rule","method":"exclude","name":"*"}],"label":null,"preserve_timestamp":true,"skip_source_errors":false,"sync_level":null,"verify_checksum":true,"notify_on_succeeded":true,"notify_on_failed":true,"notify_on_inactive":true,"store_base_path_info":true}`

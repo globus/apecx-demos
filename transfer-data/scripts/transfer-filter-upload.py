@@ -1,7 +1,15 @@
 """
 Perform a transfer, leveraging the power of filters. This isn't a fully generic reusable script, but may be useful for example purposes.
 
-Call via CLI
+This ensures that sensitive data never reaches the server. Mistakes happen, but Globus Transfer provides ways to
+    safeguard against accidental data breaches, by establishing a whitelist of allowed file types.
+
+Ths SDK is the recommended way to use filters.
+
+See this article for one example of "the wrong files getting uploaded", with major potential consequences!
+https://blog.pypi.org/posts/2024-07-08-incident-report-leaked-admin-personal-access-token/
+
+This script is called via CLI
 """
 import argparse
 import logging
@@ -72,15 +80,16 @@ def build_transfer_options(client: TransferClient, s_coll, s_path, d_coll, d_pat
         sync_level="checksum",
         notify_on_failed=True,
         notify_on_inactive=True,
-        notify_on_succeeded=True,  # you may not want notifications for nightly timed backups!
+        notify_on_succeeded=True,  # you may not want notifications for nightly timed backups unless something breaks!
     )
 
     tdata.add_item(s_path, d_path, recursive=True)
+
     # By default, sync copies everything, and the first rule specified takes precedence. To copy only one file type,
     #   we need both specific include AND general exclude
     # CAUTION: the exclude must explicitly specify type=None. If you exclude only type=file, you may see more stuff
-    #   copied than you expect. Since the CLI *only* supports these filters on files, the SDK is the most reliable way
-    #   to perform filter operations (you can do it via the webapp, but it's not super intuitive)
+    #   copied than you expect. Since the CLI only supports these filters on *files*, the SDK is the most reliable way
+    #   to perform filter operations (you can mostly do it via the webapp, but it's not super intuitive)
     tdata.add_filter_rule("*.cff", method="include", type='file')
     tdata.add_filter_rule("*", method="exclude", type=None)
 
@@ -133,4 +142,5 @@ if __name__ == "__main__":
     transfer_options = build_transfer_options(client, s_coll, s_path, d_coll, d_path)
     resp = client.submit_transfer(transfer_options)
 
-    print('Transfer complete! Final task status is: ', report_result(client, resp.data['task_id']))
+    task_id = resp.data['task_id']
+    print(f"Transfer task '{task_id}' complete! Final task status is: ", report_result(client, task_id))
