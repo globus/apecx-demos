@@ -1,1 +1,4 @@
 # Special requirements only used by this demo, in addition to root folder requirements
+
+
+requests  # Already installed as a dependency of globus SDK, repeated here for pedagogical clarity
