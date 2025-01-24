@@ -60,7 +60,7 @@ def requires_data_access_scope(client: TransferClient, coll_id: str) -> bool:
     return (r.data['high_assurance'] is False) and (r.data['entity_type'] == 'GCSv5_mapped_collection')
 
 
-def build_transfer_options(s_coll, s_path, d_coll, d_path, verbose=False) -> TransferData:
+def build_transfer_options(s_coll, s_path, d_coll, d_path) -> TransferData:
     """
     Build base options for the transfer, moving data from one source to one destination.
     """
@@ -82,9 +82,5 @@ def build_transfer_options(s_coll, s_path, d_coll, d_path, verbose=False) -> Tra
     )
 
     tdata.add_item(s_path, d_path, recursive=True)
-
-    if verbose:
-        logger.debug("Your transfer options will be reported to the API as:")
-        logger.debug(tdata)
 
     return tdata

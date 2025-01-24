@@ -75,7 +75,8 @@ def add_demo_filters(options: TransferData) -> TransferData:
     """
     Add some upload filters that are only relevant to this demo. Separated out for clarity.
 
-    This example is based on INCLUDING selected files. See timer example in this repo for an EXCLUDE based rule.
+    This example is based on INCLUDING certain files (whitelist).
+    See the timer demo for an example based on EXCLUDING (blacklist).
     """
     # By default, sync copies everything. To copy only one file type,
     #   we need both specific include (*.cff) AND general exclude (everything else = *).
