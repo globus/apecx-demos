@@ -1,2 +1,1 @@
 # Special requirements only used by this demo, in addition to root folder requirements
-rispy==0.9.0
