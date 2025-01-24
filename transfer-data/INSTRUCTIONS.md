@@ -12,8 +12,13 @@
     - Comment on how filters allow us to safeguard against uploading sensitive or temp files in a big data release; reference to the python 2024 credential leak and remind audience this can happen to anyone. Show how Globus automation helps us to make safeguards part of our everyday workflow. 
   - Control over other options (like encryption of transfer)
 - Show a guest collection for access to just part of a filesystem: list my mapped collection and guest side-by-side. Same storage, different views.
+- Optional: show fileserver capabilities
 - Optional: get access to an ALCF guest collection and show how that can be used as a transfer destination too (highlight that system is locked down to owners, but with a guest collection, we gain flexibility. Maybe show auth rules assigned to a group.)
-- 
+- Mention bonus scripts
+  - Create a timed backup on a schedule (restrict by max file size and exclude certain filetypes)
+  - Control which files are transferred (upload)
+  - Customize views of a folder
+  - Automatically set permissions 
 
 ### Multiple interfaces to the same operation!
 Show a CLI operation like list, and run it with list filters. Compare to SDK script.

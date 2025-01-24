@@ -22,66 +22,29 @@ from globus_sdk import (
     TransferData,
 )
 
+# This demo intended to be run from within the scripts folder to avoid import issues
+from common import (
+    build_transfer_options,
+    parse_target,
+    requires_data_access_scope,
+    str_ne,
+)
+
 logger = logging.getLogger(__name__)
 
-
-def str_ne(value):
-    """Validator rejects empty strings"""
-    if not value:
-        raise ValueError("Must not be an empty string")
-    return value
-
-def requires_data_access_scope(client: TransferClient, coll_id: str) -> bool:
-    """
-    Determine if this collection requires special extra auth permissions before
-        we can use this script to create a transfer. Non-HA GCSv5 mapped collections require extra data access scopes.
-
-    This is an extremely pedantic thing, which mostly comes up if you're writing a script that does things on behalf
-        of other users a lot. This script is demonstrating deep quirky stuff.
-
-    tl;dr, mapped collections are odd because most Guest Collections have opted into the full range of globus features.
-    Some institutions prefer that mapped collections ("behave like the host system") should get affirmative consent
-    from the user before a script can do anything on the user's behalf. To make things even trickier, once a user
-    has authorized a specific client + collection once, Globus auth will remember this (under "manage my consents")
-    and not require the "data access scope" grant again
-
-    See:
-        https://globus-sdk-python.readthedocs.io/en/stable/services/timer.html#globus_sdk.TimersClient.add_app_transfer_data_access_scope
-        https://docs.globus.org/api/transfer/endpoints_and_collections/#entity_types
-
-    If you want to script timers and transfers, it is easier to authenticate using guest collections, not mapped.
-        Our guidance: Design your project accordingly!
-    """
-    r = client.get_endpoint(coll_id)
-    if not r.http_status == 200:
-        logger.debug(f"Guest collection endpoint returned status {r.http_status} - {r.http_reason}")
-        logger.debug(r)
-        raise Exception(f"Error encountered while querying status for endpoint {coll_id}")
-    return (r.data['high_assurance'] is False) and (r.data['entity_type'] == 'GCSv5_mapped_collection')
 
 def add_transfer_scopes(client: TransferClient, coll_id: str) -> TransferClient:
     """
     If (and only if) something is a non-HA GCSv5 mapped collection, special extra login scopes are required.
     https://globus-sdk-python.readthedocs.io/en/stable/services/transfer.html#globus_sdk.TransferClient.add_app_data_access_scope
+
+    NOTE that transfer and timer clients have similar helper methods, but not the same name
     """
     # Don't run this method with a guest collection, because authorization will fail with "unknown scopes" error.
     #   Sorry. This feature was created for humans, and hence it looks weird when expressed as code.
     logger.info('Adding transfer scopes for mapped collection. You can avoid this double login by using guest collections instead')
     return client.add_app_data_access_scope(coll_id)
 
-def parse_target(location: str) -> (str, str):
-    """
-    Allow CLI-friendly `source:path` syntax for copies. Path is required.
-    """
-    loc = location.split(':')
-    if len(loc) != 2:
-        # Mapped collections present the path on the filesystem, rather than just the directories a user can see
-        # So
-        # We want to be careful to avoid requesting a transfer of "way too much" by accident, so user must always specify path
-        raise ValueError("Must specify `source:path`")
-
-    coll, path = loc
-    return coll, path
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -126,37 +89,6 @@ def add_demo_filters(options: TransferData) -> TransferData:
     return options
 
 
-def build_transfer_options(client: TransferClient, s_coll, s_path, d_coll, d_path, verbose=False) -> TransferData:
-    """
-    Build base options for the transfer, moving data from one source to one destination.
-    """
-    tdata = TransferData(
-        client,
-        s_coll,
-        d_coll,
-        label="SDK example",
-
-        # Values useful to this situation
-        encrypt_data=True,  # if your endpoint doesn't support encryption, talk to your sysadmin
-        preserve_timestamp=True,  # Where possible. In s3, globus follows rec practice and saves this as a custom tag.
-        verify_checksum=True,  # May be slower, but more robust
-
-        # Always on by default, but these are useful to know about
-        sync_level="checksum",
-        notify_on_failed=True,
-        notify_on_inactive=True,
-        notify_on_succeeded=True,  # For an immediate one-time transfer, notifications are helpful
-    )
-
-    tdata.add_item(s_path, d_path, recursive=True)
-
-    if verbose:
-        logger.debug("Your transfer options will be reported to the API as:")
-        logger.debug(tdata)
-
-    return tdata
-
-
 def report_result(client: TransferClient, task_id, delay_sec=15, max_sec=3600) -> str:
     """Poll server every n seconds until transfer status resolves, up max interval.
         This is a very short demo, so we picked short times; in the real world, prefer much slower polling, or
@@ -197,7 +129,7 @@ if __name__ == "__main__":
     client = create_client(args.client_id, s_coll, d_coll)
 
     # See: https://globus-sdk-python.readthedocs.io/en/stable/services/transfer.html#globus_sdk.TransferClient.submit_transfer
-    transfer_options = build_transfer_options(client, s_coll, s_path, d_coll, d_path)
+    transfer_options = build_transfer_options(s_coll, s_path, d_coll, d_path)
     transfer_options = add_demo_filters(transfer_options)
     resp = client.submit_transfer(transfer_options)
 
