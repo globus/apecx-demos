@@ -2,11 +2,16 @@
 Lists the contents of whatever is in a remote directory
 https://docs.globus.org/api/transfer/file_operations/#dir_listing_filtering
 
-Results are filtered based on set criteria. This is useful if you have to work with a dataset that is already
+Results are filtered based on set criteria. This is useful if you have to work with a dataset that was already
   delivered, and want to guarantee operations are only performed on certain results. For example, a workflow
   may not want to add everything to the search index (think OS-default "junk files", or QC script debug logs)
 
-This script is called via CLI
+If you are an enduser, the official Globus CLI provides a more convenient command:
+  `globus ls [OPTIONS] ENDPOINT_ID[:PATH]`
+
+This script is primarily useful for educational purposes, showing how you can write your own automation scripts/ flows.
+
+This script is called via CLI.
 """
 import argparse
 import logging
@@ -71,6 +76,8 @@ if __name__ == "__main__":
         s_coll,
         s_path,
         show_hidden=False,
+        # An interesting quirk of Globus: the transfer API has limited filter functionality (by name patterns). The
+        #   `ls` endpoint has rather a more powerful filtering syntax with additional operators like size and type.
         filter={
             # Search for files (not folders), excluding empty files or known junk
             "name": ["!~.*", "!Thumbs.db", "!desktop.ini", "!~*.pyc"],

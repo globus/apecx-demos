@@ -1,13 +1,16 @@
  # Introduction to Globus Data Services: Move, share, and automate
 This presentation provides an overview of how Globus can help you move and share data. The Globus documentation can be quite extensive, so this supplemental document provides a quick reference to key information. Many tutorials exist, so we will not attempt to duplicate separate instructions here.
 
-## Quick links: Useful References
+## Quick links
+
+
+### References
 * [Getting started](https://www.globus.org/get-started)
 * [How to share data using Globus](https://docs.globus.org/guides/tutorials/manage-files/share-files/): Introduction to guest collections
 * [Subscriptions](https://www.globus.org/why-subscribe) provide access to advanced features. [Search](https://app.globus.org/settings/subscriptions/search) to see if your institution (or a partner) already has a subscription!
 
 
-### Useful tools
+### Tools
 * [Globus web app](https://app.globus.org/file-manager): Go to app.globus.org to use the file manager and manage collections on any kind of storage system. Many researchers use this to manage their data, without having to learn SSH.
 * [Globus Connect Personal](https://docs.globus.org/api/transfer/): Create your own endpoint on a laptop
 * All Globus transfer features can be controlled via the [Transfer API](https://docs.globus.org/api/transfer/). Several tools exist to help control this functionality:
@@ -51,10 +54,18 @@ Guest collections allow you to share part of your storage with users who do not 
 
 For large collaborations, this is often a far easier way to extend sharing than other methods (such as sponsored university affiliate accounts). If your subscription support High Assurance (HA) features, sharing grants can be also be [set to expire](https://docs.globus.org/faq/transfer-sharing/#can_i_set_permissions_on_guest_collections_to_automatically_expire_can_i_limit_how_long_everyone_can_share_data_from_my_collection) after a defined period of time.
 
+In general, due to rules negotiated with universities in secure environments, Guest Collections require deliberate opt-in, and therefore are easier to use with most Globus features (such as automation and timers). Mapped collections will often encounter more permissions and access prompts.
+
+> **Prescriptive guidance**: Use mapped collections and Globus auth identities wherever possible.
+
 #### Users and Groups
 Guest collection access and/or administration privileges can be granted to all members of a group. This is useful for managing large distributed collaborations, because it lets you centralize privileges in one place.
 
 * [How to manage Globus Groups](https://docs.globus.org/guides/tutorials/manage-identities/manage-groups/)
+
+
+## Privacy and security
+Globus features can be used even if your data is subject to restrictions. Certain subscriptions can take advantage of additional [high-assurance features](https://docs.globus.org/guides/overviews/high-assurance/). If your data is subject contains things like Personally Identifiable Information (PII), Controlled Unclassified Information (CUI), or Protected Health Information (PHI), reach out to learn more about our [High Assurance or HIPAA BAA subscription tier](https://www.globus.org/subscriptions) options.
 
 ## Automation capabilities
 ### Workflow automation with Globus Flows
@@ -72,4 +83,6 @@ Globus provides a common interface to many kinds of storage systems. To achieve 
 * Endpoint: the host server (or cluster of servers). A single endpoint can govern access to multiple kinds of storage.
   * Storage Gateway (each endpoint can control access to multiple storage systems at once): defines how to access a particular storage type (S3, POSIX, etc). Even if you are using cloud storage, you must register your own endpoint and gateway.
     * Mapped collection (each gateway can have multiple views of storage): this is the storage type that most closely resembles accessing the host system. You will see paths and authentication rules similar to if your authenticated user had directly accessed the system. 
-      * Guest collection (each mapped collection can expose multiple guest collections): The unit of storage most useful for sharing resources with external users. With guest collections, user authorization is handled by globus.org, rather than the rules on the host system. Guest collections can only be created by users with appropriate permissions on the parent mapped collection.
+      * Guest collection (each mapped collection can expose multiple guest collections): The unit of storage most useful for sharing resources with external users. With guest collections, user authorization is handled by globus.org, rather than the rules on the host system. Guest collections can only be created by users with appropriate permissions on the parent mapped collection. They provide an easier way to control data sharing, and tend to be the best path for using most Globus automation features.
+
+> **NOTE**: Old documentation (pre GCSv5) may refer to storage collections as "endpoints". If you see confusing outdated language, it may be using terminology that reflects an older system design. Let us know and we can update the documentation!

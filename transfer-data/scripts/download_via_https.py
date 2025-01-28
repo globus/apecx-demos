@@ -3,8 +3,11 @@ Globus Connect Server Files can be downloaded via HTTPS, which is nice for build
 https://docs.globus.org/globus-connect-server/v5/https-access-collections/#overview
 
 This script demonstrates how to find the URL for a file and download a single item via HTTPS download.
-    For small files like data tables or pictures, the file can then be embedded directly in the page
-    (like via HTML `img` tag) without the need to download.
+For small files like data tables or pictures, the file can then be embedded directly in the page
+  (like via HTML `img` tag). This means that instead of downloading a file to open in a local app, you can view
+  files directly in the web browser. Globus is not just a "better SFTP"; it provides entirely new (opt in)
+  capabilities to change how you build data repositories. And it's protected by the same Globus Auth system you use
+  everywhere else.
 """
 import argparse
 import logging

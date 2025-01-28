@@ -1,74 +1,35 @@
-# Demo
-### Setup required
-- Create two Globus storage gateways, with doc links (source and dest)
-- Set up GCP on local machine
-- Create an ALCF globus guest collection, assigning permissions to a user group
+# Demo notes
+
+## Getting started
+Globus Transfer is widely used and documented, and where possible, we will refer you to existing tutorials. The instructions below are focused on specific features that we think would be of interest to the APECx audience.
+
+See:
+* [Tutorial: How To Log In and Transfer Files with Globus](https://docs.globus.org/guides/tutorials/manage-files/transfer-files/)
+  * The instructions include links to two "example" collections. You will be able to explore Globus features without installing any software or using your own data. 
+* [How to install and use Globus Connect Personal](https://docs.globus.org/globus-connect-personal/)
+  * This is useful for a single user on a laptop or a VM. You can create your own Globus Endpoint and Collection for real-world interaction with data stored on a remote HPC cluster.
+  * Allows you to go more "hands on" by using your own files with Globus.
+
+> **NOTE**: Globus is designed around granular "least permissions" privileges. (eg read-only vs write) The first time you use any feature on a given collection, you may be prompted to log in and authorize access for that additional feature. It will seem a bit surprising to see so many authorization screens, but the system is behaving normally.
+>
+> As you follow tutorials or videos, you will notice that the host does not see as many login prompts as you. Globus will remember your  consent, and future usages will not prompt you again.
+
 
 ### Things to demonstrate
-- Globus app can be used to find a storage collection and view contents of a storage location: https://app.globus.org/file-manager
-- Transfer files from POSIX to S3: just selected files, or an entire folder recursively
-  - Emphasize this is one interface to two different kinds of storage. User doesn't need to re-learn how to run `ls` in multiple environments; we handle the details
-  - Apply filters: `match files named *.cff, exclude any type matching * otherwise`
-    - Comment on how filters allow us to safeguard against uploading sensitive or temp files in a big data release; reference to the python 2024 credential leak and remind audience this can happen to anyone. Show how Globus automation helps us to make safeguards part of our everyday workflow. 
-  - Control over other options (like encryption of transfer)
+- Open the Globus webapp file manager: https://app.globus.org/file-manager
+  - Show that this is a web-based view to find a storage collection and view contents
+  - Demonstrate that it can be used to upload a single file from local computer
+  - Demonstrate transfer files from POSIX to S3: just selected files, or an entire folder recursively. Mention here that in practice, most transfers are peer to peer, and user does not have to go through their local laptop. (This is important for web based portals uploading really big datasets. Users can initiate a transfer without having to download to a computer with a web browser first) 
+    - Emphasize this is one interface to two different kinds of storage. User doesn't need to re-learn how to run `ls` in multiple environments; we handle the details
+    - For the transfer demo: do an advanced transfer with custom filters: `{include} {files} named {*.cff}` ; `{exclude} {any type} matching {*}` 
+      - Comment on how filters allow us to safeguard against uploading sensitive or temp files in a big data release; reference to the python 2024 credential leak and remind audience this can happen to anyone. Show how Globus automation helps us to make safeguards part of our everyday workflow. 
+      - Control over other options (like encryption of transfer)
+      - Mention parallels to how other familiar tools, like the S3 CLI, handle include/exclude rules. Filter syntax is powerful, but a bit fussy
+      - To help people use them, the demo repo contains several scripts that showcase best practices
 - Show a guest collection for access to just part of a filesystem: list my mapped collection and guest side-by-side. Same storage, different views.
-- Optional: show fileserver capabilities
-- Optional: get access to an ALCF guest collection and show how that can be used as a transfer destination too (highlight that system is locked down to owners, but with a guest collection, we gain flexibility. Maybe show auth rules assigned to a group.)
-- Mention bonus scripts
+  -For this demo: show access to an ALCF guest collection and show how that can be used as a transfer destination (highlight that system is locked down to owners, but with a guest collection, we gain flexibility. Show auth rules can be defined with different levels of access, and this is much easier to reason about than, eg, students running `chmod -R 777`)
+- Mention bonus scripts in this repo
   - Create a timed backup on a schedule (restrict by max file size and exclude certain filetypes)
   - Control which files are transferred (upload)
   - Customize views of a folder
   - Automatically set permissions 
-
-### Multiple interfaces to the same operation!
-Show a CLI operation like list, and run it with list filters. Compare to SDK script.
-
-
-(note: certain operations, like filters, are best done via the SDK; the expecyted behavior is a bit complex and hard to present concisely. The CLI can only filter filenames, and )
-- Copy file via the web app
-- Copy same file via the CLI:
-```bash
-GCS_SOURCE_UUID="REPLACE-SOURCE"
-GCS_SOURCE_PATH="/"
-
-# Written as example of copying from POSIX to s3, where bucket name must be part of the path
-GCS_DEST_UUID="20eb90f3-e3f9-4c7a-823f-bcc6fedf1f29"
-GCS_DEST_PATH="/some-aws-bucket-name/target-dest-folder"
-
-# Note that we specify both include and exclude. 
-#   A file that does not match either option is included by default, and earlier options have priority. Filters are powerful, but not always intuitive! 
-globus transfer \
-    "${GCS_SOURCE_UUID}:${GCS_SOURCE_PATH}" \
-    "${GCS_DEST_UUID}:${GCS_DEST_PATH}" \
-    --label "abought APECx demo" \
-    --recursive \
-    --include "*.cff" --exclude "*" \
-    --preserve-timestamp \
-    --encrypt-data \
-    --notify on
-    
-# Monitor task status using CLI. You will receive an email message when transfer succeeds/fails.
-globus task show ${GCS_TRANSFER_TASK_ID}
-    
-```
-
-
-UI lets me exclude files, folders, or both
-
-CLI above produces for the exclude rule:
-```
-    {
-      "DATA_TYPE": "filter_rule",
-      "method": "exclude",
-      "name": "*",
-      "type": "file"
-    }
-```
-
-
-## TODO
-Show how the API enables other types of options. Eg
-* transfer filters (we have a script)
-Different ways of changing what a user sees in app:
-  * Directory listing filters (useful for sending to search index) https://docs.globus.org/api/transfer/file_operations/
-  * Guest collection permissions controls
