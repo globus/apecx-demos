@@ -32,4 +32,3 @@ See:
   - Create a timed backup on a schedule (restrict by max file size and exclude certain filetypes)
   - Control which files are transferred (upload)
   - Customize views of a folder
-  - Automatically set permissions 

@@ -39,12 +39,14 @@ Because Globus enables peer-to-peer data transfer, you will need to run your own
 
 ## Permissions management
 ### Authentication
-GCS Mapped Collections allows you to control how users log in. By default, it user the username portion of their Globus linked identity, eg `<username>@domain.example`, and looks for a matching username on the host system.
+GCS Mapped Collections allow you to control how users log in. The default behavior of mapped collections is to match the username portion of their Globus linked identity (`<username>@domain.example`) to a matching username on the host system.
 
-You can configure this to work with other on-campus login systems, add domain restrictions, and apply other policy controls via your globus endpoint.
+Your Globus Endpoint can configure this to work with on-campus login systems, add domain restrictions, and apply other policy controls.
 
 * https://docs.globus.org/globus-connect-server/v5.4/identity-mapping-guide/
 * https://docs.globus.org/globus-connect-server/v5.4/globus-oidc-guide/
+
+Globus Guest Collections build on top of Mapped collections and can connect to many possible forms of identity provider. You can control who has access to the data via the web interface, across multiple institutions.
 
 ### Mapped collections
 Mapped collections are the default way of accessing files. They best resemble the experience of logging into an HPC system: a user will see the same files as their existing account on the HPC system. Special [connectors](https://www.globus.org/connectors) are available that seamlessly enable access to many different kinds of storage through a single unified interface. Many [options](https://docs.globus.org/globus-connect-server/v5/reference/collection/create/) are available to give the systems administrator control of what users can see.
@@ -56,7 +58,7 @@ For large collaborations, this is often a far easier way to extend sharing than 
 
 In general, due to rules negotiated with universities in secure environments, Guest Collections require deliberate opt-in, and therefore are easier to use with most Globus features (such as automation and timers). Mapped collections will often encounter more permissions and access prompts.
 
-> **Prescriptive guidance**: Use mapped collections and Globus auth identities wherever possible.
+> **Prescriptive guidance**: Use guest collections and Globus auth identities wherever possible.
 
 #### Users and Groups
 Guest collection access and/or administration privileges can be granted to all members of a group. This is useful for managing large distributed collaborations, because it lets you centralize privileges in one place.
@@ -69,7 +71,9 @@ Globus features can be used even if your data is subject to restrictions. Certai
 
 ## Automation capabilities
 ### Workflow automation with Globus Flows
-Increasingly, big data applications do not use files in isolation. For example, data portal submission usually involves running a QC script after upload, then adding the file to a search index. For sensitive data, it may also make sense to perform [two-stage transfers](https://docs.globus.org/api/flows/examples/), where a user only has access to the staging area. This is useful for high-security use cases where data should pass QC, then move into the final deployment area... all without giving a partner direct access to the final repository data. 
+Big data applications often act as more than a neutral archive of files. They typically need to _do_ something with the data.
+
+For example, data portal submission usually involves running a QC script after upload, then adding the file to a search index. Ideally this would be a [two-stage transfer](https://docs.globus.org/api/flows/examples/), where a user only has access to the staging area, and yet data can make it into the final repository when it is ready for sharing. 
 
 Globus provides an automation product called [flows](https://www.globus.org/automation) that can do these things and more. Flows has access to the full range of [operations](https://docs.globus.org/api/transfer/action-providers/) exposed by transfer for use in scripting.
 
