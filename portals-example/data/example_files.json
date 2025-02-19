@@ -1,0 +1,223 @@
+{
+  "ingest_type": "GMetaList",
+  "ingest_data": {
+    "gmeta": [
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/2957073.png",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "Profile picture",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/2957073.png",
+          "description": null,
+          "keywords": ["image"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/bad.tsv",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "TSV (potential XSS)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/bad.tsv",
+          "description": "A TSV file that could become an XSS vector",
+          "keywords": ["table", "tsv"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/bad.csv",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "CSV (potential XSS)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/bad.csv",
+          "description": "A CSV file that could become an XSS ",
+          "keywords": ["table", "csv"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/boughton-2024_10.pdf",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "PDF (resume)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/boughton-2024_10.pdf",
+          "description": "The first PDF I could find",
+          "keywords": ["pdf", "embed"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/code.js",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "Code (JavaScript)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/code.js",
+          "description": "A sample JS file with code highlighting",
+          "keywords": ["code", "javascript", "text"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/github-mark.png",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "GH logo (png)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/github-mark.png",
+          "description": "An image in several file formats",
+          "keywords": ["image", "png"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/github-mark.svg",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "GH logo (SVG)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/github-mark.svg",
+          "description": "An image in several file formats",
+          "keywords": ["image", "svg"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/safe.csv",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "CSV (safe)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/safe.csv",
+          "description": "A CSV file (safe)",
+          "keywords": ["table", "csv"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/safe.tsv",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "TSV (safe)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/safe.tsv",
+          "description": "A TSV file (safe)",
+          "keywords": ["table", "tsv"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/test.py",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "Python file",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/test.py",
+          "description": "A flask app for source code highlighting",
+          "keywords": ["code", "python"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/UChicago_Ivy.jpg",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "Big image",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/UChicago_Ivy.jpg",
+          "description": "A big background picture for testing iframe resize/centering",
+          "keywords": ["image", "resize"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/UChicago_Ivy.jpg",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "Big image",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/UChicago_Ivy.jpg",
+          "description": "A big background picture for testing iframe resize/centering",
+          "keywords": ["image", "resize"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/unformatted.json",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "JSON blob",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/unformatted.json",
+          "description": "A json blob with odd formatting, to test code highlighting of rendered JSON",
+          "keywords": ["code", "json"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/chr11.fa.gz",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "chr11 sequence (hg37)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/chr11.fa.gz",
+          "description": "A large gzip-compressed text file from the human reference genome",
+          "keywords": ["gzip", "text", "large"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/_404_DNE_.txt",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "NO SUCH RESULT",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/_404_DNE_.txt",
+          "description": "Demonstrate 404 behavior for a file that does not exist",
+          "keywords": ["empty", "fail", "404"]
+        }
+      },
+      {
+        "subject": "https://m-aa8657.554f69.8540.data.globus.org/home/andrew.boughton/apecx-demo-2024-11/abought-papers.ris",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "Permissions error",
+          "preview_url": "https://m-aa8657.554f69.8540.data.globus.org/home/andrew.boughton/apecx-demo-2024-11/abought-papers.ris",
+          "description": "A demo-friendly file from a private mapped collection",
+          "keywords": ["empty", "fail", "404"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/chr22.fa.txt",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "chr22 (plaintext, hg37)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/chr22.fa.txt",
+          "description": "Demo load partial mode for big plaintext files",
+          "keywords": ["text", "large"]
+        }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/joshua-tsu-NNLtyMTvBxI-unsplash.jpg",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "chr22 (plaintext, hg37)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/joshua-tsu-NNLtyMTvBxI-unsplash.jpg",
+          "description": "A JPG file ~5MB, not auto-shown inline due to filesize - from https://unsplash.com/photos/a-panoramic-view-of-the-grand-canyon-NNLtyMTvBxI",
+          "keywords": ["image", "jpg", "large"]
+        }
+      }
+    ]
+  }
+}
