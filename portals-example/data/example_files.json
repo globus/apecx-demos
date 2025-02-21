@@ -217,6 +217,18 @@
           "description": "A JPG file ~5MB, not auto-shown inline due to filesize - from https://unsplash.com/photos/a-panoramic-view-of-the-grand-canyon-NNLtyMTvBxI",
           "keywords": ["image", "jpg", "large"]
         }
+      },
+      {
+        "subject": "https://g-b89568.554f69.8540.data.globus.org/1omw.cif",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "PDB mmCIF file (1omw)",
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/1omw.cif",
+          "description": "Crystal Structure of the complex between G Protein-Coupled Receptor Kinase 2 and Heterotrimeric G Protein beta 1 and gamma 2 subunits",
+          "keywords": ["text", "protein", "large"]
+        }
       }
     ]
   }
