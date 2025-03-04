@@ -1,0 +1,53 @@
+{
+  "ingest_type": "GMetaList",
+  "ingest_data": {
+    "gmeta": [
+      {
+        "subject": "1omw",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "1OMW",
+          "type": "experimental",
+          "organism": "bos taurus",
+          "description": "Crystal Structure of the complex between G Protein-Coupled Receptor Kinase 2 and Heterotrimeric G Protein beta 1 and gamma 2 subunits",
+          "doi": "https://doi.org/10.2210/pdb1OMW/pdb",
+          "deposited": "2003-02-26T00:00:00+00:00",
+          "released": "2003-06-03T00:00:00+00:00",
+          "authors": ["Lodowski, D.T.", "Pitcher, J.A.", "Capel, W.D.", "Lefkowitz, R.J.", "Tesmer, J.J.G."],
+          "funders": [],
+
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/1omw.cif",
+          "preview_collection": "06e1f1e9-c778-40ec-beb4-5807af321198",
+          "preview_path": "1omw.cif",
+
+          "keywords": ["protein", "gprotein", "gpcr", "xrd", "experimental"]
+        }
+      },
+      {
+        "subject": "6F8P",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "title": "6F8P",
+          "type": "experimental",
+          "organism": "Rift Valley fever virus",
+          "description": "Crystal structure of Gn from Rift Valley fever virus",
+          "doi": "https://doi.org/10.2210/pdb6F8P/pdb",
+          "deposited": "2017-12-13T00:00:00+00:00",
+          "released": "2018-01-31T00:00:00+00:00",
+          "authors": ["Halldorsson, S.", "Bowden, T.A.", "Harlos, K."],
+          "funders": ["Medical Research Council (United Kingdom)"],
+
+          "preview_url": "https://g-b89568.554f69.8540.data.globus.org/6f8p.cif",
+          "preview_collection": "06e1f1e9-c778-40ec-beb4-5807af321198",
+          "preview_path": "6f8p.cif",
+
+          "keywords": ["protein", "viral protein", "rift valley fever", "xrd", "Experimental"]
+        }
+      }
+    ]
+  }
+}
