@@ -1,0 +1,23 @@
+{
+  "Comment": "Run a validation function on files in a local system path",
+  "States": {
+    "RunValidation": {
+      "Comment": "Run a user-specified validation function on the dataset that returns {status: success|fail|error, message: str, data: ANY}",
+      "Type": "Action",
+      "ActionUrl": "https://compute.actions.globus.org",
+      "Parameters": {
+        "endpoint.$": "$.compute_endpoint_id",
+        "function.$": "$.validation_function_uuid",
+        "args.$": "$.validation_args",
+        "kwargs.$":  "$.validation_kwargs",
+        "__Private_Parameters": [
+          "endpoint",
+          "function"
+        ]
+      },
+      "ResultPath": "$.run_validation",
+      "End": true
+    }
+  },
+  "StartAt": "RunValidation"
+}

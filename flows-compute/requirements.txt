@@ -1,0 +1,5 @@
+gladier==0.9.5
+gladier-tools==0.5.4
+
+# Until gladier updated
+globus_compute_sdk<3.0.0

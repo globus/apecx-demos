@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "required": [
+    "compute_endpoint_id",
+    "validation_function_uuid"
+  ],
+  "properties": {
+    "compute_endpoint_id": {
+      "type": "string",
+      "title": "GCE compute endpoint ID",
+      "description": "A compute endpoint that is able to run the validation function"
+    },
+    "validation_function_uuid": {
+      "type": "string",
+      "title": "GCE validation function",
+      "description": "The UUID of an appropriate GCE function that returns {success, message, data}"
+    },
+    "validation_args": {
+      "type": "array",
+      "title": "ValidationArgs",
+      "description": "*args to the validation function",
+      "default": [],
+    },
+    "validation_kwargs": {
+      "type": "object",
+      "title": "ValidationKwargs",
+      "description": "**kwargs to validation function",
+      "default": {}
+    }
+  },
+  "additionalProperties": false
+}
