@@ -35,10 +35,27 @@
         {
           "Variable": "$.run_validation.details.results[0].output.status",
           "StringEquals": "success",
-          "Next": "ReportValidationSuccess"
+          "Next": "SearchIngestSuccess"
         }
       ],
       "Default": "ReportValidationFailure"
+    },
+    "SearchIngestSuccess": {
+      "Type": "Action",
+      "Next": "ReportValidationSuccess",
+      "ActionUrl": "https://actions.globus.org/search/ingest",
+      "Parameters": {
+        "search_index": "15e0a3f0-9642-482b-8e8c-af2035a85665",
+        "visible_to": [
+          "public"
+        ],
+        "subject.$": "$.validation_args[0]",
+        "content": {
+          "demo": "flows-2025",
+          "validation.$": "$.run_validation.details.results[0].output"
+        }
+      },
+      "ResultPath": "$.search_ingest_result"
     },
     "ReportValidationFailure": {
       "Type": "Fail",
