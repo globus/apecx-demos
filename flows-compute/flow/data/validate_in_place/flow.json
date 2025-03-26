@@ -15,7 +15,40 @@
           "function"
         ]
       },
+      "ExceptionOnActionFailure": true,
+      "Catch": [
+        {
+          "Next": "ReportValidationFailure",
+          "ErrorEquals": [
+            "ActionUnableToRun",
+            "ActionFailedException",
+            "ActionTimeout"
+          ]
+        }
+      ],
       "ResultPath": "$.run_validation",
+      "Next": "EvaluateValidationResult"
+    },
+    "EvaluateValidationResult": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.run_validation.details.results[0].output.status",
+          "StringEquals": "success",
+          "Next": "ReportValidationSuccess"
+        }
+      ],
+      "Default": "ReportValidationFailure"
+    },
+    "ReportValidationFailure": {
+      "Type": "Fail",
+      "Error": "ValidationFailed",
+      "Cause": "File failed validation. Consult logs for details."
+    },
+    "ReportValidationSuccess": {
+      "Type": "Pass",
+      "InputPath": "$.run_validation.details.results[0].output",
+      "ResultPath": "$",
       "End": true
     }
   },

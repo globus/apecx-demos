@@ -127,6 +127,7 @@ if __name__ == "__main__":
     )
     flow_id = register_flow(fc, flow_def, schema_def)
 
+    fc.update_flow(flow_id)
     sfc = SpecificFlowClient(flow_id, app=app)
 
     run_id, start_status = sfc.run_flow(

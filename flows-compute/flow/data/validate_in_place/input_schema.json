@@ -19,7 +19,7 @@
       "type": "array",
       "title": "ValidationArgs",
       "description": "*args to the validation function",
-      "default": [],
+      "default": []
     },
     "validation_kwargs": {
       "type": "object",
