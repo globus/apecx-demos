@@ -1,24 +1,80 @@
 {
-  "Comment": "Run a validation function on files in a local system path",
+  "Comment": "Transfer files to a specific endpoint with compute + transfer access, then run validation function on files in a specific location",
   "States": {
-    "RunValidation": {
-      "Comment": "Run a user-specified validation function on the dataset that returns {status: success|fail|error, message: str, data: ANY}",
+    "GetSourcePathInfo": {
       "Type": "Action",
-      "ActionUrl": "https://compute.actions.globus.org",
+      "ActionUrl": "https://transfer.actions.globus.org/stat",
+      "Comment": "Get the source path info",
+
+      "Next": "VerifySourcePathInfo",
+      "ResultPath": "$._run.GetSourcePathInfo",
+
       "Parameters": {
-        "endpoint.$": "$.compute_endpoint_id",
-        "function.$": "$.validation_function_uuid",
-        "args.$": "$.validation_args",
-        "kwargs.$":  "$.validation_kwargs",
-        "__Private_Parameters": [
-          "endpoint",
-          "function"
-        ]
+        "path.$": "$.source.path",
+        "endpoint_id.$": "$.source.id"
+      }
+    },
+
+    "VerifySourcePathInfo": {
+      "Type": "Choice",
+      "Comment": "Validate options: Ensure source exists and is a directory",
+
+      "Choices": [
+        {
+          "Variable": "$._run.GetSourcePathInfo.details.type",
+          "StringEquals": "dir",
+          "Next": "ComputeIntermediatePath"
+        }
+      ],
+      "Default": "FailSourcePathInfo"
+    },
+
+    "FailSourcePathInfo": {
+      "Type": "Fail",
+      "Error": "ErrorSourcePath",
+      "Cause": "Source must be a directory"
+    },
+
+    "ComputeIntermediatePath": {
+      "Type": "ExpressionEval",
+      "Comment": "Determine the intermediate path (compute once, used by multiple steps)",
+
+      "Next": "MakeIntermediate",
+      "ResultPath": "$._run.ComputeIntermediatePath",
+
+      "Parameters": {
+        "path.=": "`$._context.flow_id` + '_'  + `$._context.run_id`"
+      }
+    },
+
+    "MakeIntermediate": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/mkdir",
+      "Comment": "Create a temp directory on the intermediate to hold the data. Since name is run-specific, we won't check if it exists first",
+
+      "Next": "CopySourceToIntermediate",
+      "ResultPath": "$._run.MakeIntermediate",
+
+      "Parameters": {
+        "endpoint_id.$": "$.intermediate.id",
+        "path.$": "$._run.ComputeIntermediatePath.path"
       },
+      "WaitTime": 300
+    },
+
+    "CopySourceToIntermediate": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/transfer",
+      "Comment": "Run the initial transfer operation from the source collection to the intermediate collection",
+
+      "Next": "RunValidation",
+      "ResultPath": "$._run.CopySourceToIntermediate",
+
       "ExceptionOnActionFailure": true,
       "Catch": [
         {
-          "Next": "ReportValidationFailure",
+          "Next": "FailCopyToIntermediate",
+          "ResultPath": "$.CopySourceToIntermediate.error",
           "ErrorEquals": [
             "ActionUnableToRun",
             "ActionFailedException",
@@ -26,48 +82,101 @@
           ]
         }
       ],
-      "ResultPath": "$.run_validation",
-      "Next": "EvaluateValidationResult"
+
+      "Parameters": {
+        "source_endpoint.$": "$.source.id",
+        "destination_endpoint.$": "$.intermediate.id",
+        "notify_on_succeeded": false,
+        "notify_on_failed": false,
+
+        "DATA": [
+          {
+            "source_path.$": "$.source.path",
+            "destination_path.$": "$._run.ComputeIntermediatePath.path"
+          }
+        ]
+      },
+      "WaitTime": 300
     },
+
+    "FailCopyToIntermediate": {
+      "Type": "Fail",
+      "Error": "ErrorCopyToIntermediate",
+      "Cause": "File(s) failed to copy"
+    },
+
+    "RunValidation": {
+      "Type": "Action",
+      "ActionUrl": "https://compute.actions.globus.org",
+      "Comment": "Run a user-specified validation function on the dataset that returns {status: success|fail|error, message: str, data: ANY}",
+
+      "Next": "EvaluateValidationResult",
+      "ResultPath": "$._run.RunValidation",
+
+      "ExceptionOnActionFailure": true,
+      "Catch": [
+        {
+          "Next": "FailReportValidation",
+          "ErrorEquals": [
+            "ActionUnableToRun",
+            "ActionFailedException",
+            "ActionTimeout"
+          ]
+        }
+      ],
+
+      "Parameters": {
+        "endpoint.$": "$.compute.endpoint_id",
+        "function.$": "$.validation_function_uuid",
+        "args": [],
+        "kwargs": {
+          "gcs_root.$": "$.compute.gcs_root",
+          "path.$": "$._run.ComputeIntermediatePath.path"
+        }
+      }
+    },
+
     "EvaluateValidationResult": {
       "Type": "Choice",
       "Choices": [
         {
-          "Variable": "$.run_validation.details.results[0].output.status",
+          "Variable": "$._run.RunValidation.details.results[0].output.status",
           "StringEquals": "success",
-          "Next": "SearchIngestSuccess"
+          "Next": "SearchIngest"
         }
       ],
-      "Default": "ReportValidationFailure"
+      "Default": "FailReportValidation"
     },
-    "SearchIngestSuccess": {
+
+    "SearchIngest": {
       "Type": "Action",
-      "Next": "ReportValidationSuccess",
       "ActionUrl": "https://actions.globus.org/search/ingest",
+
+      "Next": "SuccessReportValidation",
+      "ResultPath": "$._run.SearchIngest",
+
       "Parameters": {
         "search_index": "15e0a3f0-9642-482b-8e8c-af2035a85665",
         "visible_to": [
           "public"
         ],
-        "subject.$": "$.validation_args[0]",
-        "content": {
-          "demo": "flows-2025",
-          "validation.$": "$.run_validation.details.results[0].output"
-        }
-      },
-      "ResultPath": "$.search_ingest_result"
+        "subject.$": "$._context.flow_id",
+        "content.$": "$._run.RunValidation.details.results[0].output.data.manifest"
+      }
     },
-    "ReportValidationFailure": {
+
+    "FailReportValidation": {
       "Type": "Fail",
-      "Error": "ValidationFailed",
+      "Error": "ErrorValidationFailed",
       "Cause": "File failed validation. Consult logs for details."
     },
-    "ReportValidationSuccess": {
+
+    "SuccessReportValidation": {
       "Type": "Pass",
-      "InputPath": "$.run_validation.details.results[0].output",
+      "InputPath": "$._run.RunValidation.details.results[0].output",
       "ResultPath": "$",
       "End": true
     }
   },
-  "StartAt": "RunValidation"
+  "StartAt": "GetSourcePathInfo"
 }

@@ -1,20 +1,75 @@
 {
   "type": "object",
   "required": [
-    "compute_endpoint_id",
     "validation_function_uuid"
   ],
   "properties": {
-    "compute_endpoint_id": {
-      "type": "string",
-      "title": "GCE compute endpoint ID",
-      "description": "A compute endpoint that is able to run the validation function"
+
+    "source": {
+      "type": "object",
+      "title": "Source",
+      "format": "globus-collection",
+      "required": [
+        "id",
+        "path"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Source Collection ID",
+          "format": "uuid",
+          "description": "The UUID for the collection which serves as the source of the data for the two-stage Transfer"
+        },
+        "path": {
+          "type": "string",
+          "title": "Source Collection Path",
+          "description": "The path on the source collection for the data"
+        }
+      },
+      "description": "The data's origin",
+      "additionalProperties": false
     },
+
+    "intermediate": {
+      "type": "object",
+      "title": "Intermediate",
+      "format": "globus-collection",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Intermediate Collection ID",
+          "format": "uuid",
+          "description": "The UUID for the collection which serves as the intermediate, temporary storage for the Transfer"
+        }
+      },
+      "description": "An intermediate location used to hold data, often used to manage network usage",
+      "additionalProperties": false
+    },
+
+    "compute": {
+      "type": "object",
+      "title": "Compute options",
+      "required": ["gcs_root", "endpoint_id"],
+      "properties": {
+        "endpoint_id": {
+          "type": "string",
+          "title": "GCE compute endpoint ID",
+          "description": "A compute endpoint that is able to run the validation function"
+        },
+        "gcs_root": {
+          "type": "string",
+          "title": "The filesystem path where a compute endpoint can read files for the intermediate GCS collection"
+        }
+      }
+    },
+
     "validation_function_uuid": {
       "type": "string",
       "title": "GCE validation function",
       "description": "The UUID of an appropriate GCE function that returns {success, message, data}"
     },
+
     "validation_args": {
       "type": "array",
       "title": "ValidationArgs",

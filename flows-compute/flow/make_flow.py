@@ -23,19 +23,36 @@ logger = logging.getLogger(__name__)
 #######################
 # Compute functions used to add custom logic into a single step of the workflow
 ######################
-def _file_validation_func(path: str):
+def _file_validation_func(gcs_root=None, path: str=None):
     """
     Read an input file at an agreed-upon location accessible to this function
 
     If we want to make this workflow generic, expect that every file validation function will return {status, message, data}.
         Normal file validation errors will fail via `message`, though workflows can also choose to define exception handlers.
     """
-    with open(path, 'r') as f:
-        content = f.read()
+    import json
+    import os
+
+    if not gcs_root or not path:
+        raise Exception("No input folder specified")
+
+    manifest_fn = os.path.join(gcs_root, path, "manifest.json")
+    if not os.path.exists(manifest_fn):
+        return {
+        'status': 'failure',
+        'message': f'Manifest file could not be located at {manifest_fn}',
+    }
+
+    # The first stab at validation will be: "if a manifest.json file exists, then this can be imported to search"
+    with open(manifest_fn, 'r') as f:
+        manifest = json.load(f)
     return {
         'status': 'success',
         'message': 'File validated successfully',
-        'data': {'size': len(content)}
+        'data': {
+            'size': len(manifest),
+            'manifest': manifest
+        }
     }
 
 
@@ -83,6 +100,19 @@ def register_flow(client: FlowsClient, flow_def: dict, schema_def: dict) -> str:
     return resp.data['id']
 
 
+def update_flow(client: FlowsClient, flow_id, flow_def: dict, schema_def: dict) -> str:
+    try:
+        resp = client.update_flow(flow_id, definition=flow_def, input_schema=schema_def)
+    except FlowsAPIError as e:
+        # Provide additional info for debugging
+        pp(e.errors, sort_dicts=False, indent=2)
+        raise e
+
+    if resp.http_status != 200:
+        raise Exception(f"Could not update existing flow {flow_id}: {resp.http_status} (code {resp.http_reason})")
+
+    return resp.data['id']
+
 def run_flow(client: SpecificFlowClient, body: dict, label: str=None, tags: list[str]=None) -> (str, str):
     try:
         resp = client.run_flow(body, label=label, tags=tags)
@@ -91,15 +121,15 @@ def run_flow(client: SpecificFlowClient, body: dict, label: str=None, tags: list
         pp(e.errors, sort_dicts=False, indent=2)
         raise e
 
-    if resp.http_status != 200:
+    if resp.http_status != 201:
         raise Exception(f"Could not run flow: {resp.http_status} (code {resp.http_reason})")
 
     return resp.data['run_id'], resp.data['status']
 
 
 def check_flow_status(client: FlowsClient, run_id: str) -> str:
-    status = None
-    while status and status == 'ACTIVE':
+    status = 'ACTIVE'
+    while status == 'ACTIVE':
         time.sleep(15)
         run = client.get_run(run_id)
         status = run.data['status']
@@ -115,6 +145,9 @@ def cleanup(cc: ComputeClient, fc: FlowsClient, func_ids: list[str], flow_id: st
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+
+    EXISTING_FLOW_ID = '8f62db7d-ac7f-4bba-9292-2fa3a26fb5ee' # None
     app = UserApp(client_id="5f4fc571-4fa2-4d84-ab6e-567d5245af7a")
     cc = ComputeClient(app=app)
     fc = FlowsClient(app=app)
@@ -125,19 +158,33 @@ if __name__ == "__main__":
         'data/validate_in_place/input_schema.json',
         func_id
     )
-    flow_id = register_flow(fc, flow_def, schema_def)
+    if EXISTING_FLOW_ID is None:
+        flow_id = register_flow(fc, flow_def, schema_def)
+    else:
+        flow_id = update_flow(fc, EXISTING_FLOW_ID, flow_def, schema_def)
 
-    fc.update_flow(flow_id)
     sfc = SpecificFlowClient(flow_id, app=app)
 
-    run_id, start_status = sfc.run_flow(
+    run_id, start_status = run_flow(
+        sfc,
         {
-            "compute_endpoint_id": "ab18eb68-2fb7-411a-9b72-5468bb6ced78",
+            "source": {
+                # "id": '23bcedea-90ac-11ef-aa6b-13835fff4299',
+                # "path": '/home/andrew.boughton/2025-04-flows-demo/'
+                "id": "dba0d7c0-1f63-44d1-bcd0-76865d3d44a0",  # GUEST collection root = root
+                "path": "/2025-04-flows-demo/source"  # I created a guest collection where manifest was in root directory
+            },
+            "intermediate": {
+                # Guest collection on a server where GCS + GCE are both installed
+                # GCE and GCS don't know about each other, so there's some blind faith involved; both options have to
+                #   be under control of the workflow definition, not the end user. Remember that GCE and GCS both need POSIX permissions on the target folder; this doesn't go through globus auth
+                "id": 'e0bf746e-d4db-48ff-b1d4-4c113956148c',
+            },
+            "compute": {
+                "endpoint_id": "ab18eb68-2fb7-411a-9b72-5468bb6ced78",
+                "gcs_root": '/share/gcs-demo',
+            },
             "validation_function_uuid": func_id,
-            "validation_args": [
-                "/tmp/gcs-2025-03-25.txt",  # A known file accessible to a specific compute endpoint
-            ],
-            "validation_kwargs": {},
         },
         label="Test run",
         tags=['apecx', 'apecx-demo'],
@@ -149,12 +196,15 @@ if __name__ == "__main__":
     else:
         final_status = check_flow_status(fc, run_id)
 
-    # This script is purely for demo purposes, so we do something odd: delete the resources when it runs successfully once
-    # But if the script failed, we keep the resources because we assume we're debugging in a REPL and will manually run again
-    if final_status == 'SUCCEEDED':
-        # This script is pirely
-        cleanup(cc, fc, [func_id], flow_id)
-    else:
-        print("The run failed. Keeping the following resources:")
-        print('* func ID:', func_id)
-        print('* flow ID:', flow_id)
+    print('See web logs: ', f'https://app.globus.org/runs/{run_id}/logs')
+
+
+    # # This script is purely for demo purposes, so we do something odd: delete the resources when it runs successfully once
+    # # But if the script failed, we keep the resources because we assume we're debugging in a REPL and will manually run again
+    # if final_status == 'SUCCEEDED':
+    #     # This script is purely
+    #     cleanup(cc, fc, [func_id], flow_id)
+    # else:
+    #     print("The run failed. Keeping the following resources:")
+    #     print('* func ID:', func_id)
+    #     print('* flow ID:', flow_id)
