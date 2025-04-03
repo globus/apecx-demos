@@ -124,6 +124,7 @@ def run_flow(client: SpecificFlowClient, body: dict, label: str=None, tags: list
     if resp.http_status != 201:
         raise Exception(f"Could not run flow: {resp.http_status} (code {resp.http_reason})")
 
+    logger.info(f'Initiated flow "{resp.data["run_id"]}"')
     return resp.data['run_id'], resp.data['status']
 
 
@@ -159,25 +160,28 @@ if __name__ == "__main__":
         func_id
     )
     if EXISTING_FLOW_ID is None:
+        # For exploratory purposes only: easier to re-define one flow in place while debugging
         flow_id = register_flow(fc, flow_def, schema_def)
     else:
         flow_id = update_flow(fc, EXISTING_FLOW_ID, flow_def, schema_def)
 
+    # If creating a new flow, this might trigger re-auth
     sfc = SpecificFlowClient(flow_id, app=app)
 
     run_id, start_status = run_flow(
         sfc,
         {
             "source": {
-                # "id": '23bcedea-90ac-11ef-aa6b-13835fff4299',
-                # "path": '/home/andrew.boughton/2025-04-flows-demo/'
-                "id": "dba0d7c0-1f63-44d1-bcd0-76865d3d44a0",  # GUEST collection root = root
-                "path": "/2025-04-flows-demo/source"  # I created a guest collection where manifest was in root directory
+                "id": "dba0d7c0-1f63-44d1-bcd0-76865d3d44a0",  # GUEST collection
+                "path": "/2025-04-flows-demo/source"  # A folder
             },
             "intermediate": {
                 # Guest collection on a server where GCS + GCE are both installed
                 # GCE and GCS don't know about each other, so there's some blind faith involved; both options have to
-                #   be under control of the workflow definition, not the end user. Remember that GCE and GCS both need POSIX permissions on the target folder; this doesn't go through globus auth
+                #   be under control of the workflow definition, not the end user.
+                # Remember that GCE and GCS both need POSIX permissions on the target folder;
+                #   this doesn't go through globus auth. Compute functions with file operations are thus coupled to a
+                #   specific (set of) specially configured endpoints.
                 "id": 'e0bf746e-d4db-48ff-b1d4-4c113956148c',
             },
             "compute": {
@@ -199,10 +203,9 @@ if __name__ == "__main__":
     print('See web logs: ', f'https://app.globus.org/runs/{run_id}/logs')
 
 
-    # # This script is purely for demo purposes, so we do something odd: delete the resources when it runs successfully once
+    # # This script is purely for demo purposes, so we can do something unusual: delete the resources when a flow runs successfully once
     # # But if the script failed, we keep the resources because we assume we're debugging in a REPL and will manually run again
     # if final_status == 'SUCCEEDED':
-    #     # This script is purely
     #     cleanup(cc, fc, [func_id], flow_id)
     # else:
     #     print("The run failed. Keeping the following resources:")

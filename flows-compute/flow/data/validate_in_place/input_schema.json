@@ -1,7 +1,12 @@
 {
   "type": "object",
   "required": [
-    "validation_function_uuid"
+    "source",
+    "intermediate",
+    "compute",
+    "validation_function_uuid",
+    "validation_args",
+    "validation_kwargs"
   ],
   "properties": {
 
@@ -76,6 +81,7 @@
       "description": "*args to the validation function",
       "default": []
     },
+
     "validation_kwargs": {
       "type": "object",
       "title": "ValidationKwargs",

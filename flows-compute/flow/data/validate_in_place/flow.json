@@ -1,5 +1,6 @@
 {
   "Comment": "Transfer files to a specific endpoint with compute + transfer access, then run validation function on files in a specific location",
+  "StartAt": "GetSourcePathInfo",
   "States": {
     "GetSourcePathInfo": {
       "Type": "Action",
@@ -177,6 +178,5 @@
       "ResultPath": "$",
       "End": true
     }
-  },
-  "StartAt": "GetSourcePathInfo"
+  }
 }
