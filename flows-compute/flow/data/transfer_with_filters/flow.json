@@ -1,0 +1,131 @@
+{
+  "Comment": "Transfer files from a source folder (that must exist) to a specified dest folder (that must not exist)",
+  "StartAt": "GetInfoSourcePath",
+
+  "States": {
+    "GetInfoSourcePath": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/stat",
+      "Comment": "Get the source path info",
+
+      "Next": "GetInfoDestPath",
+      "ResultPath": "$._run.GetInfoSourcePath",
+
+      "Parameters": {
+        "endpoint_id.$": "$.source.id",
+        "path.$": "$.source.path"
+      }
+    },
+
+    "GetInfoDestPath": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/stat",
+      "Comment": "Get the dest path info",
+
+      "Next": "CheckPathTypes",
+      "ResultPath": "$._run.GetInfoDestPath",
+
+      "Parameters": {
+        "endpoint_id.$": "$.dest.id",
+        "path.$": "$.dest.path"
+      }
+    },
+
+    "CheckPathTypes": {
+      "Type": "ExpressionEval",
+      "Comment": "Check the paths to see if they are directories or files",
+
+      "Next": "ValidateSourceDest",
+      "ResultPath": "$._run.CheckPathTypes",
+
+      "Parameters": {
+        "dest_exists.=": "'code' not in _run.GetInfoDestPath.details or _run.GetInfoDestPath.details.code != 'NotFound'",
+        "source_is_dir.=": "'type' in _run.GetInfoSourcePath.details and _run.GetInfoSourcePath.details.type == 'dir'"
+      }
+    },
+
+    "ValidateSourceDest": {
+      "Type": "Choice",
+      "Comment": "Ensure that path criteria are met",
+      "Default": "FailInvalidSourceDest",
+
+      "Choices": [
+        {
+          "Next": "CreateDestPath",
+          "And": [
+            {
+              "Variable": "$._run.CheckPathTypes.source_is_dir",
+              "BooleanEquals": true
+            },
+            {
+              "Variable": "$._run.CheckPathTypes.dest_exists",
+              "BooleanEquals": false
+            }
+          ]
+        }
+      ]
+    },
+
+    "FailInvalidSourceDest": {
+      "Type": "Fail",
+      "Error": "ErrorValidationFailed",
+      "Cause": "Invalid source / dest pair. Source must exist and dest must not exist."
+    },
+
+    "CreateDestPath": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/mkdir",
+      "Comment": "Create the specified destination directory",
+
+      "Next": "CopyToDest",
+      "ResultPath": "$.MkdirResult",
+
+      "Parameters": {
+        "endpoint_id.$": "$.dest.id",
+        "path.$": "$.dest.path"
+      },
+      "WaitTime": 300
+    },
+
+    "CopyToDest": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/transfer",
+      "Comment": "Copy the specified folder to the destination",
+
+      "End": true,
+      "ResultPath": "$",
+
+      "Parameters": {
+        "source_endpoint.$": "$.source.id",
+        "destination_endpoint.$": "$.dest.id",
+        "notify_on_succeeded": true,
+        "notify_on_failed": true,
+
+        "encrypt_data": true,
+        "verify_checksum": true,
+
+        "DATA": [
+          {
+            "source_path.$": "$.source.path",
+            "destination_path.$": "$.dest.path"
+          }
+        ],
+
+        "filter_rules": [
+          {
+            "DATA_TYPE": "filter_rule",
+            "method": "include",
+            "type": "file",
+            "name": "*.json"
+          },
+          {
+            "DATA_TYPE": "filter_rule",
+            "method": "exclude",
+            "name": "*"
+          }
+        ]
+      },
+      "WaitTime": 300
+    }
+  }
+}
