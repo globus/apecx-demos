@@ -42,7 +42,7 @@ In brief, you will do the following:
 * Set up GCS (two guest collections, but they can share different parts of the same mapped collection, see storage setup notes below)
 * Ensure there is a folder on the GCE host accessible to both the user who will be running the flow (Globus user mapped to local system for GCS + flows), but also accessible to the user who is running the compute endpoint (GCE). Since GCE does not talk to Globus storage directly, this requires some basic POSIX trickery.
 
-> *Note*: We recommend always using guest collections for all automation and scripting related tasks. Mapped collections require extra permissions and more frequent re-authorization. You will find it easier to 
+> *Note*: We recommend always using guest collections for all automation and scripting related tasks. Mapped collections require extra permissions and more frequent re-authorization. These examples deliberately do not demonstrate the advanced case of mapped collections.
 
 #### Create a folder that GCS and GCE can both access
 ```bash
@@ -53,7 +53,8 @@ sudo adduser yourusername apecx-flows-example-group
 ```
 
 ```bash
-# Create a shared storage location and ensure it will be accessible. This isn't Globus configuration; we're using old-school POSIX commands to fill in the missing connection between GCS and GCE  
+# Create a shared storage location and ensure it will be accessible. This isn't Globus configuration; we're using old-school POSIX commands to fill in the missing connection between GCS and GCE
+# NOTE! This means that the compute server could have access to more files than the globus user. Use this very carefully, and only for GCE functions initiated in a highly controlled way (such as via a workflow that regulates the input arguments passed to compute).   
 sudo mkdir -p /share/gcs-demo  # Make sure that your GCS path-restrictions file allows sharing of `/share`
 # First item (set default rule) for new items, second for existing. Remember to log out and back in for new groups to take effect.
 sudo setfacl -Rdm g:apecx-flows-example-group:rwx /share/gcs-demo
@@ -90,6 +91,6 @@ def read_globus_file(collection_uuid, gcs_file_path):
 
 ## Tools
 * Globus [Flows IDE](https://globus.github.io/flows-ide): A graphical tool for visualizing workflow definitions, and provides feedback for schema validation.
-  * This is a beta tool, and does not provide UI to generate all parts of a Globus Flow. However, it is _highly_ useful for visualizing existing workflows as an aid to debugging!
+  * This is a beta tool, and does not provide UI to generate all parts of a Globus Flow from scratch; you will still need to know the basic JSON syntax. However, it is _highly_ useful for visualizing existing workflows as an aid to debugging!
 * [Gladier](https://github.com/globus-gladier/gladier) is a tool for authoring flows. It especially provides helpers for working with compute functions, and makes it easier to update the flow definition when a compute function definition / ID is changed.
   * It works best for flow definitions with linear logic.  Although the underlying Globus flows language (JSON-based) is capable of supporting branching logic, these are not as easy to represent in the abstract syntax used by Gladier.
