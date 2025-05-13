@@ -1,0 +1,114 @@
+{
+  "Comment": "Transfer files to a specific endpoint with compute + transfer access, then run validation function on files in a specific location",
+  "StartAt": "GetInfoSourcePath",
+  "States": {
+
+    "GetInfoSourcePath": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/stat",
+      "Comment": "Get the source path info, and specifically ensure that metadata.json exists in source collection root",
+
+      "Next": "GetInfoDestPath",
+      "ResultPath": "$.run.GetInfoSourcePath",
+
+      "Parameters": {
+        "endpoint_id.$": "$.source.id",
+        "path.=": "source.path + 'metadata.json' if source.path.endswith('/') else source.path + '/metadata.json'"
+      }
+    },
+
+    "GetInfoDestPath": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/stat",
+      "Comment": "Get the dest path info.",
+
+      "Next": "QueryDestCollection",
+      "ResultPath": "$.run.GetInfoDestPath",
+
+      "Parameters": {
+        "endpoint_id.$": "$.dest.id",
+        "path.=": "`$._context.flow_id` + '_'  + `$._context.run_id`"
+      }
+    },
+
+    "QueryDestCollection": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/collection_info",
+      "Comment": "Get HTTPS URL and check that guest collection is compatible with this workflow",
+
+      "Next": "CheckSourceDest",
+      "ResultPath": "$.run.QueryDestCollection",
+
+      "Parameters": {
+        "endpoint_id.$": "$.dest.id"
+      }
+    },
+
+
+    "CheckSourceDest": {
+      "Type": "ExpressionEval",
+      "Comment": "Source must exist (with metadata.json), dest must not exist (rule may change), and dest must allow HTTPS file access",
+
+      "Next": "ValidateSourceDest",
+      "ResultPath": "$.run.CheckSourceDest",
+
+      "Parameters": {
+        "dest_exists.=": "'code' not in run.GetInfoDestPath.details or run.GetInfoDestPath.details.code != 'NotFound'",
+        "source_is_dir.=": "'type' in run.GetInfoSourcePath.details and run.GetInfoSourcePath.details.type == 'dir'",
+        "dest_allows_https.=": "run.QueryDestCollection.details.https_server and run.QueryDestCollection.details.subscription_id and not run.QueryDestCollection.details.entity_type == 'GCSv5_mapped_collection'"
+      }
+    },
+
+    "ValidateSourceDest": {
+      "Type": "Choice",
+      "Comment": "Ensure that path criteria are met",
+      "Default": "FailInvalidSourceDest",
+
+      "Choices": [
+        {
+          "Next": "SearchIngest",
+          "And": [
+            {
+              "Variable": "$.run.CheckSourceDest.source_is_dir",
+              "BooleanEquals": true
+            },
+            {
+              "Variable": "$.run.CheckSourceDest.dest_exists",
+              "BooleanEquals": false
+            },
+            {
+              "Variable": "$.run.CheckSourceDest.dest_allows_https",
+              "BooleanEquals": true
+            }
+          ]
+        }
+      ]
+    },
+
+    "FailInvalidSourceDest": {
+      "Type": "Fail",
+      "Error": "ErrorInvalidSourceDest",
+      "Cause": "Source or destination collection do not meet requirements; see logs for details"
+    },
+
+
+
+   "SearchIngest": {
+      "Type": "Action",
+      "ActionUrl": "https://actions.globus.org/search/ingest",
+      "Comment": "Ingest the provided metadata into the repository search index",
+
+      "End": true,
+      "ResultPath": "$",
+
+      "Parameters": {
+        "search_index": "",
+        "visible_to": [
+          "public"
+        ],
+        "subject.$": "$.search_metadata.identifier.identifier",
+        "content.$": "$.search_metadata"
+      }
+    }
+  }
+}

@@ -2,3 +2,4 @@ globus_sdk~=3.50.0
 -r ./search/requirements.txt
 -r transfer-data/requirements.txt
 -r flows-compute/requirements.txt
+-r 2025-06-integrated/requirements.txt
