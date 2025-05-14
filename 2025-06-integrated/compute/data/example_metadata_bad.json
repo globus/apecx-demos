@@ -1,0 +1,32 @@
+{
+  "identifier": {
+    "identifier": "example-testcase-datacite"
+  },
+  "creators": [
+    {
+      "familyName": "Boughton",
+      "givenName": "Andy",
+      "x-missing-field-name": "Andy Middlename Boughton"
+    }
+  ],
+  "titles": [
+    {
+      "title": 12
+    }
+  ],
+  "publisher": {
+    "name": "Globus.org"
+  },
+  "publicationYear": 2025,
+  "dates": [
+    {
+      "date": "2025-05-12",
+      "dateType": "Created"
+    }
+  ],
+  "descriptions": [
+    {
+      "description": "An example datacite-derived input schema for a single search index metadata entry"
+    }
+  ]
+}
