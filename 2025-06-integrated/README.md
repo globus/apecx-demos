@@ -53,3 +53,10 @@ Fortunately, we don't really want metadata submitted via the flow at all, becaus
   * Submitting user must be authorized at source and dest collection
   * Flow must be authorized to read the dest (https grant)
   * Flow must be authorized to run functions on the compute endpoint
+
+* Webapp
+  * A static search portal fork oriented around the Datacite schema
+  * An example file for the MU VIOLIN scraping dataset
+    * `globus search ingest "${GSI_UUID}" "compute/data/gsearch-example_metadata_violin-mu.json"`
+
+  
