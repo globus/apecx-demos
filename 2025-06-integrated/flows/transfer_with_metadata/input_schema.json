@@ -2,7 +2,8 @@
   "type": "object",
   "required": [
     "source",
-    "dest"
+    "dest",
+    "search_metadata"
   ],
   "properties": {
     "source": {
@@ -129,7 +130,9 @@
               "type": "string"
             }
           },
-          "required": ["name"]
+          "required": [
+            "name"
+          ]
         },
         "publicationYear": {
           "type": "integer"
@@ -141,7 +144,39 @@
               "type": "string"
             },
             "resourceTypeGeneral": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "Audiovisual",
+                "Book",
+                "BookChapter",
+                "Collection",
+                "ComputationalNotebook",
+                "ConferencePaper",
+                "ConferenceProceeding",
+                "DataPaper",
+                "Dataset",
+                "Dissertation",
+                "Event",
+                "Image",
+                "Instrument",
+                "InteractiveResource",
+                "Journal",
+                "JournalArticle",
+                "Model",
+                "OutputManagementPlan",
+                "PeerReview",
+                "PhysicalObject",
+                "Preprint",
+                "Report",
+                "Service",
+                "Software",
+                "Sound",
+                "Standard",
+                "StudyRegistration",
+                "Text",
+                "Workflow",
+                "Other"
+              ]
             }
           },
           "required": [
@@ -159,7 +194,11 @@
               },
               "dateType": {
                 "type": "string",
-                "enum": [ "Created", "Submitted", "Updated"]
+                "enum": [
+                  "Created",
+                  "Submitted",
+                  "Updated"
+                ]
               }
             },
             "required": [
@@ -212,7 +251,9 @@
                 "type": "string"
               }
             },
-            "required": ["rights"]
+            "required": [
+              "rights"
+            ]
           }
         },
         "descriptions": {

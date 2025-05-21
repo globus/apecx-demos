@@ -6,6 +6,7 @@ Generate and run an example workflow with the following steps:
 """
 import json
 import logging
+import uuid
 from pathlib import Path
 from pprint import pp
 import time
@@ -145,7 +146,7 @@ def check_flow_status(client: FlowsClient, run_id: str) -> str:
 
 def cleanup(cc: ComputeClient, fc: FlowsClient, func_ids: list[str], flow_id: str):
     """Clean up resources created for this demo, to leave a clean slate at end of script"""
-    cc.delete_function(func_id)
+    # cc.delete_function(func_id)
     fc.delete_flow(flow_id)
 
 
@@ -179,12 +180,12 @@ if __name__ == "__main__":
             "source": {
                 # abought - jetstream2 - POSIX - horizon - GUEST
                 "id": "dba0d7c0-1f63-44d1-bcd0-76865d3d44a0",  # GUEST collection
-                "path": "/subfolder/example_metadata.json"  # A folder
+                "path": "/subfolder/"  # A folder that contains file named metadata.json
             },
             "dest": {
                 #
                 # 2025-04-flows-demo-intermediate (guest under abought - jetstream2 - POSIX - horizon)
-                "id": 'e0bf746e-d4db-48ff-b1d4-4c113956148c',
+                "id": 'e0bf746e-d4db-48ff-b1d4-4c113956148c'
             },
         },
         label="Test endpoint validation and search metadata",

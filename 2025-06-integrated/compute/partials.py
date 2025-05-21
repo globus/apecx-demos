@@ -4,7 +4,11 @@ Test out bits of logic locally:
 * Download a file via HTTPS
 * Validate against a jsonschema and report errors to the flow if necessary
 """
-def compute_wrapper(collection_id: str, metadata_fn: str):
+def compute_wrapper(
+        collection_id: str, metadata_fn: str,
+        # These two are only for testing purposes, usually the worker gets them:
+        client_id=None, client_secret=None
+):
     """
     All Globus compute functions must be serialized within a single parent function
     This one expects GLOBUS_CLIENT_ID and GLOBUS_CLIENT_SECRET to be set as worker envvars,
@@ -330,6 +334,41 @@ def compute_wrapper(collection_id: str, metadata_fn: str):
     client_id = os.environ['GLOBUS_CLIENT_ID']
     client_secret = os.environ['GLOBUS_CLIENT_SECRET']
     return main(client_id, client_secret, collection_id, metadata_fn)
+
+
+def gce_submit_function(client_id, function):
+    """
+    Submit a function to GCE (as a specific user) and return the function ID
+    """
+    import logging
+    from globus_sdk import UserApp
+    from globus_compute_sdk import Client as ComputeClient
+
+    logger = logging.getLogger(__file__)
+
+    app = UserApp(client_id=client_id)
+    client = ComputeClient(app=app)
+
+    # TODO: Adjust serialization strategies to allow function to be defined in another file, make this more generic
+    func_id = client.register_function(function, public=False)
+    logger.info(f'Registered function  "{function.__name__}" with ID "{func_id}"')
+    return func_id
+
+
+def gce_run_function(client_id: str, endpoint_id, function_id, *args, **kwargs):
+    from globus_sdk import UserApp
+    from globus_compute_sdk import (
+        Client as ComputeClient,
+        Executor
+    )
+
+    app = UserApp(client_id=client_id)
+    client = ComputeClient(app=app)
+
+    with Executor(endpoint_id=endpoint_id, client=client) as gce:
+        fut = gce.submit(compute_wrapper, *args, **kwargs)
+        print(fut.result())
+
 
 
 if __name__ == '__main__':
