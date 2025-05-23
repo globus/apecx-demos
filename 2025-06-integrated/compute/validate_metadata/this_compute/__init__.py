@@ -11,17 +11,19 @@ Doing this all in one function allows bypassing the 256k state size limit if the
 import logging
 import os
 
-from .retrieval import get_file_from_gcs
-from .validators import validate_datacite_json
+from this_compute.retrieval import get_file_from_gcs
+from this_compute.validators import validate_datacite_json
 
 logger = logging.getLogger(__name__)
 
 
 
 def validate_gcs_json_datacite(
-        collection_id: str, metadata_fn: str, *,
+        collection_id: str,
+        metadata_fn: str, *,
         # Kwargs for local testing, only
-        client_id: str= None, client_secret: str,
+        client_id: str= None,
+        client_secret: str= None,
 ):
     try:
         CLIENT_ID = client_id or os.environ['GLOBUS_CLIENT_ID']

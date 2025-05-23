@@ -38,8 +38,11 @@ docker build . -t gce_workers/validate_metadata:latest
   * ```bash
     GLOBUS_CLIENT_ID="REPLACEME"
     
-    docker run -v ../common/commands:/app/commands gce_workers/validate_metadata:latest python3 /app/commands/register_function.py ${GLOBUS_CLIENT_ID} this_compute.main
+    # Replace with absolute path to ../common
+    docker run -it -v ../common/commands:/app/commands gce_workers/validate_metadata:latest python3 /app/commands/register_function.py ${GLOBUS_CLIENT_ID} this_compute.main
     ```
-  * ` (optional args: `--public` and `--group UUID`)
-    * Binds commands in as a volume, so that they don't need to be installed in the container up front. This reduces the amount of "extra management" code present in the worker in production.
+    * ` (optional args: `--public` and `--group UUID`)
+      * Binds commands in as a volume, so that they don't need to be installed in the container up front. This reduces the amount of "extra management" code present in the worker in production.
+  * Build a worker (remote host)
+    * `docker build . -t gce_workers/validate_metadata:latest`
   * Note: eventually we'll push the built image to a repository for use in workers. In first proof of concept test, we'll build locally, then build same Dockerfile on test host.
