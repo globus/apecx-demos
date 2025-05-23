@@ -28,7 +28,11 @@ The following containers rely on building the image first:
 
 ```bash
 cd validate_metadata
+
 docker build . -t gce_workers/validate_metadata:latest
+
+# ALTERNATE: ultra pedantic mode
+docker build --no-cache . -t gce_workers/validate_metadata:latest
 ```
 
 
@@ -46,3 +50,17 @@ docker build . -t gce_workers/validate_metadata:latest
   * Build a worker (remote host)
     * `docker build . -t gce_workers/validate_metadata:latest`
   * Note: eventually we'll push the built image to a repository for use in workers. In first proof of concept test, we'll build locally, then build same Dockerfile on test host.
+  * Run a function on a remote endpoint:
+  ```bash
+  
+  GLOBUS_CLIENT_ID="REPLACEME"
+  GLOBUS_ENDPOINT_ID="REPLACEME"
+  GLOBUS_FUNCTION_ID="REPLACEME"
+  
+  # Function args for file validation function example
+  TEST_COLLECTION_ID="dba0d7c0-1f63-44d1-bcd0-76865d3d44a0"
+  TEST_FILENAME="/subfolder/example_metadata_bad.json"
+  
+  # NOTE: Replace with actual path to ../common
+  docker run -it -v ../common/commands:/app/commands gce_workers/validate_metadata:latest python3 /app/commands/run_function.py ${GLOBUS_CLIENT_ID} ${GLOBUS_ENDPOINT_ID} ${GLOBUS_FUNCTION_ID}  ${TEST_COLLECTION_ID} ${TEST_FILENAME} 
+  ```

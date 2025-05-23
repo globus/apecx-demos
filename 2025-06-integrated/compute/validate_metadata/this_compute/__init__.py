@@ -19,11 +19,11 @@ logger = logging.getLogger(__name__)
 
 
 def validate_gcs_json_datacite(
-        collection_id: str,
-        metadata_fn: str, *,
-        # Kwargs for local testing, only
-        client_id: str= None,
-        client_secret: str= None,
+    collection_id: str,
+    metadata_fn: str, *,
+    # Kwargs for local testing, only
+    client_id: str= None,
+    client_secret: str= None,
 ):
     try:
         CLIENT_ID = client_id or os.environ['GLOBUS_CLIENT_ID']
