@@ -1,0 +1,2 @@
+# Shared requirements for all compute endpoints / functions
+globus-compute-endpoint==3.7.0  # https://pypi.org/project/globus-compute-endpoint/

@@ -5,6 +5,7 @@
   "properties": {
     "identifier": {
       "type": "object",
+      "description": "The identifier (workflow will fill this in as 'file path from collection root')",
       "properties": {
         "identifier": {
           "type": "string"
@@ -64,6 +65,7 @@
             "type": "string"
           },
           "titleType": {
+            "description": "Placeholder; rarely used. Some datasets may wish to specify a subtitle. (see controlled list values)",
             "type": "string"
           }
         },
@@ -91,10 +93,45 @@
       "type": "object",
       "properties": {
         "resourceType": {
+          "description": "Placeholder. A specific resource type, like 'assay'. consider developing a custom list of types for SPHERICAL",
           "type": "string"
         },
         "resourceTypeGeneral": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "Audiovisual",
+            "Award",
+            "Book",
+            "BookChapter",
+            "Collection",
+            "ComputationalNotebook",
+            "ConferencePaper",
+            "ConferenceProceeding",
+            "DataPaper",
+            "Dataset",
+            "Dissertation",
+            "Event",
+            "Image",
+            "InteractiveResource",
+            "Instrument",
+            "Journal",
+            "JournalArticle",
+            "Model",
+            "OutputManagementPlan",
+            "PeerReview",
+            "PhysicalObject",
+            "Preprint",
+            "Project",
+            "Report",
+            "Service",
+            "Software",
+            "Sound",
+            "Standard",
+            "StudyRegistration",
+            "Text",
+            "Workflow",
+            "Other"
+          ]
         }
       },
       "required": [
@@ -127,7 +164,7 @@
     },
     "alternateIdentifiers": {
       "type": "array",
-      "description": "Other ways that the resource may be recognized. For example, PDB, uniprot ID, DOI...",
+      "description": "Other ways that the resource may be recognized. For example, a protein structure dataset might have a PDB, uniprot ID, DOI...",
       "items": {
         "type": "object",
         "properties": {
@@ -197,7 +234,8 @@
     "creators",
     "titles",
     "publisher",
-    "publicationYear"
+    "publicationYear",
+    "descriptions"
   ],
   "additionalProperties": false
 }

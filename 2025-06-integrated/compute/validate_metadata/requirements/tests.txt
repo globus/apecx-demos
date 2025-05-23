@@ -1,0 +1,2 @@
+# Additional requirements run only when running unit tests
+pytest==8.3.5

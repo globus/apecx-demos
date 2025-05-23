@@ -1,1 +1,0 @@
-from partials import val
