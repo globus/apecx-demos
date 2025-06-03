@@ -5,6 +5,7 @@ Use the environment defined by the container to submit a function to Globus Comp
 This helps discourage drift between function registration host and endpoint worker.
 """
 import argparse
+import datetime
 from importlib import import_module
 import logging
 import sys
@@ -20,8 +21,17 @@ logger = logging.getLogger(__file__)
 def parse_arguments():
     parser = argparse.ArgumentParser()
 
+    # This seems like a spurious default, but it has the effect of forcing a new function ID (bug with sometimes getting duplicates)
+    desc = lambda: datetime.datetime.now(datetime.timezone.utc).isoformat()
+
     # Authentication
     parser.add_argument('client_id', type=str, help='Globus Compute Client ID')
+    parser.add_argument(
+        '--description',
+        type=str,
+        default=desc(),
+        help='Globus Compute Client description',
+    )
     parser.add_argument('--client_secret', type=str, help='If provided, uses a service account + client secret')
     parser.add_argument(
         'function_name',
@@ -82,14 +92,14 @@ def create_app(client_id, client_secret):
     return UserApp(client_id=client_id)
 
 
-def gce_submit_function(app: GlobusApp, func: t.Callable, *, public: bool=False, group: str=None):
+def gce_submit_function(app: GlobusApp, func: t.Callable, *, public: bool=False, group: str=None, description=None):
     """
     Submit a function to GCE (as a specific user) and return the function ID
     """
     client = ComputeClient(app=app)
 
-    func_id = client.register_function(func, public=public, group=group)
-    logger.info(f'Registered GCE function  "{func.__name__}" with ID "{func_id}"')
+    func_id = client.register_function(func, public=public, group=group, description=description)
+    logger.info(f'Registered GCE function  "{func.__name__}" with ID "{func_id}" to group "{group}"')
     return func_id
 
 
@@ -100,6 +110,6 @@ if __name__ == '__main__':
 
     func = _import_string(args.function_name)
     app = create_app(args.client_id, args.client_secret)
-    func_id = gce_submit_function(app, func, public=args.public, group=args.group)
+    func_id = gce_submit_function(app, func, public=args.public, group=args.group, description=args.description)
 
     logger.info(f'Function successfully registered with ID "{func_id}"')
