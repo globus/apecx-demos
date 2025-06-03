@@ -1,0 +1,21 @@
+engine:
+  type: GlobusComputeEngine
+  container_type: docker
+  container_uri: gce_workers/validate_metadata:latest
+  container_cmd_options: -e GLOBUS_CLIENT_ID -e GLOBUS_CLIENT_SECRET
+
+  max_workers_per_node: 1
+
+  provider:
+    type: LocalProvider
+
+    min_blocks: 0
+    max_blocks: 1
+    init_blocks: 1
+
+# At 30s/hb (default value), 10 heartbeats is 300s.
+idle_heartbeats_soft: 10
+
+# At 30s/hb, this translates to worker shutdown after 48 hrs
+idle_heartbeats_hard: 5760
+subscription_id: "REPLACEME"
