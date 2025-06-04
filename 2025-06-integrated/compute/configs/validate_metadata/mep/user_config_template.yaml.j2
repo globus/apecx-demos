@@ -1,6 +1,6 @@
 engine:
   type: GlobusComputeEngine
-  container_type: docker
+  container_type: podman
   container_uri: gce_workers/validate_metadata:latest
   container_cmd_options: -e GLOBUS_CLIENT_ID -e GLOBUS_CLIENT_SECRET
 
@@ -16,6 +16,6 @@ engine:
 # At 30s/hb (default value), 10 heartbeats is 300s.
 idle_heartbeats_soft: 10
 
-# At 30s/hb, this translates to worker shutdown after 48 hrs
-idle_heartbeats_hard: 5760
+# At 30s/hb, this translates to worker shutdown after 1 hr of no task progress (ok assuming most tasks should take seconds)
+idle_heartbeats_hard: 120
 subscription_id: "REPLACEME"
