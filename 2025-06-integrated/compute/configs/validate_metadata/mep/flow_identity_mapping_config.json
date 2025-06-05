@@ -6,7 +6,7 @@
       {
         "source": "{username}",
         "match": "REPLACEME@clients.auth.globus.org",
-        "output": "gce-restricted"
+        "output": "gce-user"
       }
     ]
   }

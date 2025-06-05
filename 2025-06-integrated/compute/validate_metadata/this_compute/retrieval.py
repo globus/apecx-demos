@@ -1,7 +1,12 @@
 import logging
 from urllib.parse import urljoin
 
-from globus_sdk import ClientApp, TransferClient
+from globus_sdk import (
+    ClientApp,
+    GlobusAppConfig,
+    TransferClient,
+)
+from globus_sdk.tokenstorage import JSONTokenStorage
 import requests
 
 logger = logging.getLogger(__name__)
@@ -10,13 +15,18 @@ logger = logging.getLogger(__name__)
 def _create_app(client_id, client_secret, collection_id):
     """
     Generate a client app that can log in using credentials from envvars.
-        This client must have identity access to the specified collection.
+        This client identity must have access to the specified collection.
     GCE currently doesn't provide a way to get user credentials, and we use a ClientApp to avoid human-in-the-loop
         authentication
     """
+    # When we run a container under `--user $(id -u)`, it doesn't guarantee a home directory.
+    #   Ensure cache is writable by using a tmp file, or else SDK calls will fail.
+    storage = JSONTokenStorage("/tmp/gsdk_token_cache.json")
+    config = GlobusAppConfig(token_storage=storage)
     return ClientApp(
         client_id=client_id,
         client_secret=client_secret,
+        config = config,
         scope_requirements={
             'auth.globus.org': ['openid', 'profile', 'email'],
             collection_id: [f'https://auth.globus.org/scopes/{collection_id}/https']

@@ -29,26 +29,28 @@ The following containers rely on building the image first:
 ```bash
 cd validate_metadata
 
-podman build . -t gce_workers/validate_metadata:latest
+docker build . -t gce_workers/validate_metadata:latest
 
 # ALTERNATE: ultra pedantic mode
-podman build --no-cache . -t gce_workers/validate_metadata:latest
+docker build --no-cache . -t gce_workers/validate_metadata:latest
 ```
 
 
 * Running tests:
-  `podman run -it gce_workers/validate_metadata:latest bash -c "pip install -r requirements/tests.txt && pytest ."` 
+  ```
+  docker run -it gce_workers/validate_metadata:latest bash -c "pip install -r requirements/tests.txt && pytest ."
+  ``` 
 * Submitting a function: (eventually we can push the image, or else it's enough to run the same image in both local and remote configurations)
   * ```bash
     GLOBUS_CLIENT_ID="REPLACEME"
     
     # Replace with absolute path to ../common
-    podman run -it -v `realpath ../common/commands`:/app/commands gce_workers/validate_metadata:latest python3 /app/commands/register_function.py ${GLOBUS_CLIENT_ID} this_compute.main
+    docker run -it -v `realpath ../common/commands`:/app/commands gce_workers/validate_metadata:latest python3 /app/commands/register_function.py ${GLOBUS_CLIENT_ID} this_compute.main
     ```
     * ` (optional args: `--public` and `--group UUID`)
       * Binds commands in as a volume, so that they don't need to be installed in the container up front. This reduces the amount of "extra management" code present in the worker in production.
   * Build a worker (remote host)
-    * `podman build . -t gce_workers/validate_metadata:latest`
+    * `docker build . -t gce_workers/validate_metadata:latest`
   * Note: eventually we'll push the built image to a repository for use in workers. In first proof of concept test, we'll build locally, then build same Dockerfile on test host.
   * Run a function on a remote endpoint after it was submitted to GCE:
   ```bash
@@ -62,9 +64,8 @@ podman build --no-cache . -t gce_workers/validate_metadata:latest
   TEST_FILENAME="/subfolder/example_metadata_bad.json"
   
   # NOTE: Replace with actual path to ../common
-  podman run -it \
+  docker run -it \
   -v $(realpath ../common/commands):/app/commands \
-  -v $(realpath ~/.globus/):/~./globus \
    gce_workers/validate_metadata:latest python3 /app/commands/run_function.py ${GLOBUS_CLIENT_ID} ${GLOBUS_ENDPOINT_ID} ${GLOBUS_FUNCTION_ID}  ${TEST_COLLECTION_ID} ${TEST_FILENAME} 
   ```
 
