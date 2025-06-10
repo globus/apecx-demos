@@ -1,0 +1,20 @@
+{
+  "Comment": "Test various behaviors of flows",
+  "StartAt": "CheckSourceMetadata",
+  "States": {
+    "CheckSourceMetadata": {
+      "Comment": "Verify that a metadata.json file exists at root location",
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/stat",
+      "End": true,
+      "ResultPath": "$",
+
+      "Parameters": {
+        "endpoint_id.$": "$.source.id",
+        "path.=": "`$.source.path` + ('/' if not `$.source.path`.endswith('/') else '') + 'metadata.json'"
+      }
+    }
+  }
+}
+
+

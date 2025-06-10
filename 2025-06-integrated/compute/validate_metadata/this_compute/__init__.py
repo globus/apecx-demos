@@ -33,12 +33,17 @@ def validate_gcs_json_datacite(
 
     content = get_file_from_gcs(CLIENT_ID, CLIENT_SECRET, collection_id, metadata_fn)
 
-    val = validate_datacite_json(content)
+    res = validate_datacite_json(content)
 
-    if len(val) > 0:
+    if len(res) > 0:
         logger.error('Invalid user input!')
-        logger.error(val)
-    return val
+        logger.error(res)
+    return {
+        "errors": res,
+        # Put count in payload directly, as this is easier to reference with an expression in the flow logic
+        "n_errors": len(res),
+        "data": content
+    }
 
 # Alias makes it easier to use the generic "register GCE function(s)" helper scripts
 main = validate_gcs_json_datacite
@@ -46,8 +51,8 @@ main = validate_gcs_json_datacite
 
 if __name__ == '__main__':
     # Just for local testing purposes. Demonstrates how it would be called in GCS.
-    COLLECTION_ID = "dba0d7c0-1f63-44d1-bcd0-76865d3d44a0"  # GUEST-ified personal collection
-    # res = compute_wrapper(COLLECTION_ID, '/subfolder/metadata.json') # A good file in my specific collection
+    COLLECTION_ID = "REPLACEME"  # GUEST-ified personal collection
+    # res = main(COLLECTION_ID, '/subfolder/metadata.json') # A good file in my specific collection
 
     res = main(COLLECTION_ID, '/subfolder/example_metadata_bad.json')
 

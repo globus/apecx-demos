@@ -25,44 +25,27 @@
           "title": "Source Collection Path",
           "description": "The path on the source collection for the data"
         }
-      },
-      "description": "The data's origin",
-      "additionalProperties": false
+      }
     },
-
     "destination": {
       "type": "object",
       "title": "Destination",
       "format": "globus-collection",
       "required": [
-        "id"
+        "id",
+        "path"
       ],
       "properties": {
         "id": {
           "type": "string",
-          "title": "Destination Collection ID",
+          "title": "Source Collection ID",
           "format": "uuid",
-          "description": "The UUID for the destination collection"
-        }
-      },
-      "description": "Where to send the data",
-      "additionalProperties": false
-    },
-
-    "compute": {
-      "type": "object",
-      "title": "Compute options (will later be moved into flow as private params)",
-      "required": ["endpoint_id", "function_id"],
-      "properties": {
-        "endpoint_id": {
-          "type": "string",
-          "title": "GCE compute endpoint ID",
-          "description": "A bespoke compute endpoint deployed to run validation function (must have credentials to read dest collection via HTTPS)"
+          "description": "The UUID for the collection which serves as the source of the data for the two-stage Transfer"
         },
-        "function_id": {
+        "path": {
           "type": "string",
-          "title": "GCE validation function ID",
-          "description": "A GCE compute function that performs file validation- TODO move to private params / hardcoded flow value"
+          "title": "Source Collection Path",
+          "description": "The path on the source collection for the data"
         }
       }
     }

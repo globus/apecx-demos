@@ -1,7 +1,19 @@
 {
   "Comment": "Transfer files to a specific endpoint with compute + transfer access, then run validation function on files in a specific location",
-  "StartAt": "GetInfoSourcePath",
+  "StartAt": "CalculatePaths",
   "States": {
+    "CalculatePaths": {
+      "Comment": "Calculate paths that will be used in multiple steps, and store somewhere useful",
+      "Type": "ExpressionEval",
+
+      "Next": "GetInfoSourcePath",
+      "ResultPath": "$.meta.paths",
+
+      "Parameters": {
+        "metadata_fn.=": "`$.source.path`.rstrip('/') + '/' + 'metadata.json'",
+        "dest_path.=": "`$.destination.path`.rstrip('/') + '/' + `$._context.flow_id` + '_'  + `$._context.run_id`"
+      }
+    },
 
     "GetInfoSourcePath": {
       "Type": "Action",
@@ -9,76 +21,57 @@
       "Comment": "Get the source path info, and specifically ensure that metadata.json exists in source collection root",
 
       "Next": "GetInfoDestPath",
-      "ResultPath": "$.run.GetInfoSourcePath",
+      "ResultPath": "$.prev.GetInfoSourcePath",
 
       "Parameters": {
         "endpoint_id.$": "$.source.id",
-        "path.=": "source.path + 'metadata.json' if source.path.endswith('/') else source.path + '/metadata.json'"
+        "path.$":  "$.meta.paths.metadata_fn"
       }
     },
 
     "GetInfoDestPath": {
       "Type": "Action",
       "ActionUrl": "https://transfer.actions.globus.org/stat",
-      "Comment": "Get the dest path info.",
-
-      "Next": "QueryDestCollection",
-      "ResultPath": "$.run.GetInfoDestPath",
-
-      "Parameters": {
-        "endpoint_id.$": "$.dest.id",
-        "path.=": "`$._context.flow_id` + '_'  + `$._context.run_id`"
-      }
-    },
-
-    "QueryDestCollection": {
-      "Type": "Action",
-      "ActionUrl": "https://transfer.actions.globus.org/collection_info",
-      "Comment": "Get HTTPS URL and check that guest collection is compatible with this workflow",
+      "Comment": "Ensure that data in the destination does not yet exist",
 
       "Next": "CheckSourceDest",
-      "ResultPath": "$.run.QueryDestCollection",
+      "ResultPath": "$.prev.GetInfoDestPath",
 
       "Parameters": {
-        "endpoint_id.$": "$.dest.id"
+        "endpoint_id.$": "$.destination.id",
+        "path.=": "`$.meta.paths.dest_path`"
       }
     },
-
 
     "CheckSourceDest": {
       "Type": "ExpressionEval",
       "Comment": "Source must exist (with metadata.json), dest must not exist (rule may change), and dest must allow HTTPS file access",
 
-      "Next": "ValidateSourceDest",
-      "ResultPath": "$.run.CheckSourceDest",
+      "Next": "VerifySourceDest",
+      "ResultPath": "$.prev.CheckSourceDest",
 
       "Parameters": {
-        "dest_exists.=": "'code' not in run.GetInfoDestPath.details or run.GetInfoDestPath.details.code != 'NotFound'",
-        "source_is_dir.=": "'type' in run.GetInfoSourcePath.details and run.GetInfoSourcePath.details.type == 'dir'",
-        "dest_allows_https.=": "run.QueryDestCollection.details.https_server and run.QueryDestCollection.details.subscription_id and not run.QueryDestCollection.details.entity_type == 'GCSv5_mapped_collection'"
+        "dest_exists.=": "'code' not in `$.prev.GetInfoDestPath.details` or `$.prev.GetInfoDestPath.details.code` != 'NotFound'",
+        "source_is_dir.=": "'type' in `$.prev.GetInfoSourcePath.details` and `$.prev.GetInfoSourcePath.details.type` == 'dir'"
       }
     },
 
-    "ValidateSourceDest": {
+    "VerifySourceDest": {
       "Type": "Choice",
       "Comment": "Ensure that path criteria are met",
       "Default": "FailInvalidSourceDest",
 
       "Choices": [
         {
-          "Next": "SearchIngest",
+          "Next": "CopyMetadataSourceToDest",
           "And": [
             {
-              "Variable": "$.run.CheckSourceDest.source_is_dir",
+              "Variable": "$.prev.CheckSourceDest.source_is_dir",
               "BooleanEquals": true
             },
             {
-              "Variable": "$.run.CheckSourceDest.dest_exists",
+              "Variable": "$.prev.CheckSourceDest.dest_exists",
               "BooleanEquals": false
-            },
-            {
-              "Variable": "$.run.CheckSourceDest.dest_allows_https",
-              "BooleanEquals": true
             }
           ]
         }
@@ -91,6 +84,136 @@
       "Cause": "Source or destination collection do not meet requirements; see logs for details"
     },
 
+    "CopyMetadataSourceToDest": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/transfer",
+      "Comment": "Copy just the metadata file (nothing else) to the dest location, to allow running validation. This is because we can't guarantee that source coll will allow reading files via HTTPS",
+
+      "Next": "ValidateMetadataContent",
+      "ResultPath": "$.prev",
+      "WaitTime": 300,
+
+      "ExceptionOnActionFailure": true,
+      "Catch": [
+        {
+          "Next": "FailCopyToDest",
+          "ResultPath": "$.CopyMetadataSourceToDest.error",
+          "ErrorEquals": [
+            "ActionUnableToRun",
+            "ActionFailedException",
+            "ActionTimeout"
+          ]
+        }
+      ],
+
+      "Parameters": {
+        "source_endpoint.$": "$.source.id",
+        "destination_endpoint.$": "$.destination.id",
+        "notify_on_succeeded": false,
+        "notify_on_failed": false,
+        "DATA": [
+          {
+            "source_path.$": "$.meta.paths.metadata_fn",
+            "destination_path.$": "$.meta.paths.dest_path"
+          }
+        ]
+      }
+    },
+
+    "FailCopyToDest": {
+      "Type": "Fail",
+      "Error": "ErrorCopyToDest",
+      "Cause": "File(s) failed to copy"
+    },
+
+    "ValidateMetadataContent": {
+      "Type": "Action",
+      "ActionUrl": "https://compute.actions.globus.org",
+      "Comment": "Run a user-specified validation function on the dataset that returns {status: success|fail|error, message: str, data: ANY}",
+
+      "Next": "CheckValidationResult",
+      "ResultPath": "$.meta.ValidateMetadataContent",
+
+      "ExceptionOnActionFailure": true,
+      "Catch": [
+        {
+          "Next": "FailValidation",
+          "ErrorEquals": [
+            "ActionUnableToRun",
+            "ActionFailedException",
+            "ActionTimeout"
+          ]
+        }
+      ],
+
+      "Parameters": {
+        "endpoint.$": "$.compute.endpoint_id",
+        "function.$": "$.compute.function_id",
+        "args.=": "[`$.destination.id`, `$.meta.paths.metadata_fn`]",
+
+        "__Private_Parameters": [
+          "endpoint",
+          "function"
+        ]
+      }
+    },
+
+    "CheckValidationResult": {
+      "Comment": "Check that validation does not return errors. TODO: WRITE expression for is array empty",
+      "Type": "Choice",
+
+      "Default": "FailValidation",
+
+      "Choices": [
+        {
+          "Variable": "$.meta.ValidateMetadataContent.details.results[0].output.n_errors",
+          "NumericEquals": 0,
+          "Next": "CopyFullDatasetSourceToDest"
+        }
+      ]
+    },
+
+    "FailValidation": {
+      "Type": "Fail",
+      "Error": "ErrorMetadataInvalid",
+      "Cause": "Invalid Search Metadata"
+    },
+
+    "CopyFullDatasetSourceToDest": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/transfer",
+      "Comment": "Copy the entire dataset to destination, once validation is confirmed. (wait up to 1 week in case of storage downtime etc)",
+
+      "Next": "SearchIngest",
+      "ResultPath": "$.prev",
+      "WaitTime": 604800,
+
+      "ExceptionOnActionFailure": true,
+      "Catch": [
+        {
+          "Next": "FailCopyToDest",
+          "ResultPath": "$",
+          "ErrorEquals": [
+            "ActionUnableToRun",
+            "ActionFailedException",
+            "ActionTimeout"
+          ]
+        }
+      ],
+
+      "Parameters": {
+        "source_endpoint.$": "$.source.id",
+        "destination_endpoint.$": "$.destination.id",
+        "notify_on_succeeded": false,
+        "notify_on_failed": false,
+        "DATA": [
+          {
+            "source_path.$": "$.meta.paths.metadata_fn",
+            "destination_path.$": "$.meta.paths.dest_path"
+          }
+        ]
+      }
+    },
 
 
    "SearchIngest": {
@@ -106,8 +229,8 @@
         "visible_to": [
           "public"
         ],
-        "subject.$": "$.search_metadata.identifier.identifier",
-        "content.$": "$.search_metadata"
+        "subject.$": "$.meta.ValidateMetadataContent.data.identifier.identifier",
+        "content.$": "$.meta.ValidateMetadataContent.data"
       }
     }
   }
