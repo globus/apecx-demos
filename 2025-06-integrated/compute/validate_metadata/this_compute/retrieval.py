@@ -82,7 +82,7 @@ def _get_file_from_https(collection_base_url: str, filename: str, auth_headers: 
     }
     res = requests.get(url, headers=headers)
     if res.status_code != 200:
-        raise Exception(f"Failed to retrieve file with code {res.status_code}")
+        raise Exception(f"Failed to retrieve file {url} with code {res.status_code}")
 
     try:
         return res.json()
@@ -101,6 +101,7 @@ def get_file_from_gcs(client_id: str, client_secret: str, collection_id: str, fi
     if _requires_data_access_scope(client, collection_id):
         raise NotImplementedError('Only non-HA guest collections are supported.')
 
+    # TODO Add URL validation. GCS recognizes `..` and we probably want to restrict to exact pathnames
     collection_https_url = _get_https_url(client, collection_id)
     headers = _get_https_request_headers(app, collection_id)
 

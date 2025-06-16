@@ -52,7 +52,7 @@
 
       "Parameters": {
         "dest_exists.=": "'code' not in `$.prev.GetInfoDestPath.details` or `$.prev.GetInfoDestPath.details.code` != 'NotFound'",
-        "source_is_dir.=": "'type' in `$.prev.GetInfoSourcePath.details` and `$.prev.GetInfoSourcePath.details.type` == 'dir'"
+        "source_has_metadata.=": "'type' in prev.GetInfoSourcePath.details and prev.GetInfoSourcePath.details.type == 'file'"
       }
     },
 
@@ -66,7 +66,7 @@
           "Next": "CopyMetadataSourceToDest",
           "And": [
             {
-              "Variable": "$.prev.CheckSourceDest.source_is_dir",
+              "Variable": "$.prev.CheckSourceDest.source_has_metadata",
               "BooleanEquals": true
             },
             {

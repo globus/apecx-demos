@@ -35,7 +35,8 @@
       "title": "Destination",
       "format": "globus-collection",
       "required": [
-        "id"
+        "id",
+        "path"
       ],
       "properties": {
         "id": {
@@ -43,6 +44,11 @@
           "title": "Destination Collection ID",
           "format": "uuid",
           "description": "The UUID for the destination collection"
+        },
+        "path": {
+          "type": "string",
+          "title": "Source Collection Path",
+          "description": "The folder on the dest collection where we should store the data. TODO: Will web UI allow us to specify id-only? Can this be omitted for auto-generated paths?"
         }
       },
       "description": "Where to send the data",
