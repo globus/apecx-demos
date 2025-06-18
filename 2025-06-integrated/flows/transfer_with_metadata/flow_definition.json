@@ -11,7 +11,7 @@
 
       "Parameters": {
         "metadata_fn.=": "`$.source.path`.rstrip('/') + '/' + 'metadata.json'",
-        "dest_path.=": "`$.destination.path`.rstrip('/') + '/' + `$._context.flow_id` + '_'  + `$._context.run_id`"
+        "dest_path.=": "`$.destination.path`.rstrip('/') + '/' + `$._context.flow_id` + '_'  + `$._context.run_id` + '/'"
       }
     },
 
@@ -63,7 +63,7 @@
 
       "Choices": [
         {
-          "Next": "CopyMetadataSourceToDest",
+          "Next": "MakeDestDirectory",
           "And": [
             {
               "Variable": "$.prev.CheckSourceDest.source_has_metadata",
@@ -84,10 +84,37 @@
       "Cause": "Source or destination collection do not meet requirements; see logs for details"
     },
 
+    "MakeDestDirectory": {
+      "Type": "Action",
+      "ActionUrl": "https://transfer.actions.globus.org/mkdir",
+      "Comment": "Ensure that the destination path exists (otherwise metadata.json would be copied to a file instead of a folder)",
+
+      "Next": "CopyMetadataSourceToDest",
+      "ResultPath": "$.prev",
+
+      "ExceptionOnActionFailure": true,
+      "Catch": [
+        {
+          "Next": "FailCopyToDest",
+          "ResultPath": "$.MakeDestDirectory.error",
+          "ErrorEquals": [
+            "ActionUnableToRun",
+            "ActionFailedException",
+            "ActionTimeout"
+          ]
+        }
+      ],
+
+      "Parameters": {
+        "endpoint_id.$": "$.destination.id",
+        "path.$": "$.meta.paths.dest_path"
+      }
+    },
+
     "CopyMetadataSourceToDest": {
       "Type": "Action",
       "ActionUrl": "https://transfer.actions.globus.org/transfer",
-      "Comment": "Copy just the metadata file (nothing else) to the dest location, to allow running validation. This is because we can't guarantee that source coll will allow reading files via HTTPS",
+      "Comment": "Copy just the metadata file (nothing else) to the dest location, to allow running validation. This is req'd because we can't guarantee that source coll will allow reading files via HTTPS",
 
       "Next": "ValidateMetadataContent",
       "ResultPath": "$.prev",
@@ -114,7 +141,7 @@
         "DATA": [
           {
             "source_path.$": "$.meta.paths.metadata_fn",
-            "destination_path.$": "$.meta.paths.dest_path"
+            "destination_path.=": "meta.paths.dest_path + 'metadata.json'"
           }
         ]
       }
@@ -149,7 +176,7 @@
       "Parameters": {
         "endpoint.$": "$.compute.endpoint_id",
         "function.$": "$.compute.function_id",
-        "args.=": "[`$.destination.id`, `$.meta.paths.metadata_fn`]",
+        "args.=": "[`$.destination.id`, `$.meta.paths.dest_path` + 'metadata.json']",
 
         "__Private_Parameters": [
           "endpoint",
@@ -208,7 +235,7 @@
         "notify_on_failed": false,
         "DATA": [
           {
-            "source_path.$": "$.meta.paths.metadata_fn",
+            "source_path.$": "$.source.path",
             "destination_path.$": "$.meta.paths.dest_path"
           }
         ]
@@ -225,12 +252,12 @@
       "ResultPath": "$",
 
       "Parameters": {
-        "search_index": "",
+        "search_index": "8cd76948-c803-483b-88aa-cdd2f6a4cbe6",
         "visible_to": [
           "public"
         ],
-        "subject.$": "$.meta.ValidateMetadataContent.data.identifier.identifier",
-        "content.$": "$.meta.ValidateMetadataContent.data"
+        "subject.$": "$.meta.ValidateMetadataContent.details.result[0].data.identifier.identifier",
+        "content.$": "$.meta.ValidateMetadataContent.details.result[0].data"
       }
     }
   }
