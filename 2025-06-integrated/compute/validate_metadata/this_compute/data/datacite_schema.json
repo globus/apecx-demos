@@ -26,13 +26,6 @@
           "name": {
             "type": "string"
           },
-          "nameType": {
-            "type": "string",
-            "enum": [
-              "Organizational",
-              "Personal"
-            ]
-          },
           "givenName": {
             "type": "string"
           },
@@ -89,55 +82,6 @@
     "publicationYear": {
       "type": "integer"
     },
-    "resourceType": {
-      "type": "object",
-      "properties": {
-        "resourceType": {
-          "description": "Placeholder. A specific resource type, like 'assay'. consider developing a custom list of types for SPHERICAL",
-          "type": "string"
-        },
-        "resourceTypeGeneral": {
-          "type": "string",
-          "enum": [
-            "Audiovisual",
-            "Award",
-            "Book",
-            "BookChapter",
-            "Collection",
-            "ComputationalNotebook",
-            "ConferencePaper",
-            "ConferenceProceeding",
-            "DataPaper",
-            "Dataset",
-            "Dissertation",
-            "Event",
-            "Image",
-            "InteractiveResource",
-            "Instrument",
-            "Journal",
-            "JournalArticle",
-            "Model",
-            "OutputManagementPlan",
-            "PeerReview",
-            "PhysicalObject",
-            "Preprint",
-            "Project",
-            "Report",
-            "Service",
-            "Software",
-            "Sound",
-            "Standard",
-            "StudyRegistration",
-            "Text",
-            "Workflow",
-            "Other"
-          ]
-        }
-      },
-      "required": [
-        "resourceTypeGeneral"
-      ]
-    },
     "dates": {
       "type": "array",
       "items": {
@@ -160,28 +104,6 @@
           "date",
           "dateType"
         ]
-      }
-    },
-    "alternateIdentifiers": {
-      "type": "array",
-      "description": "Other ways that the resource may be recognized. For example, a protein structure dataset might have a PDB, uniprot ID, DOI...",
-      "items": {
-        "type": "object",
-        "properties": {
-          "alternateIdentifier": {
-            "type": "string"
-          },
-          "alternateIdentifierType": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "formats": {
-      "type": "array",
-      "description": "(optional) The Technical format of the resource, such as mimetype/file format. Used to guide searches for data compatible with analysis software",
-      "items": {
-        "type": "string"
       }
     },
     "version": {
