@@ -1,15 +1,27 @@
+"""
+Functions to read and write small files to an (eligible) GCS collection via HTTPS features
+"""
 import logging
+import os
 from urllib.parse import urljoin
 
 from globus_sdk import (
     ClientApp,
     GlobusAppConfig,
-    TransferClient,
+    TransferClient, AuthAPIError,
 )
 from globus_sdk.tokenstorage import JSONTokenStorage
 import requests
 
+
 logger = logging.getLogger(__name__)
+
+
+def _check_filename(filename: str):
+    """Very crude validation/sanity checking for untrusted user inputs."""
+    path_segs = os.path.split(filename)
+    if '.' in path_segs or '..' in path_segs or '~' in path_segs:
+        raise Exception(f'Only absolute paths are supported. Rejected filename: {filename}')
 
 
 def _create_app(client_id, client_secret, collection_id):
@@ -60,7 +72,7 @@ def _get_https_url(client: TransferClient, coll_id: str) -> str:
                 ep_info.data['entity_type'] == 'GCSv5_mapped_collection')
     if req_da_scope or not ep_info['https_server'] or not ep_info['subscription_id']:
         raise NotImplementedError(
-            "This collection does not meet requirements. It must be a guest collections, subscribed, with HTTPS access enabled.")
+            "This collection does not meet requirements. It must be a guest collection, subscribed, with HTTPS access enabled.")
 
     return ep_info['https_server']
 
@@ -70,7 +82,7 @@ def _get_https_request_headers(app: ClientApp, collection_id: str) -> dict:
     return {'Authorization': f'Bearer {t.access_token}'}
 
 
-def _get_file_from_https(collection_base_url: str, filename: str, auth_headers: dict) -> dict:
+def _read_file_from_https(collection_base_url: str, filename: str, auth_headers: dict) -> 'requests.Response':
     url = urljoin(collection_base_url, filename)
 
     logger.info(f'Requesting file at {url}')
@@ -81,29 +93,64 @@ def _get_file_from_https(collection_base_url: str, filename: str, auth_headers: 
         "X-Requested-With": "XMLHttpRequest",
     }
     res = requests.get(url, headers=headers)
-    if res.status_code != 200:
-        raise Exception(f"Failed to retrieve file {url} with code {res.status_code}")
-
-    try:
-        return res.json()
-    except requests.exceptions.RequestException as e:
-        logger.warning(f'Request for URL {url} failed with code {res.status_code}')
-        logger.warning(res.text)
-        raise Exception('Unreadable json response from {}'.format(url))
+    return res
 
 
-def get_file_from_gcs(client_id: str, client_secret: str, collection_id: str, filename: str) -> dict:
+def _write_file_to_https(collection_base_url: str, filename: str, auth_headers: dict,
+                         data=None, json=None) -> 'requests.Response':
+    url = urljoin(collection_base_url, filename)
+
+    logger.info(f'Writing file to {url}')
+
+    headers = {
+        **auth_headers,
+        # Ensure errors are represented as machine-readable JSON
+        "X-Requested-With": "XMLHttpRequest",
+    }
+    res = requests.put(url, data=data, json=json, headers=headers)
+    return res
+
+
+def read_file_from_gcs(client_id: str, client_secret: str, collection_id: str, filename: str) -> 'requests.Response':
     app = _create_app(client_id, client_secret, collection_id)
     client = TransferClient(app=app)
 
+    # This may raise a globus API error
     app.login()
 
     if _requires_data_access_scope(client, collection_id):
         raise NotImplementedError('Only non-HA guest collections are supported.')
 
-    # TODO Add URL validation. GCS recognizes `..` and we probably want to restrict to exact pathnames
+    _check_filename(filename)
+
     collection_https_url = _get_https_url(client, collection_id)
     headers = _get_https_request_headers(app, collection_id)
 
-    return _get_file_from_https(collection_https_url, filename, headers)
+    # Note: This returns the raw HTTPS response, so consumer must check status code
+    return _read_file_from_https(collection_https_url, filename, headers)
 
+
+def write_file_to_https(client_id: str, client_secret: str,
+                        collection_id: str, filename: str,
+                        data=None, json=None):
+    """
+    Write data to an HA GCS/HA https endpoint. The `data` and `json` args are mutually exclusive and follow the
+        serialization rules of `requests.put`
+    """
+    app = _create_app(client_id, client_secret, collection_id)
+    client = TransferClient(app=app)
+
+    try:
+        app.login()
+    except AuthAPIError:
+        raise Exception('User does not have the requested credentials on this collection')
+
+    if _requires_data_access_scope(client, collection_id):
+        raise NotImplementedError('Only non-HA guest collections are supported.')
+
+    _check_filename(filename)
+
+    collection_https_url = _get_https_url(client, collection_id)
+    headers = _get_https_request_headers(app, collection_id)
+
+    return _write_file_to_https(collection_https_url, filename, headers, data=data, json=json)
