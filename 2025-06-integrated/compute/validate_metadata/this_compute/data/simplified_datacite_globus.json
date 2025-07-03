@@ -4,19 +4,8 @@
   "description": "Metadata that will be used to populate a search index. Simplified from datacite 4.6; in future we will add custom extra fields.",
   "properties": {
     "identifier": {
-      "type": "object",
-      "description": "The identifier (workflow will fill this in as 'file path from collection root')",
-      "properties": {
-        "identifier": {
-          "type": "string"
-        },
-        "identifierType": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "identifier"
-      ]
+      "type": "string",
+      "description": "The identifier (workflow will fill this in as 'file path from collection root')"
     },
     "creators": {
       "type": "array",
@@ -49,115 +38,25 @@
         ]
       }
     },
-    "titles": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "titleType": {
-            "description": "Placeholder; rarely used. Some datasets may wish to specify a subtitle. (see controlled list values)",
-            "type": "string"
-          }
-        },
-        "required": [
-          "title"
-        ]
-      }
+    "title": {
+      "type": "string",
+      "description": "A short human-friendly title for this dataset"
     },
-    "publisher": {
-      "type": "object",
-      "description": "The name of the institution that produced the resource",
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name"
-      ]
+    "publisher_name": {
+      "type": "string",
+      "description": "The name of the institution that produced the resource"
     },
-    "publicationYear": {
-      "type": "integer"
-    },
-    "dates": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "dateType": {
-            "type": "string",
-            "enum": [
-              "Created",
-              "Submitted",
-              "Updated"
-            ]
-          }
-        },
-        "required": [
-          "date",
-          "dateType"
-        ]
-      }
-    },
-    "version": {
-      "type": "string"
-    },
-    "rightsList": {
-      "type": "array",
-      "description": "Information about licensing and reuse rules (such as CC-BY-4.0)",
-      "items": {
-        "type": "object",
-        "properties": {
-          "rights": {
-            "description": "Text description of the license or access restriction",
-            "type": "string"
-          },
-          "rightsURI": {
-            "type": "string",
-            "description": "A url containing details of the license or access restrictions (optional)"
-          },
-          "rightsIdentifier": {
-            "description": "A unique ID for the license, such as from https://spdx.org/licenses/",
-            "type": "string"
-          }
-        },
-        "required": [
-          "rights"
-        ]
-      }
-    },
-    "descriptions": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "description": {
-            "type": "string"
-          },
-          "descriptionType": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "description"
-        ]
-      }
+    "description": {
+      "type": "string",
+      "description": "A one-paragraph description shown in search results"
     }
   },
   "required": [
     "identifier",
     "creators",
-    "titles",
-    "publisher",
-    "publicationYear",
-    "descriptions"
+    "title",
+    "publisher_name",
+    "description"
   ],
   "additionalProperties": false
 }

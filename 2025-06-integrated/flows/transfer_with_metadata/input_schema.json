@@ -2,7 +2,10 @@
   "type": "object",
   "required": [
     "source",
-    "destination"
+    "destination",
+    "compute",
+    "search_index_id",
+    "search_metadata"
   ],
   "properties": {
     "source": {
@@ -35,8 +38,7 @@
       "title": "Destination",
       "format": "globus-collection",
       "required": [
-        "id",
-        "path"
+        "id"
       ],
       "properties": {
         "id": {
@@ -48,7 +50,7 @@
         "path": {
           "type": "string",
           "title": "Source Collection Path",
-          "description": "The folder on the dest collection where we should store the data. TODO: Will web UI allow us to specify id-only? Can this be omitted for auto-generated paths?"
+          "description": "IGNORED: This field is only present due to a bug in the globus flows UI Jun2025"
         }
       },
       "description": "Where to send the data",
@@ -57,7 +59,8 @@
 
     "compute": {
       "type": "object",
-      "title": "Compute options (will later be moved into flow as private params)",
+      "title": "Compute options",
+      "description": "TESTING PURPOSES ONLY (will later be moved into flow as private params)",
       "required": ["endpoint_id", "function_id"],
       "properties": {
         "endpoint_id": {
@@ -71,6 +74,80 @@
           "description": "A GCE compute function that performs file validation- TODO move to private params / hardcoded flow value"
         }
       }
+    },
+
+    "search_index_id": {
+      "type": "string",
+      "title": "Search index ID",
+      "description": "TESTING PURPOSES ONLY (will later be moved into flow as private params)",
+      "default": "8cd76948-c803-483b-88aa-cdd2f6a4cbe6"
+    },
+
+    "search_metadata": {
+      "type": "object",
+      "title": "Search metadata",
+      "description": "Metadata that will be used to populate a search index. Simplified from datacite 4.6; in future we will add custom extra fields.",
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "The identifier (workflow will fill this in as 'file path from collection root')"
+        },
+
+        "creators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "givenName": {
+                "type": "string"
+              },
+              "familyName": {
+                "type": "string"
+              },
+              "affiliation": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            },
+            "required": [
+              "name"
+            ]
+          }
+        },
+
+        "title": {
+          "type": "string",
+          "description": "A short human-friendly title for this dataset"
+        },
+
+        "publisher_name": {
+          "type": "string",
+          "description": "The name of the institution that produced the resource"
+        },
+
+        "description": {
+          "type": "string",
+          "description": "A one-paragraph description shown in search results"
+        }
+      },
+      "required": [
+        "identifier",
+        "creators",
+        "title",
+        "publisher_name",
+        "description"
+      ],
+      "additionalProperties": false
     }
   },
   "additionalProperties": false

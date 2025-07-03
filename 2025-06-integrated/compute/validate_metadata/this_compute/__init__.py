@@ -8,6 +8,7 @@ Doing this all in one function allows bypassing the 256k state size limit if the
 * Use credentials to download a file via HTTPS from a collection known to allow HTTPS (subscribed, non-HA, guest)
 * Validate JSON against the datacite schema and report errors back to the flow (list of 0 or more items)
 """
+import datetime
 import logging
 import os
 
@@ -51,6 +52,28 @@ def validate_gcs_json_datacite(
         "data": content
     }
 
+def _create_search_metadata(collection_id: str, dataset_path: str, identifier: str, search_metadata: dict) -> dict:
+    """
+    Populate a datacite-ish search metadata payload with additional fields that are managed by a workflow,
+        rather than the user
+    """
+    return {
+        "identifier": identifier,
+        # Most params are provided via a globus flow, which performs validation and payload formatting before
+        #   passing to this function
+        **search_metadata,
+        "dates": [
+            {
+                "date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                "dateType": "Submitted"
+            }
+        ],
+        "globus": {
+            "collection_id": collection_id,
+            "path": dataset_path
+        }
+    }
+
 
 def write_metadata_to_remote_file(
         *,
@@ -73,21 +96,14 @@ def write_metadata_to_remote_file(
     logging.basicConfig(level=logging.INFO)
 
     try:
-        CLIENT_ID = client_id or os.environ['GLOBUS_CLIENT_ID']
-        CLIENT_SECRET = client_secret or os.environ['GLOBUS_CLIENT_SECRET']
+        client_id = client_id or os.environ['GLOBUS_CLIENT_ID']
+        client_secret = client_secret or os.environ['GLOBUS_CLIENT_SECRET']
     except KeyError:
         raise Exception("Globus Client ID and Client Secret must be set via worker environment variables")
 
-    # TODO: break "payload formatting" and "file writing" into separate functions, if the app grows
-    #   For now we combine them in a single function because that has lower latency when used via flows APs
-    combined_search_metadata = {
-        "identifier": identifier,
-        **search_metadata,  # We rely on the flow to define this datacite schema and ensure it contains only the expected params
-        "globus": {
-            "collection_id": collection_id,
-            "path": dataset_path
-        }
-    }
+    # Consider breaking "payload formatting" and "file writing" into separate GCE functions.
+    #   For now, we combine them in a single function because that has lower latency when used via flows APs
+    combined_search_metadata = _create_search_metadata(collection_id, dataset_path, identifier, search_metadata)
 
     try:
         resp = write_file_to_https(
@@ -103,8 +119,8 @@ def write_metadata_to_remote_file(
             "error": e.code,
             "code": e.http_status,
         }
-    # Return info required to consume the exact search payload (for index ingest) and check result
-    # NOTE: File write may fail
+    # Report whether the file write succeeded or failed.
+    #   This contains the entire search payload, so we can pass that to search ingest AP later
     return {
         "status": "SUCCESS" if resp.ok else "FAILURE",
         "code": resp.status_code,
