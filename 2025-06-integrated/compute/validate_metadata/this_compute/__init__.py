@@ -58,10 +58,10 @@ def _create_search_metadata(collection_id: str, dataset_path: str, identifier: s
         rather than the user
     """
     return {
+        **search_metadata,
         "identifier": identifier,
         # Most params are provided via a globus flow, which performs validation and payload formatting before
         #   passing to this function
-        **search_metadata,
         "dates": [
             {
                 "date": datetime.datetime.now(datetime.timezone.utc).isoformat(),

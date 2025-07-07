@@ -90,6 +90,8 @@
       "properties": {
         "creators": {
           "type": "array",
+          "title": "Authors",
+          "description": "A list of authors (tip: use JSON list syntax if entering via the web UI, `[{\"name\": \"Firstname Lastn\"}]`)",
           "items": {
             "type": "object",
             "properties": {
@@ -140,7 +142,6 @@
         }
       },
       "required": [
-        "identifier",
         "creators",
         "title",
         "description",

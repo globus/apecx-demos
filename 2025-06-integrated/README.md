@@ -90,6 +90,35 @@ globus search index create "apecx-dev - Data Repository" "Dev/testing version of
   * One function that can write a file via HTTPS using the Globus SDK
   * A packaged compute worker (container) that contains Globus SDK and any other required environment details (jsonschema validation etc)
 
+To deploy the compute functions, follow the instructions in `compute/README.md`. Remember to:
+* Build the function container locally, and ensure all tests pass.
+* Run the provided script to register the function, and capture the UUID for future reference (the introspection tools for after-the-fact are rather bad)
+
+Example local commands:
+```bash
+GLOBUS_CLIENT_ID="REPLACEME"  # a client app suitable for running commands like "register function" as a specific user. Will prompt for login when scripts are run.
+GLOBUS_GROUP_ID_FUNCTION="3dbaa856-3fff-11f0-b819-0e5f35b86a33"
+
+docker build --no-cache . -t gce_workers/validate_metadata:latest
+
+docker run -it gce_workers/validate_metadata:latest bash -c "pip install -r requirements/tests.txt && pytest ."
+
+docker run -it \
+    -v `realpath ../common/commands`:/app/commands \
+    gce_workers/validate_metadata:latest \
+    python3 /app/commands/register_function.py ${GLOBUS_CLIENT_ID} this_compute.main --group ${GLOBUS_GROUP_ID_FUNCTION}
+```
+
+The remote environment (MEP) config should reference a matching container built somewhere, eg a repository that we can pull the correct tag from. If not set up as a systemd service yet, be sure to start the demo via:
+
+```bash
+# Note: on many systems, it's easier to install GCE manually in a venv with permissions accessible to both the root and UEP mapped identity unix accounts. (the package may depend on a very outdated python version, causing the MEP to give exchange errors due to python 3.9, even if the worker, host machine, and function are all on python 3.12)
+source /opt/gce/bin/activate
+
+globus-compute-endpoint start apecx-dev-compute-only-mep --log-to-console
+```
+
+
 ### Webapp
   * A static search portal fork oriented around the Datacite schema
   * Some example metadata for the MU VIOLIN scraping dataset

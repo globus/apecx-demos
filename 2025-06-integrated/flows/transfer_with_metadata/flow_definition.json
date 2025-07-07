@@ -100,7 +100,7 @@
       "ResultPath": "$.prev",
 
       "Parameters": {
-        "source_is_dir": "prev.GetInfoSourcePath.details.type == 'dir'",
+        "source_is_dir.=": "prev.GetInfoSourcePath.details.type == 'dir'",
         "dest_exists.=": "'code' not in `$.prev.GetInfoDestPath.details` or `$.prev.GetInfoDestPath.details.code` != 'NotFound'"
       }
     },
@@ -190,7 +190,7 @@
         "operation": "CREATE",
         "permissions": "rw",
 
-        "endpoint_id.$": "$.dest.id",
+        "endpoint_id.$": "$.destination.id",
         "path.$": "$.meta.dest_path"
       }
     },
@@ -211,7 +211,7 @@
       "Catch": [
         {
           "Next": "FailFileCleanupBranch",
-          "ResultPath": "$",
+          "ResultPath": "$.error",
           "ErrorEquals": [
             "ActionUnableToRun",
             "ActionFailedException",
@@ -249,8 +249,8 @@
       "Catch": [
         {
           "Next": "FailFileCleanupBranch",
-
           "ResultPath": "$.error",
+
           "ErrorEquals": [
             "ActionUnableToRun",
             "ActionFailedException",
@@ -261,7 +261,7 @@
 
       "Parameters": {
         "operation": "DELETE",
-        "endpoint_id.$": "$.dest.id",
+        "endpoint_id.$": "$.destination.id",
         "rule_id.$": "$.meta.GrantUserDestAccess.details.access_id"
       }
     },
@@ -281,6 +281,8 @@
       "Catch": [
         {
           "Next": "FailFileCleanupBranch",
+          "ResultPath": "$.error",
+
           "ErrorEquals": [
             "ActionUnableToRun",
             "ActionFailedException",
@@ -295,7 +297,7 @@
 
         "kwargs": {
           "collection_id.$": "$.destination.id",
-          "dataset_path.$": "$.meta_dest_path",
+          "dataset_path.$": "$.meta.dest_path",
 
           "metadata_path.=": "f'{meta.dest_path}/{meta.metadata_fn}'",
 
@@ -336,6 +338,20 @@
 
       "End": true,
       "ResultPath": "$",
+
+      "ExceptionOnActionFailure": true,
+      "Catch": [
+        {
+          "Next": "FailFileCleanupBranch",
+          "ResultPath": "$.error",
+
+          "ErrorEquals": [
+            "ActionUnableToRun",
+            "ActionFailedException",
+            "ActionTimeout"
+          ]
+        }
+      ],
 
       "Parameters": {
         "search_index.$": "$.meta.search_index_id",
@@ -381,7 +397,7 @@
       ],
 
       "Parameters": {
-        "endpoint.$": "$.dest.id",
+        "endpoint.$": "$.destination.id",
         "recursive": true,
 
         "DATA": [

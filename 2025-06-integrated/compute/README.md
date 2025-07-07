@@ -45,7 +45,10 @@ docker build --no-cache . -t gce_workers/validate_metadata:latest
     GLOBUS_CLIENT_ID="REPLACEME"
     
     # Replace with absolute path to ../common
-    docker run -it -v `realpath ../common/commands`:/app/commands gce_workers/validate_metadata:latest python3 /app/commands/register_function.py ${GLOBUS_CLIENT_ID} this_compute.main
+    docker run -it \
+        -v `realpath ../common/commands`:/app/commands \
+        gce_workers/validate_metadata:latest \
+        python3 /app/commands/register_function.py ${GLOBUS_CLIENT_ID} this_compute.main
     ```
     * ` (optional args: `--public` and `--group UUID`)
       * Binds commands in as a volume, so that they don't need to be installed in the container up front. This reduces the amount of "extra management" code present in the worker in production.
