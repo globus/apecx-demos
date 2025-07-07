@@ -5,7 +5,7 @@
     "mappings": [
       {
         "source": "{username}",
-        "match": "REPLACEME@clients.auth.globus.org",
+        "match": "REPLACEME-FLOW_UUID@clients.auth.globus.org",
         "output": "gce-user"
       }
     ]

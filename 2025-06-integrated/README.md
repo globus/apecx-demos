@@ -25,38 +25,82 @@ The schema format is based on Datacite 4.6 ([spec](https://datacite-metadata-sch
 
 
 ## Notes during development
-Submitting a datacite schema via the web UI (flows library) does not work well. The web UI doesn't support array or array-of-objects parameters well, and the submit button never quite enabled (for unclear reasons). 
-
-Fortunately, we don't really want metadata submitted via the flow at all, because we need to keep a copy to regenerate index / change permissions later. We'll test this out, then switch to compute + read-file-via-HTTPS incrementally.
+Submitting a datacite schema via the web UI (flows library) does not work well. The web UI doesn't support array or array-of-objects parameters well, and the submit button never quite enabled. We'll start demonstrating via a pre-built JSON object. 
 
 
 ## Required assets
-* Storage
-  * A source collection (test with GCP: we do not know what capabilities a user will have on their endpoint, and GCP is a minimum baseline)
-    * An example dataset in source collection, requiring a file named metadata.json in the root
-  * A destination collection (eventually will require flow for submission)
-    * Dest collection must enable HTTPS features, since that is how we will read metadata in the compute function
-    * Specifically use a guest collection to facilitate automation
-* Search
-  * One search index that expects records in the DataCite metadata schema format
-    * `globus search index create "apecx-dev - Data Repository" "Dev/testing version of the APECx data repository"`
-      * `GSI_UUID="8cd76948-c803-483b-88aa-cdd2f6a4cbe6"`
+### A Globus subscription
+  * [Globus ARPA-H APECx](https://app.globus.org/groups/ed27319a-13eb-11f0-8c33-0affcb8df433/about) UUID: `4b8bbd04-30ee-4d29-858d-3d94454584d3`
 
-* Compute
-  * One compute endpoint that accepts flow identity to run functions
-  * One function that can retrieve a file via HTTPS using the Globus SDK
+### Storage
+* A source collection (test with GCP: we do not know what capabilities a user will have on their endpoint, and GCP is a minimum baseline)
+  * An example dataset in source collection (folder containing 1+ files)
+* A destination collection (eventually will require flow for submission)
+  * Dest collection must enable HTTPS features, since that is how we will write metadata in the compute function
+  * Specifically use a guest collection to facilitate automation
+
+
+### Groups
+Several globus groups are used to gate permissions around this feature
+* Parent group: [automation](https://app.globus.org/groups/0d2b4afe-3fff-11f0-b03a-0affcae2cfad/about) (parent group): UUID 0d2b4afe-3fff-11f0-b03a-0affcae2cfad
+  * General parent, no function except organizing
+* Subgroup [apecx-dev-automation-submission](https://app.globus.org/groups/bc8f2f41-5b5c-11f0-9736-0e5f35b86a33/subgroups) UUID bc8f2f41-5b5c-11f0-9736-0e5f35b86a33
+  * Who is allowed to RUN the data submission flow
+* Subgroup [apecx-dev-automation-internals-compute](https://app.globus.org/groups/3dbaa856-3fff-11f0-b819-0e5f35b86a33/about) UUID 3dbaa856-3fff-11f0-b819-0e5f35b86a33
+  * This is used by globus compute functions, to determine which identities are allowed to run the function. Specifically, the flow user must be added to this group.
+* Subgroup `automation-admins`
+  * TODO: People who should be allowed to administer the search index, and own other project resources. Figure out how this fits into the broader apecx hierarchy.
+
+### Auth Service accounts
+One CLI service account is required:
+* `apecx-dev-compute-abought-js2` (UUID  `e7d021af-9782-4bf6-96c2-8785ed2a1e14`, client secret created via console and not tracked here)
+  * This is used by the GCE endpoint to provide credentials for writing a file to the storage collection. This is required because the GCE endpoint has no inherent idea of context or instance metadata: it just gates whether you can run a function. It does not know who is running the flow and cannot provide credentials/tokens for that user.
+
+### Flow
+* A globus flow must be created before certain other assets, because key processes will be run under the flow identity 
+  * Use the `transfer_with_metadata` flow in this repository:
+```bash
+cd flows/transfer_with_metadata
+
+globus flows validate "flow_definition.json" --input-schema "input_schema.json"
+
+globus flows create \
+    "APECx Data Ingest Flow (dev)" \
+    --subtitle "Transfer a dataset and store a copy of user metadata" \
+    --description "A demonstration of globus platform capabilities for the ARPA-H APECx project." \
+    --administrator  0d2b4afe-3fff-11f0-b03a-0affcae2cfad \
+    --starter bc8f2f41-5b5c-11f0-9736-0e5f35b86a33 __ \
+    --keyword apecx --keyword apecx-demo --keyword apecx-dev \
+    --subscription-id 4b8bbd04-30ee-4d29-858d-3d94454584d3
+```
+* The resulting flow is: UUID `199bf87a-03b3-44da-ac7c-a9f6c34ee149` / username `199bf87a-03b3-44da-ac7c-a9f6c34ee149@clients.auth.globus.org`
+
+### Search
+One search index that expects records in the DataCite metadata schema format
+```bash
+globus search index create "apecx-dev - Data Repository" "Dev/testing version of the APECx data repository"
+```
+* `GSI_UUID="a803fd20-7c86-476f-8d0a-bd92bd5ff7fa"`
+* Per docs, contact support to request this index be added to the subscription and marked non-trial
+  
+
+
+### Compute
+* One MEP compute endpoint that accepts flow identity to run functions. See MEP setup instructions (notebook) and the config files provided in this repo (`compute/configs/validate_metadata/mep/`).
+  * One function that can write a file via HTTPS using the Globus SDK
   * A packaged compute worker (container) that contains Globus SDK and any other required environment details (jsonschema validation etc)
-* Auth
-  * A way to authorize the flow to run compute functions (evaluate options; flow specific identity for compute provider? Multi-user or login as that person for endpoint?)
-  * A way to authorize the flow for access to the storage collection, via HTTPS grant
-* Permissions
-  * Submitting user must be authorized at source and dest collection
-  * Flow must be authorized to read the dest (https grant)
-  * Flow must be authorized to run functions on the compute endpoint
 
-* Webapp
+### Webapp
   * A static search portal fork oriented around the Datacite schema
-  * An example file for the MU VIOLIN scraping dataset
+  * Some example metadata for the MU VIOLIN scraping dataset
     * `globus search ingest "${GSI_UUID}" "compute/data/gsearch-example_metadata_violin-mu.json"`
 
-  
+## Wiring together authorization
+The above components need additional work to connect them. Ideally, as much of the system as possible should be private internal state. Users should not have default write access to the repository or its contents, but only to outside wrappers (like the flow) that mediate what they can do at each step. 
+
+* The FLOW USER must be a member of the `-internals-compute` group
+  * The webapp will only send an invite, which is silly for an identity with no email. Click through the `>` icon in list view and click "add member" to force immediate invite. IIRC the underlying CLI/APIs support direct addition.
+* The FLOW USER must be allowed to create new entries in the search index 
+* The `-admins` group should be granted access to the search index, and flow monitor/runner permissions
+* The SERVICE ACCOUNT credentials must be made available to the endpoint MEP
+* The SERVICE ACCOUNT must be granted read/write access on the root of the dest guest collection

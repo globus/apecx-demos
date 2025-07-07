@@ -88,11 +88,6 @@
       "title": "Search metadata",
       "description": "Metadata that will be used to populate a search index. Simplified from datacite 4.6; in future we will add custom extra fields.",
       "properties": {
-        "identifier": {
-          "type": "string",
-          "description": "The identifier (workflow will fill this in as 'file path from collection root')"
-        },
-
         "creators": {
           "type": "array",
           "items": {
@@ -102,15 +97,19 @@
                 "type": "string"
               },
               "givenName": {
+                "title": "Given Name",
                 "type": "string"
               },
               "familyName": {
+                "title": "Family name",
                 "type": "string"
               },
               "affiliation": {
                 "type": "object",
                 "properties": {
                   "name": {
+                    "title": "Affiliation",
+                    "description": "Institution / employer for this author",
                     "type": "string"
                   }
                 },
@@ -124,28 +123,28 @@
             ]
           }
         },
-
         "title": {
           "type": "string",
+          "title": "Title",
           "description": "A short human-friendly title for this dataset"
         },
-
-        "publisher_name": {
-          "type": "string",
-          "description": "The name of the institution that produced the resource"
-        },
-
         "description": {
           "type": "string",
+          "title": "Description",
           "description": "A one-paragraph description shown in search results"
+        },
+        "publisher_name": {
+          "type": "string",
+          "title": "Produced by",
+          "description": "The name of the institution that produced the resource"
         }
       },
       "required": [
         "identifier",
         "creators",
         "title",
-        "publisher_name",
-        "description"
+        "description",
+        "publisher_name"
       ],
       "additionalProperties": false
     }
