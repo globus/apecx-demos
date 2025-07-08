@@ -19,8 +19,8 @@ engine:
     worker_init: |
       export GCE_RUN_USER=$(id -u)
       export GCE_RUN_GROUP=$(id -g)
-      export GLOBUS_CLIENT_ID="REPLACEME"
-      export GLOBUS_CLIENT_SECRET="REPLACEME"
+      export GLOBUS_CLIENT_ID=$GLOBUS_CLIENT_ID
+      export GLOBUS_CLIENT_SECRET=$GLOBUS_CLIENT_SECRET
 
 # At 30s/hb (default value), 10 heartbeats is 300s.
 idle_heartbeats_soft: 10
