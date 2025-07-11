@@ -2,9 +2,6 @@
   "type": "object",
   "required": [
     "source",
-    "destination",
-    "compute",
-    "search_index_id",
     "search_metadata"
   ],
   "properties": {
@@ -98,56 +95,6 @@
       },
       "description": "The data's origin",
       "additionalProperties": false
-    },
-
-    "destination": {
-      "type": "object",
-      "title": "Destination",
-      "format": "globus-collection",
-      "required": [
-        "id"
-      ],
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Destination Collection ID",
-          "format": "uuid",
-          "description": "The UUID for the destination collection"
-        },
-        "path": {
-          "type": "string",
-          "title": "Source Collection Path",
-          "description": "IGNORED: This field is only present due to a bug in the globus flows UI Jun2025"
-        }
-      },
-      "description": "Where to send the data",
-      "additionalProperties": false
-    },
-
-    "compute": {
-      "type": "object",
-      "title": "Compute options",
-      "description": "TESTING PURPOSES ONLY (will later be moved into flow as private params)",
-      "required": ["endpoint_id", "function_id"],
-      "properties": {
-        "endpoint_id": {
-          "type": "string",
-          "title": "GCE compute endpoint ID",
-          "description": "A bespoke compute endpoint deployed to run validation function (must have credentials to read dest collection via HTTPS)"
-        },
-        "function_id": {
-          "type": "string",
-          "title": "GCE validation function ID",
-          "description": "A GCE compute function that performs file validation- TODO move to private params / hardcoded flow value"
-        }
-      }
-    },
-
-    "search_index_id": {
-      "type": "string",
-      "title": "Search index ID",
-      "description": "TESTING PURPOSES ONLY (will later be moved into flow as private params)",
-      "default": "a803fd20-7c86-476f-8d0a-bd92bd5ff7fa"
     }
   },
   "additionalProperties": false
