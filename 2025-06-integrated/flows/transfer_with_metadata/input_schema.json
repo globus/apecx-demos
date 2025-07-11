@@ -8,6 +8,73 @@
     "search_metadata"
   ],
   "properties": {
+    "search_metadata": {
+      "type": "object",
+      "title": "Search metadata",
+      "description": "Metadata that will be used to populate a search index. Simplified from datacite 4.6; in future we will add custom extra fields.",
+      "properties": {
+        "creators": {
+          "type": "array",
+          "title": "Authors",
+          "description": "A list of authors (tip: use JSON list syntax if entering via the web UI, `[{\"name\": \"Firstname Lastn\"}]`)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "givenName": {
+                "title": "Given Name",
+                "type": "string"
+              },
+              "familyName": {
+                "title": "Family name",
+                "type": "string"
+              },
+              "affiliation": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "title": "Affiliation",
+                    "description": "Institution / employer for this author",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            },
+            "required": [
+              "name"
+            ]
+          }
+        },
+        "title": {
+          "type": "string",
+          "title": "Title",
+          "description": "A short human-friendly title for this dataset"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description",
+          "description": "A one-paragraph description shown in search results"
+        },
+        "publisher_name": {
+          "type": "string",
+          "title": "Produced by",
+          "description": "The name of the institution that produced the resource"
+        }
+      },
+      "required": [
+        "creators",
+        "title",
+        "description",
+        "publisher_name"
+      ],
+      "additionalProperties": false
+    },
+
     "source": {
       "type": "object",
       "title": "Source",
@@ -80,74 +147,7 @@
       "type": "string",
       "title": "Search index ID",
       "description": "TESTING PURPOSES ONLY (will later be moved into flow as private params)",
-      "default": "8cd76948-c803-483b-88aa-cdd2f6a4cbe6"
-    },
-
-    "search_metadata": {
-      "type": "object",
-      "title": "Search metadata",
-      "description": "Metadata that will be used to populate a search index. Simplified from datacite 4.6; in future we will add custom extra fields.",
-      "properties": {
-        "creators": {
-          "type": "array",
-          "title": "Authors",
-          "description": "A list of authors (tip: use JSON list syntax if entering via the web UI, `[{\"name\": \"Firstname Lastn\"}]`)",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "givenName": {
-                "title": "Given Name",
-                "type": "string"
-              },
-              "familyName": {
-                "title": "Family name",
-                "type": "string"
-              },
-              "affiliation": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "title": "Affiliation",
-                    "description": "Institution / employer for this author",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "name"
-                ]
-              }
-            },
-            "required": [
-              "name"
-            ]
-          }
-        },
-        "title": {
-          "type": "string",
-          "title": "Title",
-          "description": "A short human-friendly title for this dataset"
-        },
-        "description": {
-          "type": "string",
-          "title": "Description",
-          "description": "A one-paragraph description shown in search results"
-        },
-        "publisher_name": {
-          "type": "string",
-          "title": "Produced by",
-          "description": "The name of the institution that produced the resource"
-        }
-      },
-      "required": [
-        "creators",
-        "title",
-        "description",
-        "publisher_name"
-      ],
-      "additionalProperties": false
+      "default": "a803fd20-7c86-476f-8d0a-bd92bd5ff7fa"
     }
   },
   "additionalProperties": false

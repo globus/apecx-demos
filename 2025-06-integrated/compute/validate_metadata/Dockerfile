@@ -1,6 +1,5 @@
 ARG BASE=python:3.12.10-slim-bullseye
 
-
 # Temp stage: artifact build (requires compilers that we exclude from final worker image)
 FROM ${BASE} AS builder
 

@@ -51,6 +51,8 @@ Several globus groups are used to gate permissions around parts of this feature.
   * This is used by globus compute functions, to determine which identities are allowed to run the function. Specifically, the flow user must be added to this group.
 * Subgroup `automation-admins`
   * TODO: People who should be allowed to administer the search index, and own other project resources. Figure out how this fits into the broader apecx hierarchy.
+* Group: `all-project-members`: who is allowed to see search results? (separate from data access)
+  * todo create this one
 
 ### Auth Service accounts
 One CLI service account is required:
