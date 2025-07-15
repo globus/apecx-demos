@@ -15,22 +15,22 @@
         "dataset_id.=": "f'{_context.flow_id}_{_context.run_id}'",
         "dest_path.=": "f'/{_context.flow_id}_{_context.run_id}/'",
 
-        "user_uuid.=": "_context['user_id'].rpartition(':')[-1]",
+        "_pvt_user_uuid.=": "_context['user_id'].rpartition(':')[-1]",
 
-        "destination_id": "dba0d7c0-1f63-44d1-bcd0-76865d3d44a0",
-        "search_index_id": "a803fd20-7c86-476f-8d0a-bd92bd5ff7fa",
+        "_pvt_destination_id": "dba0d7c0-1f63-44d1-bcd0-76865d3d44a0",
+        "_pvt_search_index_id": "a803fd20-7c86-476f-8d0a-bd92bd5ff7fa",
 
-        "compute_endpoint_id": "5a2456c6-6c72-4cd4-a2e3-984f2e3c1b86",
-        "compute_function_id": "6a4d6359-857c-4f6a-a40e-a778e64c3a13",
+        "_pvt_compute_endpoint_id": "5a2456c6-6c72-4cd4-a2e3-984f2e3c1b86",
+        "_pvt_compute_function_id": "6a4d6359-857c-4f6a-a40e-a778e64c3a13",
 
         "__Private_Parameters": [
-          "user_uuid",
+          "_pvt_user_uuid",
 
-          "destination_id",
-          "search_index_id",
+          "_pvt_destination_id",
+          "_pvt_search_index_id",
 
-          "compute_endpoint_id",
-          "compute_function_id"
+          "_pvt_compute_endpoint_id",
+          "_pvt_compute_function_id"
         ]
       }
     },
@@ -92,7 +92,7 @@
       ],
 
       "Parameters": {
-        "endpoint_id.$": "$.meta.destination_id",
+        "endpoint_id.$": "$.meta._pvt_destination_id",
         "path.=": "`$.meta.dest_path`"
       }
     },
@@ -159,7 +159,7 @@
       ],
 
       "Parameters": {
-        "endpoint_id.$": "$.meta.destination_id",
+        "endpoint_id.$": "$.meta._pvt_destination_id",
         "path.$": "$.meta.dest_path"
       }
     },
@@ -191,12 +191,12 @@
 
       "Parameters": {
         "principal_type": "identity",
-        "principal.$": "$.meta.user_uuid",
+        "principal.$": "$.meta._pvt_user_uuid",
 
         "operation": "CREATE",
         "permissions": "rw",
 
-        "endpoint_id.$": "$.meta.destination_id",
+        "endpoint_id.$": "$.meta._pvt_destination_id",
         "path.$": "$.meta.dest_path"
       }
     },
@@ -228,7 +228,7 @@
 
       "Parameters": {
         "source_endpoint.$": "$.source.id",
-        "destination_endpoint.$": "$.meta.destination_id",
+        "destination_endpoint.$": "$.meta._pvt_destination_id",
         "notify_on_succeeded": false,
         "notify_on_failed": false,
         "DATA": [
@@ -267,7 +267,7 @@
 
       "Parameters": {
         "operation": "DELETE",
-        "endpoint_id.$": "$.meta.destination_id",
+        "endpoint_id.$": "$.meta._pvt_destination_id",
         "rule_id.$": "$.meta.GrantUserDestAccess.details.access_id"
       }
     },
@@ -298,11 +298,11 @@
       ],
 
       "Parameters": {
-        "endpoint.$": "$.meta.compute_endpoint_id",
-        "function.$": "$.meta.compute_function_id",
+        "endpoint.$": "$.meta._pvt_compute_endpoint_id",
+        "function.$": "$.meta._pvt_compute_function_id",
 
         "kwargs": {
-          "collection_id.$": "$.meta.destination_id",
+          "collection_id.$": "$.meta._pvt_destination_id",
           "dataset_path.$": "$.meta.dest_path",
 
           "metadata_path.=": "f'{meta.dest_path}/{meta.metadata_fn}'",
@@ -360,7 +360,7 @@
       ],
 
       "Parameters": {
-        "search_index.$": "$.meta.search_index_id",
+        "search_index.$": "$.meta._pvt_search_index_id",
 
         "subject.$": "$.meta.dataset_id",
         "content.$": "$.prev.details.results[0].output.data",
@@ -403,7 +403,7 @@
       ],
 
       "Parameters": {
-        "endpoint.$": "$.meta.destination_id",
+        "endpoint.$": "$.meta._pvt_destination_id",
         "recursive": true,
 
         "DATA": [

@@ -121,6 +121,9 @@ def write_metadata_to_remote_file(
         }
     # Report whether the file write succeeded or failed.
     #   This contains the entire search payload, so we can pass that to search ingest AP later
+    if not resp.ok:
+        logger.error(f"Metadata write failed with code {resp.code} and message {resp.text}")
+
     return {
         "status": "SUCCESS" if resp.ok else "FAILURE",
         "code": resp.status_code,

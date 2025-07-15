@@ -5,10 +5,11 @@
   },
   "search_metadata": {
     "creators": [
-      {"name": "Andy Boughton"}
+      {"name": "Andy Boughton"},
+      {"name": "The Globus.org Team"}
     ],
-    "title": "Example dataset",
-    "description": "A compelling example dataset",
+    "title": "2025 ARPA-H Demonstration Dataset",
+    "description": "Globus is building research data portal capabilities to facilitate sharing of data across teams. The search portal interface can be configured to support discovery of datasets by other APECx performers",
     "publisher_name": "Globus.org"
   }
 }

@@ -1,0 +1,77 @@
+{
+  "ingest_type": "GMetaList",
+  "ingest_data": {
+    "gmeta": [
+      {
+        "subject": "apecx-joshi-mu/violin-scraping",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "creators": [
+            {"name": "Yen On Chan"},
+            {"name": "Paul de Figueiredo"},
+            {"name": "Trupti Joshi"}
+          ],
+          "title": "Curated public datasets for vaccine development and AI applications",
+          "description": "There is a wealth of information in the research literature, but it is too often fragmented by inconsistent terminology or presentation. To assist in the development of robust data curation tools, we have made available lists of known biological entities collected from two well known databases. This includes data related to virus genomes, viral proteins, protein structures, and epitope information (from the BV-BRC) and data related to pathogens, vaccines, and associated gene information (from VIOLIN). These datasets are made available in a computer readable format suitable for re-use in various curation tools, including both human and AI-driven workflows.",
+          "publisher_name": "University of Missouri",
+
+          "globus": {
+            "collection": "8d2e71d6-7a29-41d9-94e5-38d8a95fa5db",
+            "path": "/apecx-joshi-anl-general/2025_04_28_VIOLIN_Web_Portal_Data/",
+            "type": "directory"
+          }
+        }
+      },
+
+
+      {
+        "subject": "apecx-joachimiak-anl/groel-cryoem",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "creators": [{"name": "Andrzej Joachimiak et. al"}],
+          "title": "100 CryoEM movies of Molecular Chaperonin GroEL @ 2Å resolution",
+          "description": "Demonstration CryoEM datasets representing an early data artifact used in the process of CryoEM data analysis and reconstruction. This example dataset may be used to validate and refine new algorithms for protein structure determination.",
+          "publisher_name": "Argonne National Laboratory",
+
+          "globus": {
+            "collection": "8d2e71d6-7a29-41d9-94e5-38d8a95fa5db",
+            "path": "/apecx-joachimiak-anl-public/GroEL-hdf/"
+          }
+        }
+      },
+
+
+
+      {
+        "subject": "placeholder/private",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "creators": [{"name": "APECx Performers"}],
+          "title": "And many others",
+          "description": "Not every dataset that has been shared to date is ready to be made public. But as we start seeing interactions across performer teams, we hope to see this repository become a central point of discovery for future collaborations across the wider APECx program.",
+          "publisher_name": "APECx Performer Teams"
+        }
+      },
+
+
+      {
+        "subject": "placeholder/future",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "creators": [{"name": "Those yet to come"}],
+          "title": "Future datasets yet to come",
+          "description": "These early pilot users are just now beginning to share data. As we expand functionality to the wider community, we hope these tools will become more widely used.",
+          "publisher_name": "TBD"
+        }
+      }
+    ]
+  }
+}
