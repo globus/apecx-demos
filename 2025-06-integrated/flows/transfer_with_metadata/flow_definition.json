@@ -84,7 +84,7 @@
         {
           "Next": "FailSetupGeneric",
 
-          "ResultPath": "$.error",
+          "ResultPath": "$._private_error",
           "ErrorEquals": [
             "ActionUnableToRun",
             "ActionFailedException",
@@ -225,14 +225,14 @@
       "RunAs":"User",
 
       "Next": "RevokeUserDestAccess",
-      "ResultPath": "$.prev",
+      "ResultPath": "$._private_prev",
       "WaitTime": 604800,
 
       "ExceptionOnActionFailure": true,
       "Catch": [
         {
           "Next": "FailFileCleanupBranch",
-          "ResultPath": "$.error",
+          "ResultPath": "$._private_error",
           "ErrorEquals": [
             "ActionUnableToRun",
             "ActionFailedException",
@@ -268,13 +268,13 @@
       "RunAs": "Flow",
 
       "Next": "WriteMetadataToDest",
-      "ResultPath": "$.prev",
+      "ResultPath": "$._private_prev",
 
       "ExceptionOnActionFailure": true,
       "Catch": [
         {
           "Next": "FailFileCleanupBranch",
-          "ResultPath": "$.error",
+          "ResultPath": "$._private_error",
 
           "ErrorEquals": [
             "ActionUnableToRun",
@@ -310,7 +310,7 @@
       "Catch": [
         {
           "Next": "FailFileCleanupBranch",
-          "ResultPath": "$.error",
+          "ResultPath": "$._private_error",
 
           "ErrorEquals": [
             "ActionUnableToRun",
@@ -344,7 +344,7 @@
 
 
     "CheckWriteResult": {
-      "Comment": "Check that validation does not return errors. TODO: WRITE expression for is array empty",
+      "Comment": "Check that validation does not return errors.",
       "Type": "Choice",
 
       "Default": "FailFileCleanupBranch",
@@ -415,12 +415,13 @@
       "RunAs": "Flow",
 
       "Next": "FailDestinationGeneric",
-      "ResultPath": "$.prev",
-
+      "ResultPath": "$._private_prev",
 
       "ExceptionOnActionFailure": true,
       "Catch": [
         {
+          "ResultPath": "$._private_error",
+
           "Next": "FailDestinationGeneric",
           "ErrorEquals": [
             "ActionUnableToRun",
