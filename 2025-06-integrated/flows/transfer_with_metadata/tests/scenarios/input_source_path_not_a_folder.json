@@ -1,7 +1,7 @@
 {
   "source": {
     "id": "23bcedea-90ac-11ef-aa6b-13835fff4299",
-    "path": "/Users/abought/Documents/globus-connect-personal/flows_debugging/transfer_with_metadata/gcs_src/good_metadata/"
+    "path": "/Users/abought/Documents/globus-connect-personal/flows_debugging/transfer_with_metadata/gcs_src/good_metadata/empty.txt"
   },
   "search_metadata": {
     "creators": [
@@ -10,7 +10,6 @@
     ],
     "title": "2025 ARPA-H Demonstration Dataset",
     "description": "Globus is building research data portal capabilities to facilitate sharing of data across teams. The search portal interface can be configured to support discovery of datasets by other APECx performers",
-    "publisher_name": "Globus.org",
-    "disallowed_extra_field": "some_value"
+    "publisher_name": "Globus.org"
   }
 }

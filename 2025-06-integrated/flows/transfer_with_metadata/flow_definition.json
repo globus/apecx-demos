@@ -450,7 +450,7 @@
 
     "FailSetupGeneric":{
       "Type": "Fail",
-      "Error": "FailDestinationGeneric",
+      "Error": "FailSetupGeneric",
       "Cause": "An error occurred while checking the source or destination collections"
     },
 

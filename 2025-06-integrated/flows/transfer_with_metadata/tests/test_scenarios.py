@@ -4,6 +4,7 @@ from pprint import pprint as pp
 import time
 
 from globus_sdk import (FlowsClient, FlowsAPIError, SpecificFlowClient, GlobusHTTPResponse)
+import pytest
 
 ############################
 # Helpers for use by tests
@@ -29,6 +30,16 @@ def _run_flow(client: SpecificFlowClient, body: dict, label: str=None, tags: lis
     print(f'Initiated flow "{resp.data["run_id"]}"')
     # Status is useful if the API rejects flow submission ("failed before it started")
     return resp
+
+
+def _get_last_state(resp_data: dict) -> GlobusHTTPResponse:
+    status = resp_data['status']
+    if status == 'SUCCEEDED':
+        return resp_data['details']['output']['state_name']
+    elif status == 'FAILED':
+        return resp_data['details']['details']['exception']
+    else:
+        raise Exception(f"Unhandled last state: {status}")
 
 
 def _check_flow_status(client: FlowsClient, run_id: str) -> GlobusHTTPResponse:
@@ -63,40 +74,50 @@ def _run_until_complete(
     print(f'Run id {run_id} had final resolved status "{status}"')
     return resp
 
+
 ##################
 # Test some scenarios
-
 def test_works_with_valid_metadata(flows_client, specific_flow_client):
+    """Should run entire flow start to finish and return success, with a specific step marked as the last item"""
     name = 'good_metadata'
     payload = _load_scenario('good_metadata')
 
     res = _run_until_complete(flows_client, specific_flow_client, payload, f'unittests - {name}')
     status = res.data['status']
     assert status == 'SUCCEEDED'
+    assert _get_last_state(res.data) == 'SearchIngest'
+
 
 
 def test_fails_with_bad_metadata(flows_client, specific_flow_client):
+    """Should fail instantly on submission due to invalid input schema"""
     name = 'bad_metadata'
     payload = _load_scenario(name)
 
-    res = _run_until_complete(flows_client, specific_flow_client, payload, f'unittests - {name}')
-    status = res.data['status']
-
-    assert status == 'FAILED'
-    assert res.data['details']['code'] == 'FlowFailed'
-
-    assert res.data['details']['details']['exception'] == 'ErrorMetadataInvalid'
+    with pytest.raises(FlowsAPIError, match='disallowed_extra_field'):
+        _run_until_complete(flows_client, specific_flow_client, payload, f'unittests - {name}')
 
 
-def test_fails_with_no_metadata(flows_client, specific_flow_client):
-    name = 'bad_metadata'
+def test_fails_source_folder_validation(flows_client, specific_flow_client):
+    name = 'source_path_not_a_folder'
     payload = _load_scenario(name)
 
     res = _run_until_complete(flows_client, specific_flow_client, payload, f'unittests - {name}')
+
     status = res.data['status']
-
     assert status == 'FAILED'
-    assert status == 'FAILED'
-    assert res.data['details']['code'] == 'FlowFailed'
 
-    assert res.data['details']['details']['exception'] == 'ErrorMetadataInvalid'
+    assert _get_last_state(res.data) == 'ErrorInvalidSourceDest'
+
+
+def test_fails_source_unreachable(flows_client, specific_flow_client):
+    name = 'invalid_source_id'
+    payload = _load_scenario(name)
+
+    res = _run_until_complete(flows_client, specific_flow_client, payload, f'unittests - {name}')
+
+    status = res.data['status']
+    assert status == 'FAILED'
+
+    assert _get_last_state(res.data) == 'FailSetupGeneric'
+
