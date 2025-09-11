@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "required": [
+    "some_array"
+  ],
+  "properties": {
+    "some_array": {
+      "type": "array",
+      "title": "some_array",
+      "description": "input array",
+      "default": []
+    }
+  },
+  "additionalProperties": false
+}

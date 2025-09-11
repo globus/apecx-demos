@@ -1,0 +1,29 @@
+engine:
+  type: GlobusComputeEngine
+  container_type: docker
+  container_uri: gce_workers/validate_metadata:latest
+  container_cmd_options: -e GLOBUS_CLIENT_ID -e GLOBUS_CLIENT_SECRET --user $GCE_RUN_USER:$GCE_RUN_GROUP
+
+  max_workers_per_node: 1
+
+  provider:
+    type: LocalProvider
+
+    min_blocks: 0
+    max_blocks: 1
+    init_blocks: 1
+
+    # NOTE: Envvars in `user_environment.yml` are passed to the UEP, and must be re-exported if we want to guarantee
+    #    availability to the worker (esp for workers run on a separate host from the UEP)
+    # This manually ensures that containers are run with less-than-root permissions
+    worker_init: |
+      export GCE_RUN_USER=$(id -u)
+      export GCE_RUN_GROUP=$(id -g)
+      export GLOBUS_CLIENT_ID=$GLOBUS_CLIENT_ID
+      export GLOBUS_CLIENT_SECRET=$GLOBUS_CLIENT_SECRET
+
+# At 30s/hb (default value), 10 heartbeats is 300s.
+idle_heartbeats_soft: 10
+
+# At 30s/hb, this translates to worker shutdown after 1 hr of no task progress (ok assuming most tasks should take seconds)
+idle_heartbeats_hard: 120

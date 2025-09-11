@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "required": [
+    "source",
+    "destination"
+  ],
+  "properties": {
+    "source": {
+      "type": "object",
+      "title": "Source",
+      "format": "globus-collection",
+      "required": [
+        "id",
+        "path"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Source Collection ID",
+          "format": "uuid",
+          "description": "The UUID for the collection which serves as the source of the data for the two-stage Transfer"
+        },
+        "path": {
+          "type": "string",
+          "title": "Source Collection Path",
+          "description": "The path on the source collection for the data"
+        }
+      }
+    },
+    "destination": {
+      "type": "object",
+      "title": "Destination",
+      "format": "globus-collection",
+      "required": [
+        "id",
+        "path"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Source Collection ID",
+          "format": "uuid",
+          "description": "The UUID for the collection which serves as the source of the data for the two-stage Transfer"
+        },
+        "path": {
+          "type": "string",
+          "title": "Source Collection Path",
+          "description": "The path on the source collection for the data"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

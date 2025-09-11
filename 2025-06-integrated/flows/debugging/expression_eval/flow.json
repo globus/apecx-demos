@@ -1,0 +1,28 @@
+{
+  "Comment": "",
+  "StartAt": "CheckValidationResult",
+  "States": {
+    "CheckValidationResult": {
+      "Comment": "Check that validation does not return errors. TODO: WRITE expression for is array empty",
+      "Type": "Choice",
+      "Default": "FailReportValidation",
+      "Choices": [
+        {
+          "Variable": "States.ArrayLength($.some_array)",
+          "NumericGreaterThan": 0,
+          "Next": "SuccessReportValidation"
+        }
+      ]
+    },
+    "FailReportValidation": {
+      "Type": "Fail",
+      "Error": "ErrorValidationFailed",
+      "Cause": "File failed validation. Consult logs for details."
+    },
+
+    "SuccessReportValidation": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}

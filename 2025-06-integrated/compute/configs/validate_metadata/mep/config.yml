@@ -1,0 +1,4 @@
+display_name: null
+identity_mapping_config_path: /root/.globus_compute/apecx-dev-compute-only-mep/flow_identity_mapping_config.json
+multi_user: true
+subscription_id: "REPLACEME"

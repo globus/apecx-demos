@@ -1,0 +1,22 @@
+{
+  "Comment": "Debug running a compute function via a flow. This generates a flow user ID that can be whitelisted to run via GCE MEP",
+  "StartAt": "RunValidation",
+  "States": {
+    "RunValidation": {
+      "Type": "Action",
+      "ActionUrl": "https://compute.actions.globus.org",
+      "Comment": "Run a user-specified validation function on the dataset that returns {status: success|fail|error, message: str, data: ANY}",
+
+      "End": true,
+      "ResultPath": "$.run.RunValidation",
+
+      "RunAs": "Flow",
+
+      "Parameters": {
+        "endpoint.$": "$.compute.endpoint_id",
+        "function.$": "$.compute.function_id",
+        "args.=": "[`$.input_gcs.id`, `$.input_gcs.path`]"
+      }
+    }
+  }
+}

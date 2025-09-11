@@ -1,0 +1,9 @@
+# Common endpoint requirements
+-r base.txt
+
+# Things required for this worker
+globus_sdk==3.56.1  # https://pypi.org/project/globus-sdk/
+globus_compute_sdk==3.7.0  # https://pypi.org/project/globus-compute-sdk/
+
+jsonschema==4.23.0  # https://pypi.org/project/jsonschema/
+requests==2.32.3  # https://pypi.org/project/requests/

@@ -1,0 +1,65 @@
+{
+  "ingest_type": "GMetaList",
+  "ingest_data": {
+    "gmeta": [
+      {
+        "id": "pub_record",
+        "subject": "apecx-joshi-mu/violin-scraping",
+        "visible_to": [
+          "public"
+        ],
+        "content": {
+          "identifier": {
+            "identifier": "apecx-joshi-mu/violin-scraping"
+          },
+          "globus": {
+            "collection": "8d2e71d6-7a29-41d9-94e5-38d8a95fa5db",
+            "path": "/apecx-joshi-anl-general/2025_04_28_VIOLIN_Web_Portal_Data/",
+            "type": "directory"
+          },
+          "creators": [
+            {
+              "familyName": "Chan",
+              "givenName": "Yen On",
+              "name": "Yen On Chan"
+            },
+            {
+              "familyName": "de Figueiredo",
+              "giveName": "Paul",
+              "name": "Paul de Figueiredo"
+            },
+            {
+              "familyName": "Joshi",
+              "givenName": "Trupti",
+              "name": "Trupti Joshi"
+            }
+          ],
+          "titles": [
+            {
+              "title": "VIOLIN Dataset: Gene, Pathogen, and Vaccine"
+            }
+          ],
+          "publisher": {
+            "name": "University of Missouri"
+          },
+          "publicationYear": 2025,
+          "resourceType": {
+            "resourceTypeGeneral": "Dataset"
+          },
+          "dates": [
+            {
+              "date": "2025-04-28",
+              "dateType": "Available"
+            }
+          ],
+          "descriptions": [
+            {
+              "description": "Various entities scraped from the VIOLIN database, of use for data harmonization efforts",
+              "descriptionType": "Abstract"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "identifier": {
+    "identifier": "apecx-joshi-mu/violin-scraping"
+  },
+  "creators": [
+    {
+      "familyName": "Chan",
+      "givenName": "Yen On",
+      "name": "Yen On Chan"
+    },
+    {
+      "familyName": "de Figueiredo",
+      "giveName": "Paul",
+      "name": "Paul de Figueiredo"
+    },
+    {
+      "familyName": "Joshi",
+      "givenName": "Trupti",
+      "name": "Trupti Joshi"
+    }
+  ],
+  "titles": [
+    {
+      "title": "VIOLIN Dataset: Gene, Pathogen, and Vaccine"
+    }
+  ],
+  "publisher": {
+    "name": "University of Missouri"
+  },
+  "publicationYear": 2025,
+  "resourceType": {
+    "resourceTypeGeneral": "Dataset"
+  },
+  "dates": [
+    {
+      "date": "2025-04-28",
+      "dateType": "Available"
+    }
+  ],
+  "descriptions": [
+    {
+      "description": "Various entities scraped from the VIOLIN database, of use for data harmonization efforts",
+      "descriptionType": "Abstract"
+    }
+  ]
+}

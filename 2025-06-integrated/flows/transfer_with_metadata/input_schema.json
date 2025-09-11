@@ -1,0 +1,101 @@
+{
+  "type": "object",
+  "required": [
+    "source",
+    "search_metadata"
+  ],
+  "properties": {
+    "search_metadata": {
+      "type": "object",
+      "title": "Search metadata",
+      "description": "Metadata that will be used to populate a search index. Simplified from datacite 4.6; in future we will add custom extra fields.",
+      "properties": {
+        "creators": {
+          "type": "array",
+          "title": "Authors",
+          "description": "A list of authors (tip: use JSON list syntax if entering via the web UI, `[{\"name\": \"Firstname Lastn\"}]`)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "givenName": {
+                "title": "Given Name",
+                "type": "string"
+              },
+              "familyName": {
+                "title": "Family name",
+                "type": "string"
+              },
+              "affiliation": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "title": "Affiliation",
+                    "description": "Institution / employer for this author",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            },
+            "required": [
+              "name"
+            ]
+          }
+        },
+        "title": {
+          "type": "string",
+          "title": "Title",
+          "description": "A short human-friendly title for this dataset"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description",
+          "description": "A one-paragraph description shown in search results"
+        },
+        "publisher_name": {
+          "type": "string",
+          "title": "Produced by",
+          "description": "The name of the institution that produced the resource"
+        }
+      },
+      "required": [
+        "creators",
+        "title",
+        "description",
+        "publisher_name"
+      ],
+      "additionalProperties": false
+    },
+
+    "source": {
+      "type": "object",
+      "title": "Source",
+      "format": "globus-collection",
+      "required": [
+        "id",
+        "path"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Source Collection ID",
+          "format": "uuid",
+          "description": "The UUID for the collection which serves as the source of the data for the two-stage Transfer"
+        },
+        "path": {
+          "type": "string",
+          "title": "Source Collection Path",
+          "description": "The path on the source collection for the data"
+        }
+      },
+      "description": "The data's origin",
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

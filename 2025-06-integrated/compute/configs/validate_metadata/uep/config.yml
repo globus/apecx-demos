@@ -1,0 +1,27 @@
+# An example config file for a worker that executes very fast-running tasks via docker containers
+# This one is a SINGLE-USER endpoint
+
+# Policy is set by endpoint when it's first initialized / configured, though you could use your own premade own
+authentication_policy: "REPLACEME"
+display_name: "apecx development endpoint"
+engine:
+  max_workers_per_node: 1
+  container_type: docker
+  # Assumes container is built on the local host according to instructions in this repo
+  container_uri: gce_workers/validate_metadata:latest
+  container_cmd_options: -e GLOBUS_CLIENT_ID -e GLOBUS_CLIENT_SECRET --user $GCE_RUN_USER:$GCE_RUN_GROUP
+  provider:
+    init_blocks: 1
+    max_blocks: 1
+    min_blocks: 0
+    type: LocalProvider
+
+    # Ensure that (any) docker container we run is executed with lower user permissions.
+    #  Since a user needs to be a sudoer to run the container, this is not a perfect fix!
+    worker_init: |
+      export GCE_RUN_USER=$(id -u)
+      export GCE_RUN_GROUP=$(id -g)
+      export GLOBUS_CLIENT_ID="REPLACEME"
+      export GLOBUS_CLIENT_SECRET="REPLACEME"
+  type: GlobusComputeEngine
+subscription_id: "REPLACEME"

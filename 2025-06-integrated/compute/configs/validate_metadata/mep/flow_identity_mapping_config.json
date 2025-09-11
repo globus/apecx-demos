@@ -1,0 +1,13 @@
+[
+  {
+    "comment": "Map a specific flow identity to a specific, restricted system account. For more examples, see: https://docs.globus.org/globus-connect-server/v5.4/identity-mapping-guide/",
+    "DATA_TYPE": "expression_identity_mapping#1.0.0",
+    "mappings": [
+      {
+        "source": "{username}",
+        "match": "REPLACEME-FLOW_UUID@clients.auth.globus.org",
+        "output": "gce-user"
+      }
+    ]
+  }
+]
